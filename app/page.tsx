@@ -21,7 +21,7 @@ export default function Home() {
             size={['3xl', '4xl']}
             textAlign={['center', 'left']}
             textTransform="uppercase"
-            letterSpacing="7px"
+            letterSpacing="8px"
           >
             <Text>Gauthier</Text>
             <Text>Painteaux</Text>
