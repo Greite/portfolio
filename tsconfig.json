@@ -34,19 +34,19 @@
         "./*"
       ],
       "~src/*": [
-        "./src/*"
+        "lib/*"
       ],
       "~types/*": [
-        "./src/types/*"
+        "lib/types/*"
       ],
       "~theme/*": [
-        "./src/theme/*"
+        "lib/theme/*"
       ],
       "~utils/*": [
-        "./src/utils/*"
+        "lib/utils/*"
       ],
       "~components/*": [
-        "./src/components/*"
+        "lib/components/*"
       ],
     }
   },
