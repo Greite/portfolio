@@ -1,4 +1,4 @@
-import { Avatar, Box, HStack, Heading, Stack, Text, VStack } from '@chakra-ui/react'
+import { Avatar, Box, Flex, HStack, Heading, Stack, Text, VStack } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import Link from 'next/link'
@@ -15,73 +15,72 @@ dayjs.locale('fr')
 export default function Home() {
   return (
     <Box>
-      <Stack
-        w="full"
-        minH="65vh"
-        spacing={[10, 0]}
-        direction={['column-reverse', 'row']}
-        alignContent="center"
-        alignItems="center"
-        justifyContent="space-evenly"
-        px={6}
-        py={24}
-        bg="rgb(250,224,86)"
-      >
-        <VStack spacing={12} alignItems={['center', 'flex-start']}>
-          <Heading
-            as="h1"
-            size={['3xl', '4xl']}
-            textAlign={['center', 'left']}
-            textTransform="uppercase"
-            letterSpacing="8px"
-          >
-            <Text>Gauthier</Text>
-            <Text>Painteaux</Text>
-          </Heading>
+      <Flex w="full" minH="65vh" py={[12, 24]} px={6} justifyContent="center" bg="rgb(250,224,86)">
+        <Stack
+          w="full"
+          maxW="1280px"
+          spacing={[10, 0]}
+          direction={['column-reverse', 'row']}
+          alignContent="center"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <VStack spacing={12} alignItems={['center', 'flex-start']}>
+            <Heading
+              as="h1"
+              size={['3xl', '4xl']}
+              textAlign={['center', 'left']}
+              textTransform="uppercase"
+              letterSpacing="8px"
+            >
+              <Text>Gauthier</Text>
+              <Text>Painteaux</Text>
+            </Heading>
 
-          <Heading as="h2" size="lg" textAlign={['center', 'left']}>
-            <Text>Développeur Web</Text>
-            <Text>Fullstack</Text>
-          </Heading>
+            <Heading as="h2" size="lg" textAlign={['center', 'left']}>
+              <Text>Développeur Web</Text>
+              <Text>Fullstack</Text>
+            </Heading>
 
-          <VStack spacing={4} alignItems={['center', 'flex-start']}>
-            <Link href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/" target="_blank">
-              <HStack spacing={2} alignItems="center">
-                <FaLinkedin size="25px" />
-                <Text>LinkedIn</Text>
-              </HStack>
-            </Link>
+            <VStack spacing={4} alignItems={['center', 'flex-start']}>
+              <Link href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/" target="_blank">
+                <HStack spacing={2} alignItems="center">
+                  <FaLinkedin size="25px" />
+                  <Text>LinkedIn</Text>
+                </HStack>
+              </Link>
 
-            <Link href="tel:+33609514433">
-              <HStack spacing={2} alignItems="center">
-                <MdLocalPhone size="25px" />
-                <Text>06.09.51.44.33</Text>
-              </HStack>
-            </Link>
+              <Link href="tel:+33609514433">
+                <HStack spacing={2} alignItems="center">
+                  <MdLocalPhone size="25px" />
+                  <Text>06.09.51.44.33</Text>
+                </HStack>
+              </Link>
 
-            <Link href="mailto:contact@gauthierpainteaux.fr">
-              <HStack spacing={2} alignItems="center">
-                <MdMail size="25px" />
-                <Text>contact@gauthierpainteaux.fr</Text>
-              </HStack>
-            </Link>
+              <Link href="mailto:contact@gauthierpainteaux.fr">
+                <HStack spacing={2} alignItems="center">
+                  <MdMail size="25px" />
+                  <Text>contact@gauthierpainteaux.fr</Text>
+                </HStack>
+              </Link>
+            </VStack>
           </VStack>
-        </VStack>
 
-        <Box textAlign="center">
-          <Avatar
-            boxSize={['200px', '300px']}
-            size={['260px', '360px']}
-            name="Gauthier Painteaux"
-            src="photo.jpg"
-            border="10px solid"
-            color="black"
-            bg="white"
-            fontSize="60px"
-            fontWeight="bold"
-          />
-        </Box>
-      </Stack>
+          <Box textAlign="center">
+            <Avatar
+              boxSize={['200px', '400px']}
+              size={['260px', '460px']}
+              name="Gauthier Painteaux"
+              src="photo.jpg"
+              border="10px solid"
+              color="black"
+              bg="white"
+              fontSize="60px"
+              fontWeight="bold"
+            />
+          </Box>
+        </Stack>
+      </Flex>
 
       <Container withDivider>
         <Heading as="h3" size="lg" textAlign="left">
