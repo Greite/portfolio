@@ -19,30 +19,24 @@ export default function Home() {
         <Stack
           w="full"
           maxW="1280px"
-          spacing={[10, 0]}
-          direction={['column-reverse', 'row']}
+          spacing={[10, null, null, 0]}
+          direction={['column-reverse', null, null, 'row']}
           alignContent="center"
           alignItems="center"
           justifyContent="space-between"
         >
-          <VStack spacing={12} alignItems={['center', 'flex-start']}>
-            <Heading
-              as="h1"
-              size={['3xl', '4xl']}
-              textAlign={['center', 'left']}
-              textTransform="uppercase"
-              letterSpacing="8px"
-            >
+          <VStack spacing={12} alignItems="flex-start">
+            <Heading as="h1" size={['3xl', '4xl']} textAlign="left" textTransform="uppercase" letterSpacing="8px">
               <Text>Gauthier</Text>
               <Text>Painteaux</Text>
             </Heading>
 
-            <Heading as="h2" size="lg" textAlign={['center', 'left']}>
+            <Heading as="h2" size="lg" textAlign="left">
               <Text>Développeur Web</Text>
               <Text>Fullstack</Text>
             </Heading>
 
-            <VStack spacing={4} alignItems={['center', 'flex-start']}>
+            <VStack spacing={4} alignItems="flex-start">
               <Link href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/" target="_blank">
                 <HStack spacing={2} alignItems="center">
                   <FaLinkedin size="25px" />
@@ -68,8 +62,8 @@ export default function Home() {
 
           <Box textAlign="center">
             <Avatar
-              boxSize={['200px', '400px']}
-              size={['260px', '460px']}
+              boxSize={['300px', '400px']}
+              size={['360px', '460px']}
               name="Gauthier Painteaux"
               src="photo.jpg"
               border="10px solid"
@@ -89,7 +83,7 @@ export default function Home() {
 
         <Stack spacing={8} py={8}>
           <Box>
-            <Stack direction={['column', 'row']} spacing={[1, 4]} alignItems="flex-start">
+            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
               <Heading as="h4" size="md" textAlign="left">
                 <Link href="https://koul.io/" target="_blank">
                   Koul
@@ -102,7 +96,7 @@ export default function Home() {
           </Box>
 
           <Box>
-            <Stack direction={['column', 'row']} spacing={[1, 4]} alignItems="flex-start">
+            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
               <Heading as="h4" size="md" textAlign="left">
                 <Link href="https://globalis-ms.com/" target="_blank">
                   Globalis media system
@@ -115,7 +109,7 @@ export default function Home() {
           </Box>
 
           <Box>
-            <Stack direction={['column', 'row']} spacing={[1, 4]} alignItems="flex-start">
+            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
               <Heading as="h4" size="md" textAlign="left">
                 <Link href="https://appartoo.com/" target="_blank">
                   Appartoo
@@ -128,7 +122,7 @@ export default function Home() {
           </Box>
 
           <Box>
-            <Stack direction={['column', 'row']} spacing={[1, 4]} alignItems="flex-start">
+            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
               <Heading as="h4" size="md" textAlign="left">
                 DTI Soft
               </Heading>
@@ -147,7 +141,7 @@ export default function Home() {
 
         <Stack spacing={8} py={8}>
           <Box>
-            <Stack direction={['column', 'row']} spacing={[1, 4]} alignItems="flex-start">
+            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
               <Heading as="h4" size="md" textAlign="left">
                 IUT Nancy Charlemagne
               </Heading>
@@ -159,7 +153,7 @@ export default function Home() {
           </Box>
 
           <Box>
-            <Stack direction={['column', 'row']} spacing={[1, 4]} alignItems="flex-start">
+            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
               <Heading as="h4" size="md" textAlign="left">
                 Lycée Raymond Poincaré
               </Heading>
@@ -169,7 +163,7 @@ export default function Home() {
           </Box>
 
           <Box>
-            <Stack direction={['column', 'row']} spacing={[1, 4]} alignItems="flex-start">
+            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
               <Heading as="h4" size="md" textAlign="left">
                 IUT Metz
               </Heading>
