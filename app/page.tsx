@@ -51,13 +51,6 @@ export default function Home() {
                 </HStack>
               </Link>
 
-              <Link href="tel:+33609514433">
-                <HStack spacing={2} alignItems="center">
-                  <MdLocalPhone size="25px" />
-                  <Text>06.09.51.44.33</Text>
-                </HStack>
-              </Link>
-
               <Link href="mailto:contact@gauthierpainteaux.fr">
                 <HStack spacing={2} alignItems="center">
                   <MdMail size="25px" />
