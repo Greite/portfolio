@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import Link from 'next/link'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
-import { MdLocalPhone, MdMail } from 'react-icons/md'
+import { MdMail } from 'react-icons/md'
 
 import Container from '@/lib/components/Container'
 
