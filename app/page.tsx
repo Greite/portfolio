@@ -95,7 +95,7 @@ export default function Home() {
             </Stack>
             <Text textAlign="left">Développeur Web Fullstack - CDI</Text>
             <Text textAlign="left" fontStyle="italic" fontWeight={300}>
-              Next.JS, Symfony, TypeScript, Docker, Kubernetes
+              Next.JS, Symfony, TypeScript, Docker
             </Text>
           </Box>
 
