@@ -13,9 +13,11 @@ dayjs.extend(relativeTime)
 dayjs.locale('fr')
 
 export default function Home() {
+  const iconStyle = { color: '#c68908' }
+
   return (
     <Box>
-      <Flex w="full" minH="65vh" py={[12, 24]} px={6} justifyContent="center" bg="rgb(250,224,86)">
+      <Flex w="full" minH="65vh" py={[12, 24]} px={6} justifyContent="center" bg="energyYellow.300">
         <Stack
           w="full"
           maxW="1280px"
@@ -31,7 +33,7 @@ export default function Home() {
               <Text>Painteaux</Text>
             </Heading>
 
-            <Heading as="h2" size="lg" textAlign="left">
+            <Heading as="h2" size={['lg', 'xl']} textAlign="left">
               <Text>Développeur Web</Text>
               <Text>Fullstack</Text>
             </Heading>
@@ -39,21 +41,21 @@ export default function Home() {
             <VStack spacing={4} alignItems="flex-start">
               <Link href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/" target="_blank">
                 <HStack spacing={2} alignItems="center">
-                  <FaLinkedin size="25px" />
+                  <FaLinkedin size="25px" style={iconStyle} />
                   <Text>LinkedIn</Text>
                 </HStack>
               </Link>
 
               <Link href="https://github.com/Greite" target="_blank">
                 <HStack spacing={2} alignItems="center">
-                  <FaGithub size="25px" />
+                  <FaGithub size="25px" style={iconStyle} />
                   <Text>Github</Text>
                 </HStack>
               </Link>
 
               <Link href="mailto:contact@gauthierpainteaux.fr">
                 <HStack spacing={2} alignItems="center">
-                  <MdMail size="25px" />
+                  <MdMail size="25px" style={iconStyle} />
                   <Text>contact@gauthierpainteaux.fr</Text>
                 </HStack>
               </Link>
@@ -77,7 +79,7 @@ export default function Home() {
       </Flex>
 
       <Container withDivider>
-        <Heading as="h3" size="lg" textAlign="left">
+        <Heading as="h3" size="xl" textAlign="left">
           Expériences
         </Heading>
 
@@ -151,7 +153,7 @@ export default function Home() {
       </Container>
 
       <Container withDivider>
-        <Heading as="h3" size="lg" textAlign="left">
+        <Heading as="h3" size="xl" textAlign="left">
           Formations
         </Heading>
 

@@ -1,6 +1,8 @@
 import { extendTheme } from '@chakra-ui/react'
 import { Raleway } from 'next/font/google'
 
+import components from './components'
+
 const raleway = Raleway({ subsets: ['latin'], display: 'swap' })
 
 const theme = {
@@ -33,7 +35,21 @@ const theme = {
       '800': 'rgba(255, 255, 255, 0.80)',
       '900': 'rgba(255, 255, 255, 0.92)',
     },
+    energyYellow: {
+      '50': '#fefce8',
+      '100': '#fdf8c4',
+      '200': '#fcee8c',
+      '300': '#fae056',
+      '400': '#f6c919',
+      '500': '#e6b10c',
+      '600': '#c68908',
+      '700': '#9e610a',
+      '800': '#834d10',
+      '900': '#6f3f14',
+      '950': '#412007',
+    },
   },
+  components,
 }
 
 export default extendTheme(theme)
