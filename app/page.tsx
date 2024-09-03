@@ -98,7 +98,7 @@ export default function Home() {
                 {currentJobDate[0] !== '0'
                   ? `${currentJobDate[0]} ${parseInt(currentJobDate[0], 10) > 1 ? 'ans' : 'an'}`
                   : undefined}{' '}
-                et {currentJobDate[1] !== '0' ? `${currentJobDate[0]} mois` : undefined})
+                et {currentJobDate[1] !== '0' ? `${currentJobDate[1]} mois` : undefined})
               </Text>
             </Stack>
             <Text textAlign="left">Développeur Web Fullstack - CDI</Text>
