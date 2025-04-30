@@ -1,5 +1,5 @@
 import { Box, Flex } from '@chakra-ui/react'
-import { PropsWithChildren } from 'react'
+import type { PropsWithChildren } from 'react'
 
 import Divider from './Divider'
 

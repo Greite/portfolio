@@ -1,3 +1,5 @@
+'use client'
+
 import { Avatar, Box, Flex, HStack, Heading, Stack, Text, VStack } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'

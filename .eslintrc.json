@@ -7,11 +7,10 @@
   },
   "extends": [
     "next/core-web-vitals",
+    "next/typescript",
     "airbnb",
     "airbnb-typescript",
-    "plugin:react/recommended",
     "plugin:react/jsx-runtime",
-    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:@typescript-eslint/strict",
@@ -27,8 +26,6 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react",
-    "react-hooks",
     "@typescript-eslint"
   ],
   "rules": {
@@ -45,6 +42,7 @@
     "no-underscore-dangle": "off",
     "class-methods-use-this": "off",
     "@typescript-eslint/unbound-method": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "@typescript-eslint/consistent-type-imports": "error"
   }
 }
