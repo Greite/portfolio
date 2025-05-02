@@ -17,7 +17,9 @@ dayjs.locale('fr')
 export default function Home() {
   const iconStyle = { color: '#c68908' }
 
-  const currentJobDate = dayjs().diff('2023-06-01', 'years', true).toFixed(1).split('.')
+  const now = dayjs()
+  const currentJobYear = Math.floor(now.diff('2023-06-01', 'years', true))
+  const currentJobMonth = Math.floor(now.diff('2023-06-01', 'months', true) - currentJobYear * 12)
 
   return (
     <Box>
@@ -97,10 +99,8 @@ export default function Home() {
               </Heading>
               <Text textAlign="left" fontWeight={500}>
                 Juin 2023 - Aujourd&apos;hui (
-                {currentJobDate[0] !== '0'
-                  ? `${currentJobDate[0]} ${parseInt(currentJobDate[0], 10) > 1 ? 'ans' : 'an'}`
-                  : undefined}{' '}
-                et {currentJobDate[1] !== '0' ? `${currentJobDate[1]} mois` : undefined})
+                {currentJobYear !== 0 ? `${currentJobYear} ${currentJobYear > 1 ? 'ans' : 'an'}` : undefined}
+                {currentJobMonth !== 0 ? ` et ${currentJobMonth} mois` : undefined})
               </Text>
             </Stack>
             <Text textAlign="left">Développeur Web Fullstack - CDI</Text>
