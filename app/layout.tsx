@@ -1,6 +1,7 @@
-import type { Metadata } from 'next'
+import type { Metadata } from "next";
+import { Provider } from "@/components/ui/provider";
 
-import Provider from './Provider'
+import "@fontsource/raleway/latin.css"
 
 export const metadata: Metadata = {
   title: 'Gauthier Painteaux · Portfolio',
@@ -12,7 +13,11 @@ export const metadata: Metadata = {
   publisher: 'Gauthier Painteaux',
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -22,15 +27,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <html lang="en">
+    <html lang="fr" suppressHydrationWarning>
       <head>
-        {/* eslint-disable-next-line react/no-danger */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body>
-        <main>
-          <Provider>{children}</Provider>
-        </main>
+        <Provider>{children}</Provider>
       </body>
     </html>
   )

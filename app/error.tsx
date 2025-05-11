@@ -16,12 +16,12 @@ export default function NotFound() {
         px={6}
         bg="rgb(250,224,86)"
       >
-        <VStack spacing={12} alignItems={['center', 'flex-start']}>
-          <Heading as="h1" size={['3xl', '4xl']} textAlign={['center', 'left']} textTransform="uppercase">
+        <VStack gap={12} alignItems={['center', 'flex-start']}>
+          <Heading as="h1" fontSize={['6xl', '7xl']} textAlign={['center', 'left']} textTransform="uppercase">
             <Text>Une erreur est survenue</Text>
           </Heading>
 
-          <Heading as="h2" size="lg" textAlign={['center', 'left']}>
+          <Heading as="h2" fontSize="3xl" textAlign={['center', 'left']}>
             <Link href="/">Retour à l&apos;acceuil</Link>
           </Heading>
         </VStack>

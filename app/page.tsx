@@ -1,18 +1,9 @@
-'use client'
-
-import { Avatar, Box, Flex, HStack, Heading, Stack, Text, VStack } from '@chakra-ui/react'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import Link from 'next/link'
-import { FaGithub, FaLinkedin } from 'react-icons/fa'
-import { MdMail } from 'react-icons/md'
-
-import Container from '@/lib/components/Container'
-
-import 'dayjs/locale/fr'
-
-dayjs.extend(relativeTime)
-dayjs.locale('fr')
+import Container from "@/components/Container";
+import { Avatar } from "@/components/ui/avatar";
+import { Box, Flex, Heading, HStack, Stack, Text, VStack } from "@chakra-ui/react";
+import dayjs from "dayjs";
+import Link from "next/link";
+import { IoIosMail, IoLogoGithub, IoLogoLinkedin } from "react-icons/io";
 
 export default function Home() {
   const iconStyle = { color: '#c68908' }
@@ -23,45 +14,45 @@ export default function Home() {
 
   return (
     <Box>
-      <Flex w="full" minH="65vh" py={[12, 24]} px={6} justifyContent="center" bg="energyYellow.300">
+      <Flex w="full" minH="65vh" py={[12, 24]} px={6} justifyContent="center" bgColor="brand.300">
         <Stack
           w="full"
           maxW="1280px"
-          spacing={[10, null, null, 0]}
+          gap={[10, null, null, 0]}
           direction={['column-reverse', null, null, 'row']}
           alignContent="center"
           alignItems="center"
           justifyContent="space-between"
         >
-          <VStack spacing={12} alignItems="flex-start">
-            <Heading as="h1" size={['3xl', '4xl']} textAlign="left" textTransform="uppercase" letterSpacing="8px">
-              <Text>Gauthier</Text>
-              <Text>Painteaux</Text>
+          <VStack gap={12} alignItems="flex-start">
+            <Heading as="h1" fontSize={['6xl', '7xl']} textAlign="left" textTransform="uppercase" letterSpacing="8px">
+              <Text lineHeight={1}>Gauthier</Text>
+              <Text lineHeight={1}>Painteaux</Text>
             </Heading>
 
-            <Heading as="h2" size={['lg', 'xl']} textAlign="left">
-              <Text>Développeur Web</Text>
-              <Text>Fullstack</Text>
+            <Heading as="h2" fontSize={['3xl', '4xl']} textAlign="left">
+              <Text lineHeight={1.2}>Développeur Web</Text>
+              <Text lineHeight={1.2}>Fullstack</Text>
             </Heading>
 
-            <VStack spacing={4} alignItems="flex-start">
+            <VStack gap={4} alignItems="flex-start">
               <Link href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/" target="_blank">
-                <HStack spacing={2} alignItems="center">
-                  <FaLinkedin size="25px" style={iconStyle} />
+                <HStack gap={2} alignItems="center">
+                  <IoLogoLinkedin size="28px" style={iconStyle} />
                   <Text>LinkedIn</Text>
                 </HStack>
               </Link>
 
               <Link href="https://github.com/Greite" target="_blank">
-                <HStack spacing={2} alignItems="center">
-                  <FaGithub size="25px" style={iconStyle} />
+                <HStack gap={2} alignItems="center">
+                  <IoLogoGithub size="28px" style={iconStyle} />
                   <Text>Github</Text>
                 </HStack>
               </Link>
 
               <Link href="mailto:contact@gauthierpainteaux.fr">
-                <HStack spacing={2} alignItems="center">
-                  <MdMail size="25px" style={iconStyle} />
+                <HStack gap={2} alignItems="center">
+                  <IoIosMail size="28px" style={iconStyle} />
                   <Text>contact@gauthierpainteaux.fr</Text>
                 </HStack>
               </Link>
@@ -71,7 +62,6 @@ export default function Home() {
           <Box textAlign="center">
             <Avatar
               boxSize={['300px', '400px']}
-              size={['360px', '460px']}
               name="Gauthier Painteaux"
               src="photo.webp"
               border="10px solid"
@@ -85,14 +75,14 @@ export default function Home() {
       </Flex>
 
       <Container withDivider>
-        <Heading as="h3" size="xl" textAlign="left">
+        <Heading as="h3" fontSize="4xl" textAlign="left">
           Expériences
         </Heading>
 
-        <Stack spacing={6} pt={8}>
+        <Stack gap={6} pt={8}>
           <Box>
-            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" size="md" textAlign="left">
+            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
+              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
                 <Link href="https://koul.io/" target="_blank">
                   Koul
                 </Link>
@@ -110,8 +100,8 @@ export default function Home() {
           </Box>
 
           <Box>
-            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" size="md" textAlign="left">
+            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
+              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
                 <Link href="https://globalis-ms.com/" target="_blank">
                   Globalis media system
                 </Link>
@@ -127,8 +117,8 @@ export default function Home() {
           </Box>
 
           <Box>
-            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" size="md" textAlign="left">
+            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
+              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
                 <Link href="https://appartoo.com/" target="_blank">
                   Appartoo
                 </Link>
@@ -144,8 +134,8 @@ export default function Home() {
           </Box>
 
           <Box>
-            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" size="md" textAlign="left">
+            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
+              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
                 DTI Soft
               </Heading>
               <Text textAlign="left" fontWeight={500}>
@@ -161,14 +151,14 @@ export default function Home() {
       </Container>
 
       <Container withDivider>
-        <Heading as="h3" size="xl" textAlign="left">
+        <Heading as="h3" fontSize="4xl" textAlign="left">
           Formations
         </Heading>
 
-        <Stack spacing={6} pt={8}>
+        <Stack gap={6} pt={8}>
           <Box>
-            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" size="md" textAlign="left">
+            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
+              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
                 IUT Nancy Charlemagne
               </Heading>
               <Text textAlign="left" fontWeight={500}>
@@ -181,8 +171,8 @@ export default function Home() {
           </Box>
 
           <Box>
-            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" size="md" textAlign="left">
+            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
+              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
                 Lycée Raymond Poincaré
               </Heading>
               <Text textAlign="left" fontWeight={500}>
@@ -193,8 +183,8 @@ export default function Home() {
           </Box>
 
           <Box>
-            <Stack direction={['column', null, 'row']} spacing={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" size="md" textAlign="left">
+            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
+              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
                 IUT Metz
               </Heading>
               <Text textAlign="left" fontWeight={500}>
