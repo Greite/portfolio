@@ -25,12 +25,12 @@ export default function Home() {
           justifyContent="space-between"
         >
           <VStack gap={12} alignItems="flex-start">
-            <Heading as="h1" fontSize={['6xl', '7xl']} textAlign="left" textTransform="uppercase" letterSpacing="8px">
+            <Heading as="h1" fontSize={{base: '4xl', sm: '5xl', md: '6xl', lg:'7xl' }} textAlign="left" textTransform="uppercase" letterSpacing={{base: '4px', sm: '8px'}}>
               <Text lineHeight={1}>Gauthier</Text>
               <Text lineHeight={1}>Painteaux</Text>
             </Heading>
 
-            <Heading as="h2" fontSize={['3xl', '4xl']} textAlign="left">
+            <Heading as="h2" fontSize={{base: '2xl', sm: '3xl', md: '4xl'}} textAlign="left">
               <Text lineHeight={1.2}>Développeur Web</Text>
               <Text lineHeight={1.2}>Fullstack</Text>
             </Heading>
