@@ -1,6 +1,7 @@
-import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react"
-import headingRecipe from "./components/Heading"
-import textRecipe from "./components/Text"
+import { createSystem, defaultConfig, defineConfig } from '@chakra-ui/react'
+
+import headingRecipe from './components/Heading'
+import textRecipe from './components/Text'
 
 const config = defineConfig({
   theme: {
@@ -56,13 +57,13 @@ const config = defineConfig({
     semanticTokens: {
       colors: {
         brand: {
-          solid: { value: "{colors.brand.500}" },
-          contrast: { value: "{colors.brand.100}" },
-          fg: { value: "{colors.brand.700}" },
-          muted: { value: "{colors.brand.100}" },
-          subtle: { value: "{colors.brand.200}" },
-          emphasized: { value: "{colors.brand.300}" },
-          focusRing: { value: "{colors.brand.500}" },
+          solid: { value: '{colors.brand.500}' },
+          contrast: { value: '{colors.brand.100}' },
+          fg: { value: '{colors.brand.700}' },
+          muted: { value: '{colors.brand.100}' },
+          subtle: { value: '{colors.brand.200}' },
+          emphasized: { value: '{colors.brand.300}' },
+          focusRing: { value: '{colors.brand.500}' },
         },
       },
     },

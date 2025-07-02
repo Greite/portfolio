@@ -1,9 +1,10 @@
-import Container from "@/components/Container";
-import { Avatar } from "@/components/ui/avatar";
-import { Box, Flex, Heading, HStack, Stack, Text, VStack } from "@chakra-ui/react";
-import dayjs from "dayjs";
-import Link from "next/link";
-import { IoIosMail, IoLogoGithub, IoLogoLinkedin } from "react-icons/io";
+import { Box, Flex, Heading, HStack, Stack, Text, VStack } from '@chakra-ui/react'
+import dayjs from 'dayjs'
+import Link from 'next/link'
+import { IoIosMail, IoLogoGithub, IoLogoLinkedin } from 'react-icons/io'
+
+import Container from '@components/Container'
+import { Avatar } from '@ui/avatar'
 
 export default function Home() {
   const iconStyle = { color: '#c68908' }
@@ -25,12 +26,18 @@ export default function Home() {
           justifyContent="space-between"
         >
           <VStack gap={12} alignItems="flex-start">
-            <Heading as="h1" fontSize={{base: '4xl', sm: '5xl', md: '6xl', lg:'7xl' }} textAlign="left" textTransform="uppercase" letterSpacing={{base: '4px', sm: '8px'}}>
+            <Heading
+              as="h1"
+              fontSize={{ base: '4xl', sm: '5xl', md: '6xl', lg: '7xl' }}
+              textAlign="left"
+              textTransform="uppercase"
+              letterSpacing={{ base: '4px', sm: '8px' }}
+            >
               <Text lineHeight={1}>Gauthier</Text>
               <Text lineHeight={1}>Painteaux</Text>
             </Heading>
 
-            <Heading as="h2" fontSize={{base: '2xl', sm: '3xl', md: '4xl'}} textAlign="left">
+            <Heading as="h2" fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }} textAlign="left">
               <Text lineHeight={1.2}>Développeur Web</Text>
               <Text lineHeight={1.2}>Fullstack</Text>
             </Heading>
@@ -93,7 +100,8 @@ export default function Home() {
                 {currentJobMonth !== 0 ? ` et ${currentJobMonth} mois` : undefined})
               </Text>
             </Stack>
-            <Text textAlign="left">Développeur Web Fullstack - CDI</Text>
+            <Text textAlign="left">Lead Développeur <Text as="span" fontStyle="italic" fontWeight={300}>(Juin 2025 - Aujourd&apos;hui)</Text> - CDI</Text>
+            <Text textAlign="left">Développeur Web Fullstack <Text as="span" fontStyle="italic" fontWeight={300}>(Juin 2023 - Mai 2025)</Text> - CDI</Text>
             <Text textAlign="left" fontStyle="italic" fontWeight={300}>
               Next.JS, Symfony, TypeScript, Docker
             </Text>
