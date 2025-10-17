@@ -1,24 +1,16 @@
 // @ts-check
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsparser from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
 import prettierConfig from 'eslint-config-prettier';
-import * as importPlugin from 'eslint-plugin-import';
-import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
-import reactPlugin from 'eslint-plugin-react';
-import reactHooksPlugin from 'eslint-plugin-react-hooks';
-import { defineConfig } from 'eslint/config';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import importPlugin from 'eslint-plugin-import';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import nextPlugin from '@next/eslint-plugin-next';
 
-// Obtenir le répertoire actuel en ESM
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const { resolve } = path;
-
-export default defineConfig([
-  // Base ESLint config
+export default tseslint.config(
+  // Global ignores
   {
     ignores: [
       '**/node_modules/**',
@@ -30,8 +22,15 @@ export default defineConfig([
       '**/.turbo/**',
     ],
   },
-  // Global rules for all files
+
+  // Base JavaScript config
+  js.configs.recommended,
+
+  // Global settings for all files
   {
+    linterOptions: {
+      reportUnusedDisableDirectives: 'error',
+    },
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -41,13 +40,6 @@ export default defineConfig([
         },
       },
     },
-    linterOptions: {
-      reportUnusedDisableDirectives: true,
-    },
-    plugins: {
-      js,
-    },
-    extends: ['js/recommended'],
     rules: {
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-unused-vars': 'off', // Handled by TypeScript
@@ -58,7 +50,6 @@ export default defineConfig([
       'prefer-const': 'error',
       'no-var': 'error',
       'prefer-destructuring': 'warn',
-      // 'prefer-arrow-callbacks': 'warn',
       'operator-assignment': 'warn',
       'no-useless-return': 'warn',
       'no-useless-rename': 'warn',
@@ -68,53 +59,87 @@ export default defineConfig([
       'no-implicit-coercion': ['warn', { disallowTemplateShorthand: false }],
       'no-else-return': 'warn',
       'no-array-constructor': 'warn',
-      eqeqeq: ['warn', 'always'],
-      curly: ['warn', 'all'],
+      'eqeqeq': ['warn', 'always'],
+      'curly': ['warn', 'all'],
       'arrow-body-style': 'warn',
     },
   },
-  // TypeScript config
+
+  // TypeScript config for files with type checking
+  ...tseslint.configs.recommendedTypeChecked.map((config) => ({
+    ...config,
+    files: ['**/*.{ts,tsx}'],
+  })),
   {
     files: ['**/*.{ts,tsx}'],
-    plugins: {
-      // @ts-ignore
-      '@typescript-eslint': tseslint,
-    },
     languageOptions: {
-      parser: tsparser,
       parserOptions: {
-        project: [
-          resolve(__dirname, './tsconfig.json'),
-          resolve(__dirname, './packages/*/tsconfig.json'),
-          resolve(__dirname, './apps/*/tsconfig.json'),
-        ],
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
     rules: {
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['error', {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      }],
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-non-null-assertion': 'warn',
       '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
-      '@typescript-eslint/no-use-before-define': ['error'],
-      '@typescript-eslint/no-shadow': ['error'],
-      '@typescript-eslint/consistent-type-imports': [
-        'error',
-        {
-          prefer: 'type-imports',
-          fixStyle: 'separate-type-imports',
-        },
-      ],
+      '@typescript-eslint/no-use-before-define': 'error',
+      '@typescript-eslint/no-shadow': 'error',
+      '@typescript-eslint/consistent-type-imports': ['error', {
+        prefer: 'type-imports',
+        fixStyle: 'separate-type-imports',
+      }],
     },
   },
+  // Disable type checking rules for .d.ts files (like next-env.d.ts)
+  {
+    files: ['**/*.d.ts'],
+    rules: {
+      '@typescript-eslint/triple-slash-reference': 'off',
+    },
+  },
+
+  // Next.js config
+  {
+    plugins: {
+      '@next/next': nextPlugin,
+    },
+    rules: {
+      '@next/next/google-font-display': 'warn',
+      '@next/next/google-font-preconnect': 'warn',
+      '@next/next/next-script-for-ga': 'warn',
+      '@next/next/no-async-client-component': 'warn',
+      '@next/next/no-before-interactive-script-outside-document': 'warn',
+      '@next/next/no-css-tags': 'warn',
+      '@next/next/no-head-element': 'warn',
+      '@next/next/no-html-link-for-pages': 'error',
+      '@next/next/no-img-element': 'warn',
+      '@next/next/no-page-custom-font': 'warn',
+      '@next/next/no-styled-jsx-in-document': 'warn',
+      '@next/next/no-sync-scripts': 'error',
+      '@next/next/no-title-in-document-head': 'warn',
+      '@next/next/no-typos': 'warn',
+      '@next/next/no-unwanted-polyfillio': 'warn',
+      '@next/next/inline-script-id': 'error',
+      '@next/next/no-assign-module-variable': 'error',
+      '@next/next/no-document-import-in-page': 'error',
+      '@next/next/no-duplicate-head': 'error',
+      '@next/next/no-head-import-in-document': 'error',
+      '@next/next/no-script-component-in-head': 'error',
+    },
+  },
+
   // React config
   {
     files: ['**/*.{jsx,tsx}'],
     plugins: {
-      react: reactPlugin,
-      'react-hooks': reactHooksPlugin,
-      // @ts-ignore
-      'jsx-a11y': jsxA11yPlugin,
+      react,
+      'react-hooks': reactHooks,
+      'jsx-a11y': jsxA11y,
     },
     settings: {
       react: {
@@ -122,12 +147,16 @@ export default defineConfig([
       },
     },
     rules: {
+      ...react.configs.recommended.rules,
+      ...react.configs['jsx-runtime'].rules,
+      ...jsxA11y.configs.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/jsx-uses-react': 'off',
+      'react/jsx-curly-brace-presence': ['warn', 'never'],
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      'react/jsx-curly-brace-presence': ['warn', 'never'],
+      // Override a11y rules to warnings
       'jsx-a11y/alt-text': 'warn',
       'jsx-a11y/anchor-has-content': 'warn',
       'jsx-a11y/aria-props': 'warn',
@@ -136,67 +165,70 @@ export default defineConfig([
       'jsx-a11y/tabindex-no-positive': 'warn',
     },
   },
-  // stylistic config
-  {
-    plugins: {
-      '@stylistic': stylistic,
-    },
-    extends: ['@stylistic/recommended'],
-    rules: {
-      '@stylistic/arrow-parens': ['error', 'always', { requireForBlockBody: true }],
-      '@stylistic/block-spacing': ['error', 'always'],
-      '@stylistic/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
-      '@stylistic/comma-dangle': ['error', 'always-multiline'],
-      '@stylistic/member-delimiter-style': [
-        'error',
-        {
-          multiline: {
-            delimiter: 'semi',
-            requireLast: true,
-          },
-          multilineDetection: 'brackets',
-          overrides: {
-            interface: {
-              multiline: {
-                delimiter: 'semi',
-                requireLast: true,
-              },
-            },
-          },
-          singleline: {
-            delimiter: 'semi',
-          },
-        },
-      ],
-      '@stylistic/quote-props': ['error', 'as-needed'],
-      '@stylistic/semi': ['error', 'always'],
-    },
-  },
-  // Import config
+
+  // Import plugin config
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
-      // @ts-ignore
       import: importPlugin,
     },
     settings: {
       'import/resolver': {
-        typescript: {},
+        typescript: true,
+        node: true,
       },
     },
     rules: {
-      'import/order': [
-        'error',
-        {
-          'newlines-between': 'always',
-          alphabetize: { order: 'asc', caseInsensitive: true },
-        },
-      ],
+      'import/order': ['error', {
+        'newlines-between': 'always',
+        'alphabetize': { order: 'asc', caseInsensitive: true },
+        'groups': [
+          'builtin',
+          'external',
+          'internal',
+          ['parent', 'sibling'],
+          'index',
+          'object',
+          'type',
+        ],
+      }],
       'import/first': 'error',
       'import/no-duplicates': 'error',
       'import/no-mutable-exports': 'error',
+      'import/newline-after-import': 'warn',
     },
   },
-  // Prettier config (must be last, disable conflicting rules with Prettier)
+
+  // Stylistic config
+  {
+    plugins: {
+      '@stylistic': stylistic,
+    },
+    rules: {
+      '@stylistic/arrow-parens': ['error', 'always'],
+      '@stylistic/block-spacing': ['error', 'always'],
+      '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      '@stylistic/comma-dangle': ['error', 'always-multiline'],
+      '@stylistic/indent': ['error', 2],
+      '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
+      '@stylistic/semi': ['error', 'never'],
+      '@stylistic/quote-props': ['error', 'as-needed'],
+      '@stylistic/member-delimiter-style': ['error', {
+        multiline: {
+          delimiter: 'none',
+          requireLast: false,
+        },
+        singleline: {
+          delimiter: 'semi',
+          requireLast: false,
+        },
+      }],
+      '@stylistic/jsx-quotes': ['error', 'prefer-double'],
+      '@stylistic/jsx-indent': ['error', 2],
+      '@stylistic/jsx-indent-props': ['error', 2],
+    },
+  },
+
+  // Prettier config (must be last to disable conflicting rules)
   prettierConfig,
-]);
+);

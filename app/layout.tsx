@@ -1,6 +1,7 @@
+import { Provider } from '@ui/provider'
+
 import type { Metadata } from 'next'
 
-import { Provider } from '@ui/provider'
 
 import '@fontsource/raleway/latin.css'
 
