@@ -1,0 +1,34 @@
+{
+  // Désactiver les formatters par défaut pour laisser Biome gérer
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "biomejs.biome",
+
+  // Configuration spécifique par langage
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+
+  // Activer les actions au save
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit"
+  },
+
+  // Désactiver ESLint et Prettier s'ils sont installés
+  "eslint.enable": false,
+  "prettier.enable": false
+}

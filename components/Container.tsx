@@ -1,9 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react'
-
-import Divider from './Divider'
-
 import type { PropsWithChildren } from 'react'
-
+import Divider from './Divider'
 
 interface ContainerProps {
   withDivider?: boolean

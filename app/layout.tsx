@@ -2,7 +2,6 @@ import { Provider } from '@ui/provider'
 
 import type { Metadata } from 'next'
 
-
 import '@fontsource/raleway/latin.css'
 
 export const metadata: Metadata = {

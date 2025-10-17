@@ -1,10 +1,9 @@
 import { Box, Flex, Heading, HStack, Stack, Text, VStack } from '@chakra-ui/react'
+import Container from '@components/Container'
+import { Avatar } from '@ui/avatar'
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import { IoIosMail, IoLogoGithub, IoLogoLinkedin } from 'react-icons/io'
-
-import Container from '@components/Container'
-import { Avatar } from '@ui/avatar'
 
 export default function Home() {
   const iconStyle = { color: '#c68908' }
@@ -100,8 +99,20 @@ export default function Home() {
                 {currentJobMonth !== 0 ? ` et ${currentJobMonth} mois` : undefined})
               </Text>
             </Stack>
-            <Text textAlign="left">Lead Développeur <Text as="span" fontStyle="italic" fontWeight={300}>(Juin 2025 - Aujourd&apos;hui)</Text> - CDI</Text>
-            <Text textAlign="left">Développeur Web Fullstack <Text as="span" fontStyle="italic" fontWeight={300}>(Juin 2023 - Mai 2025)</Text> - CDI</Text>
+            <Text textAlign="left">
+              Lead Développeur{' '}
+              <Text as="span" fontStyle="italic" fontWeight={300}>
+                (Juin 2025 - Aujourd&apos;hui)
+              </Text>{' '}
+              - CDI
+            </Text>
+            <Text textAlign="left">
+              Développeur Web Fullstack{' '}
+              <Text as="span" fontStyle="italic" fontWeight={300}>
+                (Juin 2023 - Mai 2025)
+              </Text>{' '}
+              - CDI
+            </Text>
             <Text textAlign="left" fontStyle="italic" fontWeight={300}>
               Next.JS, Symfony, TypeScript, Docker
             </Text>
