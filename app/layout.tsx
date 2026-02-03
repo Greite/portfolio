@@ -21,10 +21,47 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'Gauthier Painteaux',
-    alternateName: 'GP',
-    url: 'https://gauthierpainteaux.fr/',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://gauthierpainteaux.fr/#website',
+        name: 'Gauthier Painteaux',
+        alternateName: 'GP',
+        url: 'https://gauthierpainteaux.fr/',
+      },
+      {
+        '@type': 'Person',
+        '@id': 'https://gauthierpainteaux.fr/#person',
+        name: 'Gauthier Painteaux',
+        jobTitle: 'Lead Développeur',
+        description: 'Développeur Web Fullstack basé à Reims, France',
+        url: 'https://gauthierpainteaux.fr',
+        email: 'contact@gauthierpainteaux.fr',
+        worksFor: {
+          '@type': 'Organization',
+          name: 'Koul',
+          url: 'https://koul.io/',
+        },
+        alumniOf: [
+          { '@type': 'EducationalOrganization', name: 'IUT Nancy Charlemagne' },
+          { '@type': 'EducationalOrganization', name: 'Lycée Raymond Poincaré' },
+          { '@type': 'EducationalOrganization', name: 'IUT Metz' },
+        ],
+        knowsAbout: [
+          'Next.JS',
+          'React',
+          'TypeScript',
+          'Symfony',
+          'Docker',
+          'WordPress',
+          'Slim',
+        ],
+        sameAs: [
+          'https://www.linkedin.com/in/gauthier-painteaux-1018a2167/',
+          'https://github.com/Greite',
+        ],
+      },
+    ],
   }
 
   return (
