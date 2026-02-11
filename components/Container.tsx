@@ -1,4 +1,3 @@
-import { Box, Flex } from '@chakra-ui/react'
 import type { PropsWithChildren } from 'react'
 import Divider from './Divider'
 
@@ -8,14 +7,12 @@ interface ContainerProps {
 
 export default function Container({ withDivider, children }: PropsWithChildren<ContainerProps>) {
   return (
-    <Box position="relative">
+    <div className="relative">
       {withDivider && <Divider />}
 
-      <Flex w="full" justifyContent="center" py={16} px={6} bgColor="brand.50">
-        <Box w="full" maxW="1280px">
-          {children}
-        </Box>
-      </Flex>
-    </Box>
+      <div className="flex w-full justify-center py-16 px-6 bg-brand-50">
+        <div className="w-full max-w-7xl">{children}</div>
+      </div>
+    </div>
   )
 }

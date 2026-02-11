@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   reactCompiler: true,
   experimental: {
-    optimizePackageImports: ['@chakra-ui/react', 'react-icons/io'],
+    optimizePackageImports: ['react-icons/io'],
   },
 }
 

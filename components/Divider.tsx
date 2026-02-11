@@ -1,9 +1,7 @@
-import { Box, Flex } from '@chakra-ui/react'
-
 export default function Divider() {
   return (
-    <Flex position="absolute" top="-4px" w="full" justifyContent="center">
-      <Box w="full" maxW="1440px" borderBottom="8px solid" borderBottomColor="brand.950" />
-    </Flex>
+    <div className="absolute -top-1 flex w-full justify-center">
+      <div className="w-full max-w-[1440px] border-b-8 border-brand-950" />
+    </div>
   )
 }

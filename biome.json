@@ -61,6 +61,12 @@
       "quoteStyle": "single"
     }
   },
+  "css": {
+    "parser": {
+      "cssModules": false,
+      "tailwindDirectives": true
+    }
+  },
   "json": {
     "formatter": {
       "indentWidth": 2

@@ -1,8 +1,7 @@
-import { Provider } from '@ui/provider'
-
 import type { Metadata } from 'next'
 
 import '@fontsource/raleway/latin.css'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Gauthier Painteaux · Portfolio',
@@ -47,31 +46,18 @@ export default function RootLayout({
           { '@type': 'EducationalOrganization', name: 'Lycée Raymond Poincaré' },
           { '@type': 'EducationalOrganization', name: 'IUT Metz' },
         ],
-        knowsAbout: [
-          'Next.JS',
-          'React',
-          'TypeScript',
-          'Symfony',
-          'Docker',
-          'WordPress',
-          'Slim',
-        ],
-        sameAs: [
-          'https://www.linkedin.com/in/gauthier-painteaux-1018a2167/',
-          'https://github.com/Greite',
-        ],
+        knowsAbout: ['Next.JS', 'React', 'TypeScript', 'Symfony', 'Docker', 'WordPress', 'Slim'],
+        sameAs: ['https://www.linkedin.com/in/gauthier-painteaux-1018a2167/', 'https://github.com/Greite'],
       },
     ],
   }
 
   return (
-    <html lang="fr" suppressHydrationWarning>
+    <html lang="fr">
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
-      <body>
-        <Provider>{children}</Provider>
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

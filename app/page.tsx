@@ -1,13 +1,10 @@
-import { Box, Flex, Heading, HStack, Stack, Text, VStack } from '@chakra-ui/react'
 import Container from '@components/Container'
-import { Avatar } from '@ui/avatar'
 import dayjs from 'dayjs'
+import Image from 'next/image'
 import Link from 'next/link'
 import { IoIosMail, IoLogoGithub, IoLogoLinkedin } from 'react-icons/io'
 
 export default function Home() {
-  const iconStyle = { color: '#c68908' }
-
   const now = dayjs()
   const currentJobYear = Math.floor(now.diff('2023-06-01', 'years', true))
   const currentJobMonth = Math.floor(now.diff('2023-06-01', 'months', true) - currentJobYear * 12)
@@ -21,7 +18,7 @@ export default function Home() {
         name: "Quelle est l'expérience actuelle de Gauthier Painteaux ?",
         acceptedAnswer: {
           '@type': 'Answer',
-          text: "Gauthier Painteaux est actuellement Lead Développeur chez Koul depuis juin 2023. Il a évolué du poste de Développeur Web Fullstack (juin 2023 - mai 2025) à Lead Développeur (depuis juin 2025). Il travaille principalement avec Next.JS, Symfony, TypeScript et Docker.",
+          text: 'Gauthier Painteaux est actuellement Lead Développeur chez Koul depuis juin 2023. Il a évolué du poste de Développeur Web Fullstack (juin 2023 - mai 2025) à Lead Développeur (depuis juin 2025). Il travaille principalement avec Next.JS, Symfony, TypeScript et Docker.',
         },
       },
       {
@@ -29,7 +26,7 @@ export default function Home() {
         name: 'Quelles technologies maîtrise Gauthier Painteaux ?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: "Gauthier Painteaux maîtrise un large éventail de technologies fullstack : côté frontend avec React, Next.JS, TypeScript ; côté backend avec Symfony, Slim et WordPress ; ainsi que des outils DevOps comme Docker.",
+          text: 'Gauthier Painteaux maîtrise un large éventail de technologies fullstack : côté frontend avec React, Next.JS, TypeScript ; côté backend avec Symfony, Slim et WordPress ; ainsi que des outils DevOps comme Docker.',
         },
       },
       {
@@ -37,7 +34,7 @@ export default function Home() {
         name: 'Dans quelles entreprises Gauthier Painteaux a-t-il travaillé ?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: "Gauthier Painteaux a travaillé chez Koul (2023-présent) en tant que Lead Développeur, Globalis media system (2018-2023) comme Développeur Fullstack, Appartoo (2018) en stage, et DTI Soft (2016) en stage de développement avec Talend.",
+          text: 'Gauthier Painteaux a travaillé chez Koul (2023-présent) en tant que Lead Développeur, Globalis media system (2018-2023) comme Développeur Fullstack, Appartoo (2018) en stage, et DTI Soft (2016) en stage de développement avec Talend.',
         },
       },
     ],
@@ -53,209 +50,152 @@ export default function Home() {
   }
 
   return (
-    <Box>
+    <div>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }} />
-      <Flex w="full" minH="65vh" py={[12, 24]} px={6} justifyContent="center" bgColor="brand.300">
-        <Stack
-          w="full"
-          maxW="1280px"
-          gap={[10, null, null, 0]}
-          direction={['column-reverse', null, null, 'row']}
-          alignContent="center"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <VStack gap={12} alignItems="flex-start">
-            <Heading
-              as="h1"
-              fontSize={{ base: '4xl', sm: '5xl', md: '6xl', lg: '7xl' }}
-              textAlign="left"
-              textTransform="uppercase"
-              letterSpacing={{ base: '4px', sm: '8px' }}
-            >
-              <Text lineHeight={1}>Gauthier</Text>
-              <Text lineHeight={1}>Painteaux</Text>
-            </Heading>
+      <div className="flex w-full min-h-[65vh] py-12 sm:py-24 px-6 justify-center bg-brand-300">
+        <div className="flex w-full max-w-7xl gap-10 lg:gap-0 flex-col-reverse lg:flex-row content-center items-center justify-between">
+          <div className="flex flex-col gap-12 items-start">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-left uppercase tracking-[4px] sm:tracking-[8px]">
+              <span className="block text-brand-950 leading-none">Gauthier</span>
+              <span className="block text-brand-950 leading-none">Painteaux</span>
+            </h1>
 
-            <Heading as="h2" fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }} textAlign="left">
-              <Text lineHeight={1.2}>Développeur Web</Text>
-              <Text lineHeight={1.2}>Fullstack</Text>
-            </Heading>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl text-left">
+              <span className="block text-brand-950 leading-tight">Développeur Web</span>
+              <span className="block text-brand-950 leading-tight">Fullstack</span>
+            </h2>
 
-            <VStack gap={4} alignItems="flex-start">
+            <div className="flex flex-col gap-4 items-start">
               <Link href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/" target="_blank">
-                <HStack gap={2} alignItems="center">
-                  <IoLogoLinkedin size="28px" style={iconStyle} />
-                  <Text>LinkedIn</Text>
-                </HStack>
+                <div className="flex flex-row gap-2 items-center">
+                  <IoLogoLinkedin size="28px" className="text-brand-600" />
+                  <span>LinkedIn</span>
+                </div>
               </Link>
 
               <Link href="https://github.com/Greite" target="_blank">
-                <HStack gap={2} alignItems="center">
-                  <IoLogoGithub size="28px" style={iconStyle} />
-                  <Text>Github</Text>
-                </HStack>
+                <div className="flex flex-row gap-2 items-center">
+                  <IoLogoGithub size="28px" className="text-brand-600" />
+                  <span>Github</span>
+                </div>
               </Link>
 
               <Link href="mailto:contact@gauthierpainteaux.fr">
-                <HStack gap={2} alignItems="center">
-                  <IoIosMail size="28px" style={iconStyle} />
-                  <Text>contact@gauthierpainteaux.fr</Text>
-                </HStack>
+                <div className="flex flex-row gap-2 items-center">
+                  <IoIosMail size="28px" className="text-brand-600" />
+                  <span>contact@gauthierpainteaux.fr</span>
+                </div>
               </Link>
-            </VStack>
-          </VStack>
+            </div>
+          </div>
 
-          <Box textAlign="center">
-            <Avatar
-              boxSize={['300px', '400px']}
-              name="Gauthier Painteaux"
-              src="photo.webp"
-              border="10px solid"
-              color="black"
-              bg="white"
-              fontSize="60px"
-              fontWeight="bold"
+          <div className="text-center">
+            <Image
+              className="rounded-full border-[10px] border-black bg-white size-[300px] sm:size-[400px] object-cover"
+              src="/photo.webp"
+              alt="Gauthier Painteaux"
+              width={400}
+              height={400}
             />
-          </Box>
-        </Stack>
-      </Flex>
+          </div>
+        </div>
+      </div>
 
       <Container withDivider>
-        <Heading as="h3" fontSize="4xl" textAlign="left">
-          Expériences
-        </Heading>
+        <h3 className="text-4xl text-left">Expériences</h3>
 
-        <Stack gap={6} pt={8}>
-          <Box>
-            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
+        <div className="flex flex-col gap-6 pt-8">
+          <div>
+            <div className="flex flex-col md:flex-row gap-1 sm:gap-4 items-start">
+              <h4 className="text-xl leading-tight text-left">
                 <Link href="https://koul.io/" target="_blank">
                   Koul
                 </Link>
-              </Heading>
-              <Text textAlign="left" fontWeight={500}>
+              </h4>
+              <p className="text-left font-medium">
                 Juin 2023 - Aujourd&apos;hui (
                 {currentJobYear !== 0 ? `${currentJobYear} ${currentJobYear > 1 ? 'ans' : 'an'}` : undefined}
                 {currentJobMonth !== 0 ? ` et ${currentJobMonth} mois` : undefined})
-              </Text>
-            </Stack>
-            <Text textAlign="left">
-              Lead Développeur{' '}
-              <Text as="span" fontStyle="italic" fontWeight={300}>
-                (Juin 2025 - Aujourd&apos;hui)
-              </Text>{' '}
-              - CDI
-            </Text>
-            <Text textAlign="left">
-              Développeur Web Fullstack{' '}
-              <Text as="span" fontStyle="italic" fontWeight={300}>
-                (Juin 2023 - Mai 2025)
-              </Text>{' '}
-              - CDI
-            </Text>
-            <Text textAlign="left" fontStyle="italic" fontWeight={300}>
-              Next.JS, Symfony, TypeScript, Docker
-            </Text>
-          </Box>
+              </p>
+            </div>
+            <p className="text-left">
+              Lead Développeur <span className="italic font-light">(Juin 2025 - Aujourd&apos;hui)</span> - CDI
+            </p>
+            <p className="text-left">
+              Développeur Web Fullstack <span className="italic font-light">(Juin 2023 - Mai 2025)</span> - CDI
+            </p>
+            <p className="text-left italic font-light">Next.JS, Symfony, TypeScript, Docker</p>
+          </div>
 
-          <Box>
-            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
+          <div>
+            <div className="flex flex-col md:flex-row gap-1 sm:gap-4 items-start">
+              <h4 className="text-xl leading-tight text-left">
                 <Link href="https://globalis-ms.com/" target="_blank">
                   Globalis media system
                 </Link>
-              </Heading>
-              <Text textAlign="left" fontWeight={500}>
-                Novembre 2018 - Mai 2023 (4 ans et 5 mois)
-              </Text>
-            </Stack>
-            <Text textAlign="left">Développeur Web Fullstack - CDI</Text>
-            <Text textAlign="left" fontStyle="italic" fontWeight={300}>
-              Wordpress, React, Typescript, Slim, Symfony
-            </Text>
-          </Box>
+              </h4>
+              <p className="text-left font-medium">Novembre 2018 - Mai 2023 (4 ans et 5 mois)</p>
+            </div>
+            <p className="text-left">Développeur Web Fullstack - CDI</p>
+            <p className="text-left italic font-light">Wordpress, React, Typescript, Slim, Symfony</p>
+          </div>
 
-          <Box>
-            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
+          <div>
+            <div className="flex flex-col md:flex-row gap-1 sm:gap-4 items-start">
+              <h4 className="text-xl leading-tight text-left">
                 <Link href="https://appartoo.com/" target="_blank">
                   Appartoo
                 </Link>
-              </Heading>
-              <Text textAlign="left" fontWeight={500}>
-                Avril 2018 - Août 2018 (5 mois)
-              </Text>
-            </Stack>
-            <Text textAlign="left">Développeur Web Fullstack - Stage</Text>
-            <Text textAlign="left" fontStyle="italic" fontWeight={300}>
-              AngularJS, Symfony
-            </Text>
-          </Box>
+              </h4>
+              <p className="text-left font-medium">Avril 2018 - Août 2018 (5 mois)</p>
+            </div>
+            <p className="text-left">Développeur Web Fullstack - Stage</p>
+            <p className="text-left italic font-light">AngularJS, Symfony</p>
+          </div>
 
-          <Box>
-            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
-                DTI Soft
-              </Heading>
-              <Text textAlign="left" fontWeight={500}>
-                Mai 2016 - Juin 2016 (2 mois)
-              </Text>
-            </Stack>
-            <Text textAlign="left">Développeur - Stage</Text>
-            <Text textAlign="left" fontStyle="italic" fontWeight={300}>
-              Talend
-            </Text>
-          </Box>
-        </Stack>
+          <div>
+            <div className="flex flex-col md:flex-row gap-1 sm:gap-4 items-start">
+              <h4 className="text-xl leading-tight text-left">DTI Soft</h4>
+              <p className="text-left font-medium">Mai 2016 - Juin 2016 (2 mois)</p>
+            </div>
+            <p className="text-left">Développeur - Stage</p>
+            <p className="text-left italic font-light">Talend</p>
+          </div>
+        </div>
       </Container>
 
       <Container withDivider>
-        <Heading as="h3" fontSize="4xl" textAlign="left">
-          Formations
-        </Heading>
+        <h3 className="text-4xl text-left">Formations</h3>
 
-        <Stack gap={6} pt={8}>
-          <Box>
-            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
-                IUT Nancy Charlemagne
-              </Heading>
-              <Text textAlign="left" fontWeight={500}>
-                2017 - 2018
-              </Text>
-            </Stack>
-            <Text textAlign="left">
+        <div className="flex flex-col gap-6 pt-8">
+          <div>
+            <div className="flex flex-col md:flex-row gap-1 sm:gap-4 items-start">
+              <h4 className="text-xl leading-tight text-left">IUT Nancy Charlemagne</h4>
+              <p className="text-left font-medium">2017 - 2018</p>
+            </div>
+            <p className="text-left">
               L.P. Concepteur intégrateur en système internet et intranet pour l&apos;entreprise
-            </Text>
-          </Box>
+            </p>
+          </div>
 
-          <Box>
-            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
-                Lycée Raymond Poincaré
-              </Heading>
-              <Text textAlign="left" fontWeight={500}>
-                2015 - 2017
-              </Text>
-            </Stack>
-            <Text textAlign="left">BTS SNIR - Systèmes numériques opt. A : Informatique et réseaux</Text>
-          </Box>
+          <div>
+            <div className="flex flex-col md:flex-row gap-1 sm:gap-4 items-start">
+              <h4 className="text-xl leading-tight text-left">Lycée Raymond Poincaré</h4>
+              <p className="text-left font-medium">2015 - 2017</p>
+            </div>
+            <p className="text-left">BTS SNIR - Systèmes numériques opt. A : Informatique et réseaux</p>
+          </div>
 
-          <Box>
-            <Stack direction={['column', null, 'row']} gap={[1, 4]} alignItems="flex-start">
-              <Heading as="h4" fontSize="xl" lineHeight={1.2} textAlign="left">
-                IUT Metz
-              </Heading>
-              <Text textAlign="left" fontWeight={500}>
-                2014 - 2015
-              </Text>
-            </Stack>
-            <Text textAlign="left">DUT Informatique</Text>
-          </Box>
-        </Stack>
+          <div>
+            <div className="flex flex-col md:flex-row gap-1 sm:gap-4 items-start">
+              <h4 className="text-xl leading-tight text-left">IUT Metz</h4>
+              <p className="text-left font-medium">2014 - 2015</p>
+            </div>
+            <p className="text-left">DUT Informatique</p>
+          </div>
+        </div>
       </Container>
-    </Box>
+    </div>
   )
 }

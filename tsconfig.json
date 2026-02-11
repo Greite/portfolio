@@ -19,7 +19,6 @@
       }
     ],
     "paths": {
-      "@ui/*": ["./components/ui/*"],
       "@components/*": ["./components/*"],
       "@public/*": ["./public/*"],
       "@root/*": ["./*"]
