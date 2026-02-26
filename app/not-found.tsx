@@ -1,21 +1,23 @@
-'use client'
-
 import Link from 'next/link'
+import { LuArrowLeft } from 'react-icons/lu'
 
-export default function NotFound() {
+export default function NotFoundPage() {
   return (
-    <div>
-      <div className="flex w-full h-screen flex-col sm:flex-row content-center items-center justify-evenly px-6 bg-[rgb(250,224,86)]">
-        <div className="flex flex-col gap-12 items-center sm:items-start">
-          <h1 className="text-6xl sm:text-7xl text-center sm:text-left uppercase">
-            <span className="block text-brand-950 leading-none">404</span>
-            <span className="block text-brand-950 leading-none">Page introuvable</span>
-          </h1>
-
-          <h2 className="text-3xl text-center sm:text-left">
-            <Link href="/">Retour à l&apos;acceuil</Link>
-          </h2>
-        </div>
+    <div className="flex h-screen w-full items-center justify-center bg-brand-50 px-8">
+      <div className="flex flex-col items-center gap-5">
+        <span className="text-[80px] font-bold tracking-[6px] text-brand-600 sm:text-[120px]">404</span>
+        <div className="h-[3px] w-10 rounded-sm bg-brand-600 sm:w-[60px]" />
+        <h1 className="text-2xl font-bold text-brand-950 sm:text-[32px]">Page introuvable</h1>
+        <p className="max-w-[300px] text-center text-sm font-normal leading-relaxed text-brand-950 opacity-70 sm:max-w-none sm:text-[15px]">
+          La page que vous recherchez n&apos;existe pas ou a été déplacée.
+        </p>
+        <Link
+          href="/"
+          className="mt-2 flex items-center gap-2 rounded-full bg-brand-950 px-6 py-3 text-sm font-semibold text-brand-50 transition-opacity hover:opacity-90 sm:px-7 sm:py-3.5"
+        >
+          <LuArrowLeft size={16} aria-hidden="true" />
+          Retour à l&apos;accueil
+        </Link>
       </div>
     </div>
   )

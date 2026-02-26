@@ -13,10 +13,16 @@
   --color-brand-900: #6f3f14;
   --color-brand-950: #412007;
 
+  --color-brand-text-secondary: #5a3a1a;
+
   --font-sans: "Raleway", sans-serif;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     font-family: var(--font-sans);
     color: var(--color-brand-950);
