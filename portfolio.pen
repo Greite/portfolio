@@ -1563,7 +1563,7 @@
                           "id": "OlgkL",
                           "name": "date1",
                           "fill": "#c68908",
-                          "content": "2017 — 2018",
+                          "content": "2017 - 2018",
                           "fontFamily": "Raleway",
                           "fontSize": 12,
                           "fontWeight": "600"
@@ -1647,7 +1647,7 @@
                           "id": "tESBn",
                           "name": "date2",
                           "fill": "#c68908",
-                          "content": "2015 — 2017",
+                          "content": "2015 - 2017",
                           "fontFamily": "Raleway",
                           "fontSize": 12,
                           "fontWeight": "600"
@@ -1670,7 +1670,7 @@
                           "fill": "#412007",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "BTS SNIR — Systèmes numériques opt. A : Informatique et réseaux",
+                          "content": "BTS SNIR - Systèmes numériques opt. A : Informatique et réseaux",
                           "lineHeight": 1.4,
                           "fontFamily": "Raleway",
                           "fontSize": 15,
@@ -1723,7 +1723,7 @@
                           "id": "erl99",
                           "name": "date3",
                           "fill": "#c68908",
-                          "content": "2014 — 2015",
+                          "content": "2014 - 2015",
                           "fontFamily": "Raleway",
                           "fontSize": 12,
                           "fontWeight": "600"
@@ -3425,7 +3425,7 @@
                           "id": "1Ivaq",
                           "name": "date1",
                           "fill": "#c68908",
-                          "content": "2017—2018",
+                          "content": "2017-2018",
                           "fontFamily": "Raleway",
                           "fontSize": 11,
                           "fontWeight": "600"
@@ -3509,7 +3509,7 @@
                           "id": "ySqrt",
                           "name": "date2",
                           "fill": "#c68908",
-                          "content": "2015—2017",
+                          "content": "2015-2017",
                           "fontFamily": "Raleway",
                           "fontSize": 11,
                           "fontWeight": "600"
@@ -3532,7 +3532,7 @@
                           "fill": "#412007",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "BTS SNIR — Systèmes numériques opt. A : Informatique et réseaux.",
+                          "content": "BTS SNIR - Systèmes numériques opt. A : Informatique et réseaux.",
                           "lineHeight": 1.4,
                           "fontFamily": "Raleway",
                           "fontSize": 13,
@@ -3585,7 +3585,7 @@
                           "id": "8apZU",
                           "name": "date3",
                           "fill": "#c68908",
-                          "content": "2014—2015",
+                          "content": "2014-2015",
                           "fontFamily": "Raleway",
                           "fontSize": 11,
                           "fontWeight": "600"
@@ -5158,7 +5158,7 @@
                           "id": "pcYma",
                           "name": "f1date",
                           "fill": "#c68908",
-                          "content": "2017 — 2018",
+                          "content": "2017 - 2018",
                           "fontFamily": "Raleway",
                           "fontSize": 12,
                           "fontWeight": "600"
@@ -5242,7 +5242,7 @@
                           "id": "S9Qus",
                           "name": "f2date",
                           "fill": "#c68908",
-                          "content": "2015 — 2017",
+                          "content": "2015 - 2017",
                           "fontFamily": "Raleway",
                           "fontSize": 12,
                           "fontWeight": "600"
@@ -5265,7 +5265,7 @@
                           "fill": "#412007",
                           "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "content": "BTS SNIR — Systèmes numériques opt. A : Informatique et réseaux",
+                          "content": "BTS SNIR - Systèmes numériques opt. A : Informatique et réseaux",
                           "lineHeight": 1.4,
                           "fontFamily": "Raleway",
                           "fontSize": 14,
@@ -5318,7 +5318,7 @@
                           "id": "piD78",
                           "name": "f3date",
                           "fill": "#c68908",
-                          "content": "2014 — 2015",
+                          "content": "2014 - 2015",
                           "fontFamily": "Raleway",
                           "fontSize": 12,
                           "fontWeight": "600"

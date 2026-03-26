@@ -1,17 +1,17 @@
 const formations = [
   {
     school: 'IUT Nancy Charlemagne',
-    date: '2017 — 2018',
+    date: '2017 - 2018',
     degree: "L.P. Concepteur intégrateur en système internet et intranet pour l'entreprise",
   },
   {
     school: 'Lycée Raymond Poincaré',
-    date: '2015 — 2017',
-    degree: 'BTS SNIR — Systèmes numériques opt. A : Informatique et réseaux',
+    date: '2015 - 2017',
+    degree: 'BTS SNIR - Systèmes numériques opt. A : Informatique et réseaux',
   },
   {
     school: 'IUT Metz',
-    date: '2014 — 2015',
+    date: '2014 - 2015',
     degree: 'DUT Informatique',
   },
 ]
