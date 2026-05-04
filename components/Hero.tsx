@@ -1,17 +1,20 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { LuLinkedin, LuGithub, LuMail } from 'react-icons/lu'
+import { LuGithub, LuLinkedin, LuMail } from 'react-icons/lu'
 
 export default function Hero() {
   return (
-    <section className="w-full bg-brand-50">
-      <div className="mx-auto flex w-full max-w-[1440px] min-h-[65vh] flex-col-reverse items-center gap-12 px-6 py-12 sm:px-10 sm:py-16 lg:flex-row lg:gap-20 lg:px-[120px] lg:py-20">
+    <section aria-labelledby="hero-name" className="w-full bg-brand-50">
+      <div className="mx-auto flex w-full max-w-[1440px] min-h-[65dvh] flex-col-reverse items-center gap-12 px-6 py-12 md:px-[120px] sm:py-16 lg:flex-row lg:gap-20 lg:py-20">
         {/* Left Column */}
         <div className="flex flex-1 flex-col gap-8 items-center lg:items-start">
           {/* Name block */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[4px] sm:tracking-[6px] uppercase text-center lg:text-left">
+          <h1
+            id="hero-name"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[var(--tracking-brand)] sm:tracking-[var(--tracking-brand-wide)] uppercase text-center lg:text-left"
+          >
             <span className="block text-brand-950 leading-none">Gauthier</span>
-            <span className="block text-brand-600 leading-none">Painteaux</span>
+            <span className="block text-brand-700 leading-none">Painteaux</span>
           </h1>
 
           {/* Subtitle */}
@@ -20,62 +23,75 @@ export default function Hero() {
           </p>
 
           {/* Intro text */}
-          <p className="text-brand-950 text-base font-normal opacity-70 leading-relaxed max-w-[480px] text-center lg:text-left">
+          <p className="text-brand-text-secondary text-base font-normal leading-relaxed max-w-[480px] text-center lg:text-left">
             Je conçois et développe des applications web modernes et performantes.
           </p>
 
           {/* CTA Button */}
           <Link
             href="mailto:contact@gauthierpainteaux.fr"
-            className="bg-brand-950 text-brand-50 font-semibold text-sm rounded-full py-3.5 px-7 flex items-center gap-2.5 transition-opacity hover:opacity-90"
+            className="inline-flex min-h-11 items-center gap-2.5 rounded-full bg-brand-950 px-7 py-3.5 text-sm font-semibold text-brand-50 transition-opacity hover:opacity-90"
           >
             <LuMail size={16} aria-hidden="true" />
             Me contacter
           </Link>
 
           {/* Social links */}
-          <div className="flex gap-6 items-center">
-            <Link
-              href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/"
-              target="_blank"
-              className="flex items-center gap-2 transition-opacity hover:opacity-70"
-            >
-              <LuLinkedin size="18px" className="text-brand-600" />
-              <span className="text-brand-950 text-[13px] font-medium">LinkedIn</span>
-            </Link>
+          <ul className="flex flex-wrap gap-2 items-center">
+            <li>
+              <Link
+                href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 transition-opacity hover:opacity-80"
+              >
+                <LuLinkedin size={18} aria-hidden="true" className="text-brand-700" />
+                <span className="text-brand-950 text-[13px] font-medium">LinkedIn</span>
+              </Link>
+            </li>
 
-            <span className="text-brand-600 font-medium select-none">/</span>
+            <li aria-hidden="true" className="text-brand-700 font-medium select-none">
+              /
+            </li>
 
-            <Link
-              href="https://github.com/Greite"
-              target="_blank"
-              className="flex items-center gap-2 transition-opacity hover:opacity-70"
-            >
-              <LuGithub size="18px" className="text-brand-600" />
-              <span className="text-brand-950 text-[13px] font-medium">GitHub</span>
-            </Link>
+            <li>
+              <Link
+                href="https://github.com/Greite"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 transition-opacity hover:opacity-80"
+              >
+                <LuGithub size={18} aria-hidden="true" className="text-brand-700" />
+                <span className="text-brand-950 text-[13px] font-medium">GitHub</span>
+              </Link>
+            </li>
 
-            <span className="text-brand-600 font-medium select-none">/</span>
+            <li aria-hidden="true" className="text-brand-700 font-medium select-none">
+              /
+            </li>
 
-            <Link
-              href="mailto:contact@gauthierpainteaux.fr"
-              className="flex items-center gap-2 transition-opacity hover:opacity-70"
-            >
-              <LuMail size="18px" className="text-brand-600" />
-              <span className="text-brand-950 text-[13px] font-medium">Email</span>
-            </Link>
-          </div>
+            <li>
+              <Link
+                href="mailto:contact@gauthierpainteaux.fr"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 transition-opacity hover:opacity-80"
+              >
+                <LuMail size={18} aria-hidden="true" className="text-brand-700" />
+                <span className="text-brand-950 text-[13px] font-medium">Email</span>
+              </Link>
+            </li>
+          </ul>
         </div>
 
         {/* Right Column - Photo */}
         <div className="flex-shrink-0">
-          <div className="w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] lg:w-80 lg:h-80 rounded-full border-2 border-brand-600 shadow-[0_0_24px_4px_rgba(198,137,8,0.2)] overflow-hidden">
+          <div className="w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] lg:w-80 lg:h-80 rounded-full border-2 border-brand-700 shadow-[var(--shadow-photo)] overflow-hidden">
             <Image
               className="rounded-full object-cover w-full h-full"
               src="/photo.webp"
-              alt="Gauthier Painteaux"
+              alt="Photo de profil de Gauthier Painteaux, développeur fullstack"
               width={320}
               height={320}
+              sizes="(max-width: 640px) 200px, (max-width: 1024px) 300px, 320px"
               priority
             />
           </div>

@@ -1,7 +1,14 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
+import { Raleway } from 'next/font/google'
 
-import '@fontsource/raleway/latin.css'
 import './globals.css'
+
+const raleway = Raleway({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-raleway',
+})
 
 export const metadata: Metadata = {
   title: 'Gauthier Painteaux · Portfolio',
@@ -11,6 +18,13 @@ export const metadata: Metadata = {
   authors: { name: 'Gauthier Painteaux', url: 'https://gauthierpainteaux.fr' },
   creator: 'Gauthier Painteaux',
   publisher: 'Gauthier Painteaux',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  colorScheme: 'light',
+  themeColor: '#fefce8',
 }
 
 export default function RootLayout({
@@ -53,7 +67,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="fr">
+    <html lang="fr" className={raleway.variable}>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>

@@ -16,7 +16,6 @@
     "check:fix": "biome check --write ."
   },
   "dependencies": {
-    "@fontsource/raleway": "^5.2.8",
     "@tailwindcss/postcss": "^4.2.2",
     "dayjs": "^1.11.20",
     "next": "^16.2.3",

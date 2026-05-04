@@ -1,73 +1,84 @@
 import Link from 'next/link'
-import { LuLinkedin, LuGithub, LuMail } from 'react-icons/lu'
+import { LuGithub, LuLinkedin, LuMail } from 'react-icons/lu'
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear()
+
   return (
     <footer className="w-full bg-brand-50">
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-8 px-6 py-10 md:px-[120px] md:py-[60px]">
+      <div className="mx-auto flex max-w-[1440px] flex-col gap-8 px-6 py-12 md:px-[120px] md:py-[60px]">
         {/* Accent Line */}
-        <div className="h-[3px] w-full rounded-sm bg-brand-600" />
+        <div aria-hidden="true" className="h-[3px] w-full rounded-sm bg-brand-700" />
 
         {/* Footer Content */}
         <div className="flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-10">
           {/* Left - Brand */}
           <div className="flex flex-col gap-4">
             <span className="text-[22px] font-bold text-brand-950">Gauthier Painteaux</span>
-            <span className="text-sm font-normal text-brand-950 opacity-70">
-              Lead Développeur chez Koul
-            </span>
+            <span className="text-sm font-normal text-brand-text-secondary">Lead Développeur chez Koul</span>
           </div>
 
           {/* Center - Navigation */}
-          <div className="flex flex-col gap-4">
-            <span className="text-[11px] font-semibold tracking-[4px] text-brand-600">NAVIGATION</span>
-            <a href="#a-propos" className="text-sm font-normal text-brand-950">
+          <nav aria-label="Navigation pied de page" className="flex flex-col gap-3">
+            <h3 className="text-xs font-semibold tracking-[var(--tracking-brand)] text-brand-700">NAVIGATION</h3>
+            <a
+              href="#a-propos"
+              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-brand-950 transition-opacity hover:opacity-80"
+            >
               À propos
             </a>
-            <a href="#experience" className="text-sm font-normal text-brand-950">
+            <a
+              href="#experience"
+              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-brand-950 transition-opacity hover:opacity-80"
+            >
               Expérience
             </a>
-            <a href="#formations" className="text-sm font-normal text-brand-950">
+            <a
+              href="#formations"
+              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-brand-950 transition-opacity hover:opacity-80"
+            >
               Formations
             </a>
-          </div>
+          </nav>
 
           {/* Right - Contact */}
-          <div className="flex flex-col gap-4">
-            <span className="text-[11px] font-semibold tracking-[4px] text-brand-600">CONTACT</span>
+          <div className="flex flex-col gap-3">
+            <h3 className="text-xs font-semibold tracking-[var(--tracking-brand)] text-brand-700">CONTACT</h3>
             <Link
               href="mailto:contact@gauthierpainteaux.fr"
-              className="flex items-center gap-2.5"
+              className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-brand-950 transition-opacity hover:opacity-80"
             >
-              <LuMail size="16px" className="text-brand-600" />
-              <span className="text-sm font-normal text-brand-950">contact@gauthierpainteaux.fr</span>
+              <LuMail size={16} aria-hidden="true" className="text-brand-700" />
+              <span>contact@gauthierpainteaux.fr</span>
             </Link>
             <Link
               href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/"
               target="_blank"
-              className="flex items-center gap-2.5"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-brand-950 transition-opacity hover:opacity-80"
             >
-              <LuLinkedin size="16px" className="text-brand-600" />
-              <span className="text-sm font-normal text-brand-950">LinkedIn</span>
+              <LuLinkedin size={16} aria-hidden="true" className="text-brand-700" />
+              <span>LinkedIn</span>
             </Link>
             <Link
               href="https://github.com/Greite"
               target="_blank"
-              className="flex items-center gap-2.5"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-brand-950 transition-opacity hover:opacity-80"
             >
-              <LuGithub size="16px" className="text-brand-600" />
-              <span className="text-sm font-normal text-brand-950">GitHub / Greite</span>
+              <LuGithub size={16} aria-hidden="true" className="text-brand-700" />
+              <span>GitHub / Greite</span>
             </Link>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="h-px w-full bg-brand-950 opacity-15" />
+        <div aria-hidden="true" className="h-px w-full bg-brand-950/15" />
 
         {/* Copyright Bar */}
         <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
-          <span className="text-xs font-normal text-brand-950 opacity-50">
-            © 2026 Gauthier Painteaux. Tous droits réservés.
+          <span className="text-xs font-normal text-brand-text-secondary">
+            © {currentYear} Gauthier Painteaux. Tous droits réservés.
           </span>
         </div>
       </div>

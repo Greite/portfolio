@@ -47,21 +47,30 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }} />
 
+      <a
+        href="#main"
+        className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[100] focus-visible:rounded-full focus-visible:bg-brand-950 focus-visible:px-5 focus-visible:py-3 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-brand-50"
+      >
+        Aller au contenu principal
+      </a>
+
       <Navigation />
 
-      <Hero />
+      <main id="main">
+        <Hero />
 
-      <AboutSkills />
+        <AboutSkills />
 
-      <Experience />
+        <Experience />
 
-      <Formations />
+        <Formations />
+      </main>
 
       <Footer />
-    </div>
+    </>
   )
 }

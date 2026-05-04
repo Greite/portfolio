@@ -13,28 +13,66 @@
   --color-brand-900: #6f3f14;
   --color-brand-950: #412007;
 
+  --color-brand-text-primary: #412007;
   --color-brand-text-secondary: #5a3a1a;
+  --color-brand-text-muted: #715b3f;
+  --color-brand-accent: #9e610a;
 
-  --font-sans: "Raleway", sans-serif;
+  --font-sans: var(--font-raleway), "Raleway", sans-serif;
+
+  --shadow-nav: 0 2px 12px rgba(65, 32, 7, 0.08), 0 0 24px 4px rgba(198, 137, 8, 0.2);
+  --shadow-photo: 0 0 24px 4px rgba(198, 137, 8, 0.2);
+
+  --tracking-brand-tight: 2px;
+  --tracking-brand: 4px;
+  --tracking-brand-wide: 6px;
+
+  --section-px: 24px;
+  --section-px-md: 120px;
+  --section-py: 64px;
+  --section-py-md: 100px;
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
     font-family: var(--font-sans);
-    color: var(--color-brand-950);
+    color: var(--color-brand-text-primary);
+    background-color: var(--color-brand-50);
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-weight: 700;
-    color: var(--color-brand-600);
+  *:focus-visible {
+    outline: 2px solid var(--color-brand-700);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

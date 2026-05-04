@@ -5,6 +5,8 @@ interface ExperienceEntry {
   company: string
   link?: string
   date: string
+  startDate: string
+  endDate?: string
   roles: { label: string; secondary?: boolean }[]
   tags: string[]
 }
@@ -14,16 +16,16 @@ const entries: ExperienceEntry[] = [
     company: 'Koul',
     link: 'https://koul.io/',
     date: 'Juin 2023 - Présent',
-    roles: [
-      { label: 'Lead Developer' },
-      { label: 'Développeur Fullstack', secondary: true },
-    ],
+    startDate: '2023-06',
+    roles: [{ label: 'Lead Developer' }, { label: 'Développeur Fullstack', secondary: true }],
     tags: ['Next.JS', 'Symfony', 'TypeScript', 'Docker'],
   },
   {
     company: 'Globalis media system',
     link: 'https://globalis-ms.com/',
     date: 'Nov 2018 - Mai 2023',
+    startDate: '2018-11',
+    endDate: '2023-05',
     roles: [{ label: 'Développeur Fullstack' }],
     tags: ['WordPress', 'React', 'TypeScript', 'Slim', 'Symfony', 'Laravel'],
   },
@@ -31,12 +33,16 @@ const entries: ExperienceEntry[] = [
     company: 'Appartoo',
     link: 'https://appartoo.com/',
     date: 'Avr - Août 2018',
+    startDate: '2018-04',
+    endDate: '2018-08',
     roles: [{ label: 'Stage développeur' }],
     tags: ['AngularJS', 'Symfony'],
   },
   {
     company: 'DTI Soft',
     date: 'Mai - Juin 2016',
+    startDate: '2016-05',
+    endDate: '2016-06',
     roles: [{ label: 'Stage développeur' }],
     tags: ['Talend'],
   },
@@ -52,43 +58,52 @@ function formatDuration(years: number, months: number): string {
 export default function Experience() {
   const now = dayjs()
   const currentJobYear = Math.floor(now.diff('2023-06-01', 'years', true))
-  const currentJobMonth = Math.floor(
-    now.diff('2023-06-01', 'months', true) - currentJobYear * 12,
-  )
+  const currentJobMonth = Math.floor(now.diff('2023-06-01', 'months', true) - currentJobYear * 12)
 
   return (
-    <section id="experience" className="w-full scroll-mt-16 bg-brand-50">
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-[60px] md:px-[120px] md:py-[100px]">
+    <section id="experience" aria-labelledby="experience-heading" className="w-full scroll-mt-20 bg-brand-50">
+      <div className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
         {/* Section Header */}
         <div className="flex items-center gap-4">
-          <div className="h-[3px] w-10 rounded-sm bg-brand-600" />
-          <h2 className="text-2xl font-semibold tracking-[4px] text-brand-950">Expérience</h2>
+          <div aria-hidden="true" className="h-[3px] w-10 rounded-sm bg-brand-700" />
+          <h2
+            id="experience-heading"
+            className="text-2xl font-semibold tracking-[var(--tracking-brand)] text-brand-950"
+          >
+            Expérience
+          </h2>
         </div>
 
         {/* Timeline */}
-        <div className="flex flex-col">
+        <ol className="flex flex-col">
           {entries.map((entry, index) => {
             const isLast = index === entries.length - 1
             const durationSuffix = index === 0 ? formatDuration(currentJobYear, currentJobMonth) : ''
 
             return (
-              <div key={entry.company} className="flex flex-row">
+              <li key={entry.company} className="flex flex-row">
                 {/* Dot Column */}
-                <div className="flex w-10 shrink-0 flex-col items-center">
-                  <div className="h-3.5 w-3.5 shrink-0 rounded-full bg-brand-600" />
-                  {!isLast && <div className="w-0.5 flex-1 bg-brand-600" />}
+                <div aria-hidden="true" className="flex w-10 shrink-0 flex-col items-center">
+                  <div className="h-3.5 w-3.5 shrink-0 rounded-full bg-brand-700" />
+                  {!isLast && <div className="w-0.5 flex-1 bg-brand-700" />}
                 </div>
 
                 {/* Content Column */}
                 <div className={`flex flex-1 flex-col gap-1.5 pl-4${!isLast ? ' pb-10' : ''}`}>
-                  <span className="text-xs font-medium text-brand-600">
+                  <time dateTime={entry.startDate} className="text-xs font-semibold text-brand-700">
                     {entry.date}
                     {durationSuffix}
-                  </span>
+                  </time>
 
                   {entry.link ? (
-                    <Link href={entry.link} target="_blank">
-                      <span className="text-xl font-semibold text-brand-950">{entry.company}</span>
+                    <Link
+                      href={entry.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block rounded-md text-xl font-semibold text-brand-950 transition-opacity hover:opacity-80"
+                    >
+                      {entry.company}
+                      <span className="sr-only"> (ouvre dans un nouvel onglet)</span>
                     </Link>
                   ) : (
                     <span className="text-xl font-semibold text-brand-950">{entry.company}</span>
@@ -107,21 +122,18 @@ export default function Experience() {
                     </span>
                   ))}
 
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  <ul className="flex flex-wrap gap-2 pt-2" aria-label={`Technologies utilisées chez ${entry.company}`}>
                     {entry.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-brand-300 px-3 py-1 text-xs font-medium text-brand-950"
-                      >
+                      <li key={tag} className="rounded-full bg-brand-300 px-3 py-1 text-xs font-medium text-brand-950">
                         {tag}
-                      </span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
-              </div>
+              </li>
             )
           })}
-        </div>
+        </ol>
       </div>
     </section>
   )

@@ -1,48 +1,135 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { LuGithub, LuLinkedin, LuMail, LuMenu, LuX } from 'react-icons/lu'
 
-const desktopLinks = [
-  { label: 'À propos', href: '#a-propos' },
-  { label: 'Expérience', href: '#experience' },
-  { label: 'Formations', href: '#formations' },
-]
-
-const mobileLinks = [
-  { label: 'À propos', href: '#a-propos', num: '01' },
-  { label: 'Expérience', href: '#experience', num: '02' },
-  { label: 'Formations', href: '#formations', num: '03' },
+const links = [
+  { label: 'À propos', href: '#a-propos', id: 'a-propos', num: '01' },
+  { label: 'Expérience', href: '#experience', id: 'experience', num: '02' },
+  { label: 'Formations', href: '#formations', id: 'formations', num: '03' },
 ]
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [activeId, setActiveId] = useState<string | null>(null)
+  const hamburgerRef = useRef<HTMLButtonElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDivElement>(null)
+
+  const closeMenu = useCallback(() => {
+    setIsMenuOpen(false)
+    hamburgerRef.current?.focus()
+  }, [])
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [isMenuOpen])
+    if (!isMenuOpen) {
+      document.body.style.overflow = ''
+      return
+    }
+
+    document.body.style.overflow = 'hidden'
+    closeButtonRef.current?.focus()
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        closeMenu()
+        return
+      }
+
+      if (event.key !== 'Tab' || !dialogRef.current) return
+
+      const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      )
+      if (focusables.length === 0) return
+
+      const first = focusables[0]
+      const last = focusables[focusables.length - 1]
+      const active = document.activeElement
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [isMenuOpen, closeMenu])
+
+  useEffect(() => {
+    const sections = links
+      .map((link) => document.getElementById(link.id))
+      .filter((el): el is HTMLElement => el !== null)
+
+    if (sections.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting)
+        if (visible.length === 0) return
+        const top = visible.reduce((acc, cur) => (cur.boundingClientRect.top < acc.boundingClientRect.top ? cur : acc))
+        setActiveId(top.target.id)
+      },
+      { rootMargin: '-30% 0px -60% 0px', threshold: 0 },
+    )
+
+    for (const section of sections) {
+      observer.observe(section)
+    }
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <>
-      <nav className="sticky top-0 z-40 w-full border-b-1 border-brand-600 bg-brand-50/[0.93] shadow-[0_2px_12px_rgba(65,32,7,0.08),0_0_24px_4px_rgba(198,137,8,0.2)] backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 lg:px-20">
-          <a href="/" className="text-2xl font-bold text-brand-950">
+      <nav
+        aria-label="Navigation principale"
+        className="sticky top-0 z-40 w-full border-b border-brand-600 bg-brand-50/[0.93] shadow-[var(--shadow-nav)] backdrop-blur-md"
+      >
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 lg:px-[120px]">
+          <Link
+            href="/"
+            aria-label="Accueil — Gauthier Painteaux"
+            className="rounded-md text-2xl font-bold text-brand-950 transition-opacity hover:opacity-80"
+          >
             G.P
-          </a>
+          </Link>
 
           {/* Desktop navigation */}
-          <div className="hidden items-center gap-8 lg:flex">
-            {desktopLinks.map((link) => (
-              <a key={link.href} href={link.href} className="text-sm font-medium text-brand-950">
-                {link.label}
-              </a>
-            ))}
+          <div className="hidden items-center gap-2 lg:flex">
+            {links.map((link) => {
+              const isActive = activeId === link.id
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  aria-current={isActive ? 'location' : undefined}
+                  className={`relative rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive ? 'text-brand-700' : 'text-brand-950 hover:text-brand-700'
+                  }`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute -bottom-0.5 left-3 right-3 h-0.5 rounded-full bg-brand-700"
+                    />
+                  )}
+                </a>
+              )
+            })}
 
             <a
               href="mailto:contact@gauthierpainteaux.fr"
-              className="rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-brand-50"
+              className="ml-3 rounded-full bg-brand-700 px-5 py-2.5 text-sm font-semibold text-brand-50 transition-opacity hover:opacity-90"
             >
               Me contacter
             </a>
@@ -50,77 +137,101 @@ export default function Navigation() {
 
           {/* Mobile hamburger button */}
           <button
+            ref={hamburgerRef}
             type="button"
-            className="text-brand-950 lg:hidden"
+            className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-brand-950 transition-opacity hover:opacity-80 lg:hidden"
             onClick={() => setIsMenuOpen(true)}
             aria-label="Ouvrir le menu"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
           >
-            <LuMenu size={24} />
+            <LuMenu size={24} aria-hidden="true" />
           </button>
         </div>
       </nav>
 
       {/* Full-screen mobile menu overlay */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col bg-brand-50 lg:hidden">
+        <div
+          id="mobile-menu"
+          ref={dialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu de navigation"
+          className="fixed inset-0 z-50 flex animate-[fadeIn_180ms_ease-out] flex-col bg-brand-50 lg:hidden"
+        >
           {/* Top bar */}
           <div className="flex items-center justify-between px-5 py-4">
-            <a href="/" className="text-2xl font-bold text-brand-950" onClick={() => setIsMenuOpen(false)}>
+            <Link
+              href="/"
+              aria-label="Accueil — Gauthier Painteaux"
+              className="rounded-md text-2xl font-bold text-brand-950"
+              onClick={closeMenu}
+            >
               G.P
-            </a>
+            </Link>
             <button
+              ref={closeButtonRef}
               type="button"
-              className="text-brand-950"
-              onClick={() => setIsMenuOpen(false)}
+              className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-brand-950 transition-opacity hover:opacity-80"
+              onClick={closeMenu}
               aria-label="Fermer le menu"
             >
-              <LuX size={24} />
+              <LuX size={24} aria-hidden="true" />
             </button>
           </div>
 
           {/* Menu body */}
-          <div className="flex flex-1 flex-col justify-between px-8 py-[60px]">
-            {/* Nav links */}
-            <div className="flex flex-col">
-              {mobileLinks.map((link, index) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className={`flex items-center gap-4 py-6 ${index < mobileLinks.length - 1 ? 'border-b border-brand-950' : ''}`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <span className="text-[13px] font-normal text-brand-600">{link.num}</span>
-                  <span className="text-[32px] font-bold tracking-[2px] text-brand-950">{link.label}</span>
-                </a>
-              ))}
-            </div>
+          <div className="flex flex-1 flex-col justify-between px-8 py-12">
+            <ul className="flex flex-col">
+              {links.map((link, index) => {
+                const isActive = activeId === link.id
+                return (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      aria-current={isActive ? 'location' : undefined}
+                      className={`flex items-center gap-4 py-6 ${
+                        index < links.length - 1 ? 'border-b border-brand-950/30' : ''
+                      } ${isActive ? 'text-brand-700' : 'text-brand-950'}`}
+                      onClick={closeMenu}
+                    >
+                      <span className="text-[13px] font-semibold text-brand-700">{link.num}</span>
+                      <span className="text-3xl font-bold tracking-[var(--tracking-brand-tight)]">{link.label}</span>
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
 
             {/* Bottom section */}
             <div className="flex flex-col items-center gap-7">
               <Link
                 href="mailto:contact@gauthierpainteaux.fr"
-                className="flex w-full items-center justify-center gap-2.5 rounded-full bg-brand-950 py-4 text-base font-semibold text-brand-50"
-                onClick={() => setIsMenuOpen(false)}
+                className="flex w-full min-h-11 items-center justify-center gap-2.5 rounded-full bg-brand-950 py-4 text-base font-semibold text-brand-50 transition-opacity hover:opacity-90"
+                onClick={closeMenu}
               >
-                <LuMail size={18} className="text-brand-50" />
+                <LuMail size={18} aria-hidden="true" className="text-brand-50" />
                 Me contacter
               </Link>
 
-              <div className="flex items-center gap-8">
+              <div className="flex items-center gap-6">
                 <Link
                   href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/"
                   target="_blank"
-                  className="flex items-center gap-2"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 transition-opacity hover:opacity-80"
                 >
-                  <LuLinkedin size={18} className="text-brand-600" />
+                  <LuLinkedin size={18} aria-hidden="true" className="text-brand-700" />
                   <span className="text-[13px] font-medium text-brand-950">LinkedIn</span>
                 </Link>
                 <Link
                   href="https://github.com/Greite"
                   target="_blank"
-                  className="flex items-center gap-2"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 transition-opacity hover:opacity-80"
                 >
-                  <LuGithub size={18} className="text-brand-600" />
+                  <LuGithub size={18} aria-hidden="true" className="text-brand-700" />
                   <span className="text-[13px] font-medium text-brand-950">GitHub</span>
                 </Link>
               </div>
