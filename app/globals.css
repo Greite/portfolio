@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
-@theme {
+/* dark mode variant via data-theme attribute */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
   --color-brand-50: #fefce8;
   --color-brand-100: #fdf8c4;
   --color-brand-200: #fcee8c;
@@ -13,15 +16,30 @@
   --color-brand-900: #6f3f14;
   --color-brand-950: #412007;
 
-  --color-brand-text-primary: #412007;
-  --color-brand-text-secondary: #5a3a1a;
-  --color-brand-text-muted: #715b3f;
-  --color-brand-accent: #9e610a;
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+
+  --color-fg: var(--fg);
+  --color-fg-secondary: var(--fg-secondary);
+  --color-fg-muted: var(--fg-muted);
+
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-soft-fg: var(--accent-soft-fg);
+  --color-accent-fg: var(--accent-fg);
+
+  --color-border: var(--border);
+  --color-border-accent: var(--border-accent);
+  --color-border-strong: var(--border-strong);
+
+  --color-cta: var(--cta);
+  --color-cta-fg: var(--cta-fg);
 
   --font-sans: var(--font-raleway), "Raleway", sans-serif;
 
-  --shadow-nav: 0 2px 12px rgba(65, 32, 7, 0.08), 0 0 24px 4px rgba(198, 137, 8, 0.2);
-  --shadow-photo: 0 0 24px 4px rgba(198, 137, 8, 0.2);
+  --shadow-nav: var(--shadow-nav-value);
+  --shadow-photo: var(--shadow-photo-value);
 
   --tracking-brand-tight: 2px;
   --tracking-brand: 4px;
@@ -31,6 +49,61 @@
   --section-px-md: 120px;
   --section-py: 64px;
   --section-py-md: 100px;
+}
+
+:root,
+[data-theme="light"] {
+  --surface: #fefce8;
+  --surface-raised: #ffffff;
+
+  --fg: #412007;
+  --fg-secondary: #5a3a1a;
+  --fg-muted: #715b3f;
+
+  --accent: #9e610a;
+  --accent-strong: #6f3f14;
+  --accent-soft: #fae056;
+  --accent-soft-fg: #412007;
+  --accent-fg: #fefce8;
+
+  --border: rgba(65, 32, 7, 0.15);
+  --border-accent: #9e610a;
+  --border-strong: #c68908;
+
+  --cta: #412007;
+  --cta-fg: #fefce8;
+
+  --shadow-nav-value: 0 2px 12px rgba(65, 32, 7, 0.08), 0 0 24px 4px rgba(198, 137, 8, 0.2);
+  --shadow-photo-value: 0 0 24px 4px rgba(198, 137, 8, 0.2);
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --surface: #14110d;
+  --surface-raised: #1f1a13;
+
+  --fg: #fefce8;
+  --fg-secondary: #d4c08f;
+  --fg-muted: #a08552;
+
+  --accent: #f6c919;
+  --accent-strong: #fae056;
+  --accent-soft: #6f3f14;
+  --accent-soft-fg: #fae056;
+  --accent-fg: #14110d;
+
+  --border: rgba(246, 201, 25, 0.18);
+  --border-accent: #c68908;
+  --border-strong: #f6c919;
+
+  --cta: #f6c919;
+  --cta-fg: #14110d;
+
+  --shadow-nav-value: 0 2px 16px rgba(0, 0, 0, 0.6), 0 0 28px 4px rgba(246, 201, 25, 0.15);
+  --shadow-photo-value: 0 0 32px 8px rgba(246, 201, 25, 0.18);
+
+  color-scheme: dark;
 }
 
 @layer base {
@@ -46,12 +119,12 @@
 
   body {
     font-family: var(--font-sans);
-    color: var(--color-brand-text-primary);
-    background-color: var(--color-brand-50);
+    color: var(--fg);
+    background-color: var(--surface);
   }
 
   *:focus-visible {
-    outline: 2px solid var(--color-brand-700);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 4px;
   }

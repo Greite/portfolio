@@ -61,14 +61,14 @@ export default function Experience() {
   const currentJobMonth = Math.floor(now.diff('2023-06-01', 'months', true) - currentJobYear * 12)
 
   return (
-    <section id="experience" aria-labelledby="experience-heading" className="w-full scroll-mt-20 bg-brand-50">
+    <section id="experience" aria-labelledby="experience-heading" className="w-full scroll-mt-20 bg-surface">
       <div className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
         {/* Section Header */}
         <div className="flex items-center gap-4">
-          <div aria-hidden="true" className="h-[3px] w-10 rounded-sm bg-brand-700" />
+          <div aria-hidden="true" className="h-[3px] w-10 rounded-sm bg-accent" />
           <h2
             id="experience-heading"
-            className="text-2xl font-semibold tracking-[var(--tracking-brand)] text-brand-950"
+            className="text-2xl font-semibold tracking-[var(--tracking-brand)] text-fg"
           >
             Expérience
           </h2>
@@ -84,13 +84,13 @@ export default function Experience() {
               <li key={entry.company} className="flex flex-row">
                 {/* Dot Column */}
                 <div aria-hidden="true" className="flex w-10 shrink-0 flex-col items-center">
-                  <div className="h-3.5 w-3.5 shrink-0 rounded-full bg-brand-700" />
-                  {!isLast && <div className="w-0.5 flex-1 bg-brand-700" />}
+                  <div className="h-3.5 w-3.5 shrink-0 rounded-full bg-accent" />
+                  {!isLast && <div className="w-0.5 flex-1 bg-accent" />}
                 </div>
 
                 {/* Content Column */}
                 <div className={`flex flex-1 flex-col gap-1.5 pl-4${!isLast ? ' pb-10' : ''}`}>
-                  <time dateTime={entry.startDate} className="text-xs font-semibold text-brand-700">
+                  <time dateTime={entry.startDate} className="text-xs font-semibold text-accent">
                     {entry.date}
                     {durationSuffix}
                   </time>
@@ -100,13 +100,13 @@ export default function Experience() {
                       href={entry.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block rounded-md text-xl font-semibold text-brand-950 transition-opacity hover:opacity-80"
+                      className="inline-block rounded-md text-xl font-semibold text-fg transition-opacity hover:opacity-80"
                     >
                       {entry.company}
                       <span className="sr-only"> (ouvre dans un nouvel onglet)</span>
                     </Link>
                   ) : (
-                    <span className="text-xl font-semibold text-brand-950">{entry.company}</span>
+                    <span className="text-xl font-semibold text-fg">{entry.company}</span>
                   )}
 
                   {entry.roles.map((role) => (
@@ -114,8 +114,8 @@ export default function Experience() {
                       key={role.label}
                       className={
                         role.secondary
-                          ? 'text-[13px] font-normal text-brand-text-secondary'
-                          : 'text-[15px] font-medium text-brand-text-secondary'
+                          ? 'text-[13px] font-normal text-fg-secondary'
+                          : 'text-[15px] font-medium text-fg-secondary'
                       }
                     >
                       {role.label}
@@ -124,7 +124,7 @@ export default function Experience() {
 
                   <ul className="flex flex-wrap gap-2 pt-2" aria-label={`Technologies utilisées chez ${entry.company}`}>
                     {entry.tags.map((tag) => (
-                      <li key={tag} className="rounded-full bg-brand-300 px-3 py-1 text-xs font-medium text-brand-950">
+                      <li key={tag} className="rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent-soft-fg">
                         {tag}
                       </li>
                     ))}

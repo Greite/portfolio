@@ -10,7 +10,7 @@ export default function Container({ withDivider, children }: PropsWithChildren<C
     <div className="relative">
       {withDivider && <Divider />}
 
-      <div className="flex w-full justify-center py-16 px-6 bg-brand-50">
+      <div className="flex w-full justify-center py-16 px-6 bg-surface">
         <div className="w-full max-w-7xl">{children}</div>
       </div>
     </div>

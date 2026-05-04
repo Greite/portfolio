@@ -35,14 +35,14 @@ export default function Formations() {
     <section
       id="formations"
       aria-labelledby="formations-heading"
-      className="w-full scroll-mt-20 border-y-4 border-brand-700 bg-white"
+      className="w-full scroll-mt-20 border-y-4 border-border-accent bg-surface-raised"
     >
       <div className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
         <div className="flex items-center gap-4">
-          <div aria-hidden="true" className="w-10 h-[3px] bg-brand-700 rounded-sm" />
+          <div aria-hidden="true" className="w-10 h-[3px] bg-accent rounded-sm" />
           <h2
             id="formations-heading"
-            className="text-brand-950 text-2xl font-semibold tracking-[var(--tracking-brand)]"
+            className="text-fg text-2xl font-semibold tracking-[var(--tracking-brand)]"
           >
             Formations
           </h2>
@@ -55,16 +55,16 @@ export default function Formations() {
             return (
               <li key={formation.school} className="flex flex-row">
                 <div aria-hidden="true" className="flex w-10 flex-col items-center">
-                  <div className="w-3.5 h-3.5 rounded-full bg-brand-700 shrink-0" />
-                  {!isLast && <div className="w-0.5 flex-1 bg-brand-700" />}
+                  <div className="w-3.5 h-3.5 rounded-full bg-accent shrink-0" />
+                  {!isLast && <div className="w-0.5 flex-1 bg-accent" />}
                 </div>
 
                 <div className={`flex flex-1 flex-col gap-1.5 pl-4${isLast ? '' : ' pb-10'}`}>
-                  <time dateTime={formation.startDate} className="text-brand-700 text-xs font-semibold">
+                  <time dateTime={formation.startDate} className="text-accent text-xs font-semibold">
                     {formation.date}
                   </time>
-                  <span className="text-brand-950 text-xl font-semibold">{formation.school}</span>
-                  <span className="text-brand-text-secondary text-base font-normal leading-[1.4]">
+                  <span className="text-fg text-xl font-semibold">{formation.school}</span>
+                  <span className="text-fg-secondary text-base font-normal leading-[1.4]">
                     {formation.degree}
                   </span>
                 </div>

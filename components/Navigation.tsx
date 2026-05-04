@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { LuGithub, LuLinkedin, LuMail, LuMenu, LuX } from 'react-icons/lu'
+import ThemeToggle from './ThemeToggle'
 
 const links = [
   { label: 'À propos', href: '#a-propos', id: 'a-propos', num: '01' },
@@ -92,13 +93,13 @@ export default function Navigation() {
     <>
       <nav
         aria-label="Navigation principale"
-        className="sticky top-0 z-40 w-full border-b border-brand-600 bg-brand-50/[0.93] shadow-[var(--shadow-nav)] backdrop-blur-md"
+        className="sticky top-0 z-40 w-full border-b border-border-strong bg-surface/[0.93] shadow-[var(--shadow-nav)] backdrop-blur-md"
       >
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 lg:px-[120px]">
           <Link
             href="/"
             aria-label="Accueil — Gauthier Painteaux"
-            className="rounded-md text-2xl font-bold text-brand-950 transition-opacity hover:opacity-80"
+            className="rounded-md text-2xl font-bold text-fg transition-opacity hover:opacity-80"
           >
             G.P
           </Link>
@@ -113,23 +114,27 @@ export default function Navigation() {
                   href={link.href}
                   aria-current={isActive ? 'location' : undefined}
                   className={`relative rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                    isActive ? 'text-brand-700' : 'text-brand-950 hover:text-brand-700'
+                    isActive ? 'text-accent' : 'text-fg hover:text-accent'
                   }`}
                 >
                   {link.label}
                   {isActive && (
                     <span
                       aria-hidden="true"
-                      className="absolute -bottom-0.5 left-3 right-3 h-0.5 rounded-full bg-brand-700"
+                      className="absolute -bottom-0.5 left-3 right-3 h-0.5 rounded-full bg-accent"
                     />
                   )}
                 </a>
               )
             })}
 
+            <div className="ml-3">
+              <ThemeToggle />
+            </div>
+
             <a
               href="mailto:contact@gauthierpainteaux.fr"
-              className="ml-3 rounded-full bg-brand-700 px-5 py-2.5 text-sm font-semibold text-brand-50 transition-opacity hover:opacity-90"
+              className="ml-3 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-fg transition-opacity hover:opacity-90"
             >
               Me contacter
             </a>
@@ -139,7 +144,7 @@ export default function Navigation() {
           <button
             ref={hamburgerRef}
             type="button"
-            className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-brand-950 transition-opacity hover:opacity-80 lg:hidden"
+            className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-fg transition-opacity hover:opacity-80 lg:hidden"
             onClick={() => setIsMenuOpen(true)}
             aria-label="Ouvrir le menu"
             aria-expanded={isMenuOpen}
@@ -158,14 +163,14 @@ export default function Navigation() {
           role="dialog"
           aria-modal="true"
           aria-label="Menu de navigation"
-          className="fixed inset-0 z-50 flex animate-[fadeIn_180ms_ease-out] flex-col bg-brand-50 lg:hidden"
+          className="fixed inset-0 z-50 flex animate-[fadeIn_180ms_ease-out] flex-col bg-surface lg:hidden"
         >
           {/* Top bar */}
           <div className="flex items-center justify-between px-5 py-4">
             <Link
               href="/"
               aria-label="Accueil — Gauthier Painteaux"
-              className="rounded-md text-2xl font-bold text-brand-950"
+              className="rounded-md text-2xl font-bold text-fg"
               onClick={closeMenu}
             >
               G.P
@@ -173,7 +178,7 @@ export default function Navigation() {
             <button
               ref={closeButtonRef}
               type="button"
-              className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-brand-950 transition-opacity hover:opacity-80"
+              className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-fg transition-opacity hover:opacity-80"
               onClick={closeMenu}
               aria-label="Fermer le menu"
             >
@@ -192,11 +197,11 @@ export default function Navigation() {
                       href={link.href}
                       aria-current={isActive ? 'location' : undefined}
                       className={`flex items-center gap-4 py-6 ${
-                        index < links.length - 1 ? 'border-b border-brand-950/30' : ''
-                      } ${isActive ? 'text-brand-700' : 'text-brand-950'}`}
+                        index < links.length - 1 ? 'border-b border-border' : ''
+                      } ${isActive ? 'text-accent' : 'text-fg'}`}
                       onClick={closeMenu}
                     >
-                      <span className="text-[13px] font-semibold text-brand-700">{link.num}</span>
+                      <span className="text-[13px] font-semibold text-accent">{link.num}</span>
                       <span className="text-3xl font-bold tracking-[var(--tracking-brand-tight)]">{link.label}</span>
                     </a>
                   </li>
@@ -206,12 +211,14 @@ export default function Navigation() {
 
             {/* Bottom section */}
             <div className="flex flex-col items-center gap-7">
+              <ThemeToggle />
+
               <Link
                 href="mailto:contact@gauthierpainteaux.fr"
-                className="flex w-full min-h-11 items-center justify-center gap-2.5 rounded-full bg-brand-950 py-4 text-base font-semibold text-brand-50 transition-opacity hover:opacity-90"
+                className="flex w-full min-h-11 items-center justify-center gap-2.5 rounded-full bg-cta py-4 text-base font-semibold text-cta-fg transition-opacity hover:opacity-90"
                 onClick={closeMenu}
               >
-                <LuMail size={18} aria-hidden="true" className="text-brand-50" />
+                <LuMail size={18} aria-hidden="true" />
                 Me contacter
               </Link>
 
@@ -222,8 +229,8 @@ export default function Navigation() {
                   rel="noopener noreferrer"
                   className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 transition-opacity hover:opacity-80"
                 >
-                  <LuLinkedin size={18} aria-hidden="true" className="text-brand-700" />
-                  <span className="text-[13px] font-medium text-brand-950">LinkedIn</span>
+                  <LuLinkedin size={18} aria-hidden="true" className="text-accent" />
+                  <span className="text-[13px] font-medium text-fg">LinkedIn</span>
                 </Link>
                 <Link
                   href="https://github.com/Greite"
@@ -231,8 +238,8 @@ export default function Navigation() {
                   rel="noopener noreferrer"
                   className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 transition-opacity hover:opacity-80"
                 >
-                  <LuGithub size={18} aria-hidden="true" className="text-brand-700" />
-                  <span className="text-[13px] font-medium text-brand-950">GitHub</span>
+                  <LuGithub size={18} aria-hidden="true" className="text-accent" />
+                  <span className="text-[13px] font-medium text-fg">GitHub</span>
                 </Link>
               </div>
             </div>

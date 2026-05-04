@@ -1,3 +1,4 @@
+import ThemeProvider from '@components/ThemeProvider'
 import type { Metadata, Viewport } from 'next'
 import { Raleway } from 'next/font/google'
 
@@ -23,8 +24,11 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  colorScheme: 'light',
-  themeColor: '#fefce8',
+  colorScheme: 'light dark',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fefce8' },
+    { media: '(prefers-color-scheme: dark)', color: '#14110d' },
+  ],
 }
 
 export default function RootLayout({
@@ -67,11 +71,13 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="fr" className={raleway.variable}>
+    <html lang="fr" className={raleway.variable} suppressHydrationWarning>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
-      <body>{children}</body>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   )
 }
