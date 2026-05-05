@@ -4,6 +4,7 @@ import Footer from '@components/Footer'
 import Formations from '@components/Formations'
 import Hero from '@components/Hero'
 import Navigation from '@components/Navigation'
+import Projects from '@components/Projects'
 
 export default function Home() {
   const faqJsonLd = {
@@ -66,6 +67,8 @@ export default function Home() {
         <AboutSkills />
 
         <Experience />
+
+        <Projects />
 
         <Formations />
       </main>

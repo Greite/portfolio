@@ -11,14 +11,53 @@ const raleway = Raleway({
   variable: '--font-raleway',
 })
 
+const siteUrl = 'https://gauthierpainteaux.fr'
+const siteDescription =
+  "Gauthier Painteaux, Lead Développeur Web Fullstack basé à Reims. Plus de 7 ans d'expérience sur des applications modernes en Next.js, React, TypeScript, Symfony et Docker."
+
 export const metadata: Metadata = {
-  title: 'Gauthier Painteaux · Portfolio',
-  description: 'Gauthier Painteaux, développeur web fullstack basé à Reims, France.',
+  metadataBase: new URL(siteUrl),
+  title: 'Gauthier Painteaux · Lead Développeur Web Fullstack',
+  description: siteDescription,
   applicationName: 'Gauthier Painteaux',
-  keywords: 'Gauthier Painteaux, Painteaux, Développeur Web, Développeur Web Fullstack',
-  authors: { name: 'Gauthier Painteaux', url: 'https://gauthierpainteaux.fr' },
+  keywords: [
+    'Gauthier Painteaux',
+    'Painteaux',
+    'Développeur Web',
+    'Lead Developer',
+    'Next.js',
+    'React',
+    'TypeScript',
+    'Symfony',
+    'Reims',
+  ],
+  authors: { name: 'Gauthier Painteaux', url: siteUrl },
   creator: 'Gauthier Painteaux',
   publisher: 'Gauthier Painteaux',
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'profile',
+    siteName: 'Gauthier Painteaux',
+    title: 'Gauthier Painteaux · Lead Développeur Web Fullstack',
+    description: siteDescription,
+    url: siteUrl,
+    locale: 'fr_FR',
+    images: [
+      {
+        url: '/photo.webp',
+        width: 320,
+        height: 320,
+        alt: 'Photo de profil de Gauthier Painteaux',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Gauthier Painteaux · Lead Développeur Web Fullstack',
+    description: siteDescription,
+    images: ['/photo.webp'],
+  },
+  robots: { index: true, follow: true },
 }
 
 export const viewport: Viewport = {

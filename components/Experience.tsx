@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import Link from 'next/link'
 
 interface ExperienceEntry {
@@ -55,21 +54,25 @@ function formatDuration(years: number, months: number): string {
   return parts.length > 0 ? ` (${parts.join(' et ')})` : ''
 }
 
+function diffYearsMonths(startISO: string): { years: number; months: number } {
+  const start = new Date(startISO)
+  const now = new Date()
+  let months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth())
+  if (now.getDate() < start.getDate()) months -= 1
+  if (months < 0) months = 0
+  return { years: Math.floor(months / 12), months: months % 12 }
+}
+
 export default function Experience() {
-  const now = dayjs()
-  const currentJobYear = Math.floor(now.diff('2023-06-01', 'years', true))
-  const currentJobMonth = Math.floor(now.diff('2023-06-01', 'months', true) - currentJobYear * 12)
+  const { years: currentJobYear, months: currentJobMonth } = diffYearsMonths('2023-06-01')
 
   return (
     <section id="experience" aria-labelledby="experience-heading" className="w-full scroll-mt-20 bg-surface">
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
+      <div className="reveal mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
         {/* Section Header */}
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="h-[3px] w-10 rounded-sm bg-accent" />
-          <h2
-            id="experience-heading"
-            className="text-2xl font-semibold tracking-[var(--tracking-brand)] text-fg"
-          >
+          <h2 id="experience-heading" className="text-2xl font-semibold tracking-[var(--tracking-brand)] text-fg">
             Expérience
           </h2>
         </div>
@@ -124,7 +127,10 @@ export default function Experience() {
 
                   <ul className="flex flex-wrap gap-2 pt-2" aria-label={`Technologies utilisées chez ${entry.company}`}>
                     {entry.tags.map((tag) => (
-                      <li key={tag} className="rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent-soft-fg">
+                      <li
+                        key={tag}
+                        className="rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent-soft-fg"
+                      >
                         {tag}
                       </li>
                     ))}

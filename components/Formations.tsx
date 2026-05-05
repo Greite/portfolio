@@ -32,18 +32,11 @@ const formations: Formation[] = [
 
 export default function Formations() {
   return (
-    <section
-      id="formations"
-      aria-labelledby="formations-heading"
-      className="w-full scroll-mt-20 border-y-4 border-border-accent bg-surface-raised"
-    >
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
+    <section id="formations" aria-labelledby="formations-heading" className="w-full scroll-mt-20 bg-surface">
+      <div className="reveal mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="w-10 h-[3px] bg-accent rounded-sm" />
-          <h2
-            id="formations-heading"
-            className="text-fg text-2xl font-semibold tracking-[var(--tracking-brand)]"
-          >
+          <h2 id="formations-heading" className="text-fg text-2xl font-semibold tracking-[var(--tracking-brand)]">
             Formations
           </h2>
         </div>
@@ -64,9 +57,7 @@ export default function Formations() {
                     {formation.date}
                   </time>
                   <span className="text-fg text-xl font-semibold">{formation.school}</span>
-                  <span className="text-fg-secondary text-base font-normal leading-[1.4]">
-                    {formation.degree}
-                  </span>
+                  <span className="text-fg-secondary text-base font-normal leading-[1.4]">{formation.degree}</span>
                 </div>
               </li>
             )

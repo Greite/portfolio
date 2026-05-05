@@ -8,7 +8,8 @@ import ThemeToggle from './ThemeToggle'
 const links = [
   { label: 'À propos', href: '#a-propos', id: 'a-propos', num: '01' },
   { label: 'Expérience', href: '#experience', id: 'experience', num: '02' },
-  { label: 'Formations', href: '#formations', id: 'formations', num: '03' },
+  { label: 'Projets', href: '#projets', id: 'projets', num: '03' },
+  { label: 'Formations', href: '#formations', id: 'formations', num: '04' },
 ]
 
 export default function Navigation() {
@@ -99,9 +100,14 @@ export default function Navigation() {
           <Link
             href="/"
             aria-label="Accueil — Gauthier Painteaux"
-            className="rounded-md text-2xl font-bold text-fg transition-opacity hover:opacity-80"
+            className="inline-flex items-center gap-1 rounded-md transition-opacity hover:opacity-80"
           >
-            G.P
+            <span className="grid h-9 w-9 place-items-center rounded-full border-2 border-fg text-base font-bold text-fg">
+              G
+            </span>
+            <span className="text-base font-semibold tracking-[var(--tracking-brand-tight)] text-accent">
+              Painteaux
+            </span>
           </Link>
 
           {/* Desktop navigation */}
@@ -134,7 +140,7 @@ export default function Navigation() {
 
             <a
               href="mailto:contact@gauthierpainteaux.fr"
-              className="ml-3 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-accent-fg transition-opacity hover:opacity-90"
+              className="ml-3 inline-flex min-h-9 items-center rounded-full border border-border-accent px-5 py-2 text-sm font-semibold text-accent transition-colors hover:bg-accent hover:text-accent-fg"
             >
               Me contacter
             </a>

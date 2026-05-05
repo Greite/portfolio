@@ -47,7 +47,7 @@ export default function ThemeToggle({ variant = 'compact' }: ThemeToggleProps) {
     <div
       role="radiogroup"
       aria-label="Choix du thème"
-      className={`inline-flex items-center rounded-full border border-border bg-surface-raised p-1 ${
+      className={`inline-flex items-center rounded-full border border-border p-1 ${
         variant === 'full' ? 'w-full justify-between' : ''
       }`}
     >
@@ -60,15 +60,10 @@ export default function ThemeToggle({ variant = 'compact' }: ThemeToggleProps) {
             role="radio"
             aria-checked={isActive}
             aria-label={label}
-            title={label}
             onClick={() => setTheme(value)}
             className={`inline-flex h-9 min-h-9 items-center justify-center rounded-full px-3 text-sm font-medium transition-colors ${
               variant === 'full' ? 'flex-1' : ''
-            } ${
-              isActive
-                ? 'bg-accent text-accent-fg'
-                : 'text-fg-secondary hover:text-fg'
-            }`}
+            } ${isActive ? 'bg-accent text-accent-fg' : 'text-fg-secondary hover:text-fg'}`}
           >
             <Icon size={16} aria-hidden="true" />
             {variant === 'full' && <span className="ml-2">{label.replace('Thème ', '')}</span>}

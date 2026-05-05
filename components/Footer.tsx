@@ -5,7 +5,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="w-full bg-surface">
+    <footer className="w-full border-t border-border bg-surface-raised">
       <div className="mx-auto flex max-w-[1440px] flex-col gap-8 px-6 py-12 md:px-[120px] md:py-[60px]">
         {/* Accent Line */}
         <div aria-hidden="true" className="h-[3px] w-full rounded-sm bg-accent" />
@@ -14,7 +14,10 @@ export default function Footer() {
         <div className="flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-10">
           {/* Left - Brand */}
           <div className="flex flex-col gap-4">
-            <span className="text-[22px] font-bold text-fg">Gauthier Painteaux</span>
+            <span className="text-[22px] font-bold">
+              <span className="text-fg">Gauthier </span>
+              <span className="text-accent">Painteaux</span>
+            </span>
             <span className="text-sm font-normal text-fg-secondary">Lead Développeur chez Koul</span>
           </div>
 
@@ -32,6 +35,12 @@ export default function Footer() {
               className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-opacity hover:opacity-80"
             >
               Expérience
+            </a>
+            <a
+              href="#projets"
+              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-opacity hover:opacity-80"
+            >
+              Projets
             </a>
             <a
               href="#formations"
