@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { LuArrowLeft } from 'react-icons/lu'
+import Link from 'next/link';
+import { LuArrowLeft } from 'react-icons/lu';
 
 export default function NotFoundPage() {
   return (
@@ -25,5 +25,5 @@ export default function NotFoundPage() {
         </Link>
       </div>
     </main>
-  )
+  );
 }

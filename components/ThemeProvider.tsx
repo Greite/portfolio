@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { ThemeProvider as NextThemesProvider } from 'next-themes'
-import type { PropsWithChildren } from 'react'
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import type { PropsWithChildren } from 'react';
 
 export default function ThemeProvider({ children }: PropsWithChildren) {
   return (
@@ -14,5 +14,5 @@ export default function ThemeProvider({ children }: PropsWithChildren) {
     >
       {children}
     </NextThemesProvider>
-  )
+  );
 }

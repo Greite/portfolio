@@ -1,8 +1,8 @@
-import Link from 'next/link'
-import { LuGithub, LuLinkedin, LuMail } from 'react-icons/lu'
+import Link from 'next/link';
+import { LuGithub, LuLinkedin, LuMail } from 'react-icons/lu';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="w-full border-t border-border bg-surface-raised">
@@ -92,5 +92,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

@@ -1,8 +1,9 @@
-import type { PropsWithChildren } from 'react'
-import Divider from './Divider'
+import type { PropsWithChildren } from 'react';
+
+import Divider from './Divider';
 
 interface ContainerProps {
-  withDivider?: boolean
+  withDivider?: boolean;
 }
 
 export default function Container({ withDivider, children }: PropsWithChildren<ContainerProps>) {
@@ -14,5 +15,5 @@ export default function Container({ withDivider, children }: PropsWithChildren<C
         <div className="w-full max-w-7xl">{children}</div>
       </div>
     </div>
-  )
+  );
 }

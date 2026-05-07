@@ -1,13 +1,13 @@
 interface SkillGroup {
-  title: string
-  skills: string[]
+  title: string;
+  skills: string[];
 }
 
 const skillGroups: SkillGroup[] = [
   { title: 'Frontend', skills: ['Next.JS', 'React', 'TypeScript'] },
   { title: 'Backend', skills: ['Symfony', 'Laravel', 'Slim', 'WordPress'] },
   { title: 'Outils', skills: ['Docker'] },
-]
+];
 
 export default function AboutSkills() {
   return (
@@ -58,5 +58,5 @@ export default function AboutSkills() {
         </div>
       </div>
     </section>
-  )
+  );
 }

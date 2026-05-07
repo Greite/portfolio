@@ -1,32 +1,32 @@
-'use client'
+'use client';
 
-import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
-import { LuMonitor, LuMoon, LuSun } from 'react-icons/lu'
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import { LuMonitor, LuMoon, LuSun } from 'react-icons/lu';
 
 type ThemeOption = {
-  value: 'light' | 'dark' | 'system'
-  label: string
-  Icon: typeof LuSun
-}
+  value: 'light' | 'dark' | 'system';
+  label: string;
+  Icon: typeof LuSun;
+};
 
 const options: ThemeOption[] = [
   { value: 'light', label: 'Thème clair', Icon: LuSun },
   { value: 'system', label: 'Thème système', Icon: LuMonitor },
   { value: 'dark', label: 'Thème sombre', Icon: LuMoon },
-]
+];
 
 interface ThemeToggleProps {
-  variant?: 'compact' | 'full'
+  variant?: 'compact' | 'full';
 }
 
 export default function ThemeToggle({ variant = 'compact' }: ThemeToggleProps) {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return (
@@ -38,10 +38,10 @@ export default function ThemeToggle({ variant = 'compact' }: ThemeToggleProps) {
             : 'h-12 w-full rounded-full border border-border'
         }
       />
-    )
+    );
   }
 
-  const current = theme ?? 'system'
+  const current = theme ?? 'system';
 
   return (
     <div
@@ -52,7 +52,8 @@ export default function ThemeToggle({ variant = 'compact' }: ThemeToggleProps) {
       }`}
     >
       {options.map(({ value, label, Icon }) => {
-        const isActive = current === value
+        const isActive = current === value;
+
         return (
           <button
             key={value}
@@ -68,8 +69,8 @@ export default function ThemeToggle({ variant = 'compact' }: ThemeToggleProps) {
             <Icon size={16} aria-hidden="true" />
             {variant === 'full' && <span className="ml-2">{label.replace('Thème ', '')}</span>}
           </button>
-        )
+        );
       })}
     </div>
-  )
+  );
 }

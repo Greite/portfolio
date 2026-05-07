@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { LuArrowLeft } from 'react-icons/lu'
+import Link from 'next/link';
+import { LuArrowLeft } from 'react-icons/lu';
 
 export default function ErrorPage() {
   return (
@@ -27,5 +27,5 @@ export default function ErrorPage() {
         </Link>
       </div>
     </main>
-  )
+  );
 }

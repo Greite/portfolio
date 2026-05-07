@@ -1,11 +1,11 @@
-import Link from 'next/link'
-import { LuArrowUpRight, LuGithub } from 'react-icons/lu'
+import Link from 'next/link';
+import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 
 interface Project {
-  name: string
-  description: string
-  tags: string[]
-  repoUrl: string
+  name: string;
+  description: string;
+  tags: string[];
+  repoUrl: string;
 }
 
 const projects: Project[] = [
@@ -30,7 +30,7 @@ const projects: Project[] = [
     tags: ['Docker', 'Shell', 'PostgreSQL', 'MongoDB'],
     repoUrl: 'https://github.com/Greite/database-backup',
   },
-]
+];
 
 export default function Projects() {
   return (
@@ -103,5 +103,5 @@ export default function Projects() {
         </ul>
       </div>
     </section>
-  )
+  );
 }

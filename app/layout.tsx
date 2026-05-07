@@ -1,19 +1,19 @@
-import ThemeProvider from '@components/ThemeProvider'
-import type { Metadata, Viewport } from 'next'
-import { Raleway } from 'next/font/google'
+import ThemeProvider from '@components/ThemeProvider';
+import type { Metadata, Viewport } from 'next';
+import { Raleway } from 'next/font/google';
 
-import './globals.css'
+import './globals.css';
 
 const raleway = Raleway({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-raleway',
-})
+});
 
-const siteUrl = 'https://gauthierpainteaux.fr'
+const siteUrl = 'https://gauthierpainteaux.fr';
 const siteDescription =
-  "Gauthier Painteaux, Lead Développeur Web Fullstack basé à Reims. Plus de 7 ans d'expérience sur des applications modernes en Next.js, React, TypeScript, Symfony et Docker."
+  "Gauthier Painteaux, Lead Développeur Web Fullstack basé à Reims. Plus de 7 ans d'expérience sur des applications modernes en Next.js, React, TypeScript, Symfony et Docker.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     images: ['/photo.webp'],
   },
   robots: { index: true, follow: true },
-}
+};
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -68,12 +68,12 @@ export const viewport: Viewport = {
     { media: '(prefers-color-scheme: light)', color: '#fefce8' },
     { media: '(prefers-color-scheme: dark)', color: '#14110d' },
   ],
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -107,16 +107,17 @@ export default function RootLayout({
         sameAs: ['https://www.linkedin.com/in/gauthier-painteaux-1018a2167/', 'https://github.com/Greite'],
       },
     ],
-  }
+  };
 
   return (
     <html lang="fr" className={raleway.variable} suppressHydrationWarning>
       <head>
+        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data for SEO, content is JSON-stringified and safe */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

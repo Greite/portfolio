@@ -1,94 +1,111 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { LuGithub, LuLinkedin, LuMail, LuMenu, LuX } from 'react-icons/lu'
-import ThemeToggle from './ThemeToggle'
+import Link from 'next/link';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { LuGithub, LuLinkedin, LuMail, LuMenu, LuX } from 'react-icons/lu';
+
+import ThemeToggle from './ThemeToggle';
 
 const links = [
   { label: 'À propos', href: '#a-propos', id: 'a-propos', num: '01' },
   { label: 'Expérience', href: '#experience', id: 'experience', num: '02' },
   { label: 'Projets', href: '#projets', id: 'projets', num: '03' },
   { label: 'Formations', href: '#formations', id: 'formations', num: '04' },
-]
+];
 
 export default function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeId, setActiveId] = useState<string | null>(null)
-  const hamburgerRef = useRef<HTMLButtonElement>(null)
-  const closeButtonRef = useRef<HTMLButtonElement>(null)
-  const dialogRef = useRef<HTMLDivElement>(null)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   const closeMenu = useCallback(() => {
-    setIsMenuOpen(false)
-    hamburgerRef.current?.focus()
-  }, [])
+    setIsMenuOpen(false);
+    hamburgerRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (!isMenuOpen) {
-      document.body.style.overflow = ''
-      return
+      document.body.style.overflow = '';
+
+      return;
     }
 
-    document.body.style.overflow = 'hidden'
-    closeButtonRef.current?.focus()
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        event.preventDefault()
-        closeMenu()
-        return
+        event.preventDefault();
+        closeMenu();
+
+        return;
       }
 
-      if (event.key !== 'Tab' || !dialogRef.current) return
+      if (event.key !== 'Tab' || !dialogRef.current) {
+        return;
+      }
 
       const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
         'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      )
-      if (focusables.length === 0) return
+      );
 
-      const first = focusables[0]
-      const last = focusables[focusables.length - 1]
-      const active = document.activeElement
+      if (focusables.length === 0) {
+        return;
+      }
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
 
       if (event.shiftKey && active === first) {
-        event.preventDefault()
-        last.focus()
+        event.preventDefault();
+        last.focus();
       } else if (!event.shiftKey && active === last) {
-        event.preventDefault()
-        first.focus()
+        event.preventDefault();
+        first.focus();
       }
-    }
+    };
 
-    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('keydown', handleKeyDown);
+
     return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = ''
-    }
-  }, [isMenuOpen, closeMenu])
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen, closeMenu]);
 
   useEffect(() => {
     const sections = links
       .map((link) => document.getElementById(link.id))
-      .filter((el): el is HTMLElement => el !== null)
+      .filter((el): el is HTMLElement => el !== null);
 
-    if (sections.length === 0) return
+    if (sections.length === 0) {
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting)
-        if (visible.length === 0) return
-        const top = visible.reduce((acc, cur) => (cur.boundingClientRect.top < acc.boundingClientRect.top ? cur : acc))
-        setActiveId(top.target.id)
+        const visible = entries.filter((entry) => entry.isIntersecting);
+
+        if (visible.length === 0) {
+          return;
+        }
+
+        const top = visible.reduce((acc, cur) => (cur.boundingClientRect.top < acc.boundingClientRect.top ? cur : acc));
+
+        setActiveId(top.target.id);
       },
       { rootMargin: '-30% 0px -60% 0px', threshold: 0 },
-    )
+    );
 
     for (const section of sections) {
-      observer.observe(section)
+      observer.observe(section);
     }
-    return () => observer.disconnect()
-  }, [])
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -113,7 +130,7 @@ export default function Navigation() {
           {/* Desktop navigation */}
           <div className="hidden items-center gap-2 lg:flex">
             {links.map((link) => {
-              const isActive = activeId === link.id
+              const isActive = activeId === link.id;
               return (
                 <a
                   key={link.href}
@@ -131,7 +148,7 @@ export default function Navigation() {
                     />
                   )}
                 </a>
-              )
+              );
             })}
 
             <div className="ml-3">
@@ -196,7 +213,7 @@ export default function Navigation() {
           <div className="flex flex-1 flex-col justify-between px-8 py-12">
             <ul className="flex flex-col">
               {links.map((link, index) => {
-                const isActive = activeId === link.id
+                const isActive = activeId === link.id;
                 return (
                   <li key={link.href}>
                     <a
@@ -211,7 +228,7 @@ export default function Navigation() {
                       <span className="text-3xl font-bold tracking-[var(--tracking-brand-tight)]">{link.label}</span>
                     </a>
                   </li>
-                )
+                );
               })}
             </ul>
 
@@ -253,5 +270,5 @@ export default function Navigation() {
         </div>
       )}
     </>
-  )
+  );
 }

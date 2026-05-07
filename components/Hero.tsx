@@ -1,6 +1,6 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { LuGithub, LuLinkedin, LuMail } from 'react-icons/lu'
+import Image from 'next/image';
+import Link from 'next/link';
+import { LuGithub, LuLinkedin, LuMail } from 'react-icons/lu';
 
 const socials = [
   {
@@ -21,7 +21,7 @@ const socials = [
     Icon: LuMail,
     external: false,
   },
-]
+];
 
 export default function Hero() {
   return (
@@ -88,5 +88,5 @@ export default function Hero() {
         </div>
       </div>
     </section>
-  )
+  );
 }

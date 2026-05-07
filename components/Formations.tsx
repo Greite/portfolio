@@ -1,9 +1,9 @@
 interface Formation {
-  school: string
-  date: string
-  startDate: string
-  endDate: string
-  degree: string
+  school: string;
+  date: string;
+  startDate: string;
+  endDate: string;
+  degree: string;
 }
 
 const formations: Formation[] = [
@@ -28,7 +28,7 @@ const formations: Formation[] = [
     endDate: '2015',
     degree: 'DUT Informatique',
   },
-]
+];
 
 export default function Formations() {
   return (
@@ -43,7 +43,7 @@ export default function Formations() {
 
         <ol className="flex flex-col">
           {formations.map((formation, index) => {
-            const isLast = index === formations.length - 1
+            const isLast = index === formations.length - 1;
 
             return (
               <li key={formation.school} className="flex flex-row">
@@ -60,10 +60,10 @@ export default function Formations() {
                   <span className="text-fg-secondary text-base font-normal leading-[1.4]">{formation.degree}</span>
                 </div>
               </li>
-            )
+            );
           })}
         </ol>
       </div>
     </section>
-  )
+  );
 }

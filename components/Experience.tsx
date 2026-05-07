@@ -1,13 +1,13 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
 interface ExperienceEntry {
-  company: string
-  link?: string
-  date: string
-  startDate: string
-  endDate?: string
-  roles: { label: string; secondary?: boolean }[]
-  tags: string[]
+  company: string;
+  link?: string;
+  date: string;
+  startDate: string;
+  endDate?: string;
+  roles: { label: string; secondary?: boolean }[];
+  tags: string[];
 }
 
 const entries: ExperienceEntry[] = [
@@ -45,26 +45,41 @@ const entries: ExperienceEntry[] = [
     roles: [{ label: 'Stage développeur' }],
     tags: ['Talend'],
   },
-]
+];
 
 function formatDuration(years: number, months: number): string {
-  const parts: string[] = []
-  if (years > 0) parts.push(`${years} ${years > 1 ? 'ans' : 'an'}`)
-  if (months > 0) parts.push(`${months} mois`)
-  return parts.length > 0 ? ` (${parts.join(' et ')})` : ''
+  const parts: string[] = [];
+
+  if (years > 0) {
+    parts.push(`${years} ${years > 1 ? 'ans' : 'an'}`);
+  }
+
+  if (months > 0) {
+    parts.push(`${months} mois`);
+  }
+
+  return parts.length > 0 ? ` (${parts.join(' et ')})` : '';
 }
 
 function diffYearsMonths(startISO: string): { years: number; months: number } {
-  const start = new Date(startISO)
-  const now = new Date()
-  let months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth())
-  if (now.getDate() < start.getDate()) months -= 1
-  if (months < 0) months = 0
-  return { years: Math.floor(months / 12), months: months % 12 }
+  const start = new Date(startISO);
+  const now = new Date();
+
+  let months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+
+  if (now.getDate() < start.getDate()) {
+    months -= 1;
+  }
+
+  if (months < 0) {
+    months = 0;
+  }
+
+  return { years: Math.floor(months / 12), months: months % 12 };
 }
 
 export default function Experience() {
-  const { years: currentJobYear, months: currentJobMonth } = diffYearsMonths('2023-06-01')
+  const { years: currentJobYear, months: currentJobMonth } = diffYearsMonths('2023-06-01');
 
   return (
     <section id="experience" aria-labelledby="experience-heading" className="w-full scroll-mt-20 bg-surface">
@@ -80,8 +95,8 @@ export default function Experience() {
         {/* Timeline */}
         <ol className="flex flex-col">
           {entries.map((entry, index) => {
-            const isLast = index === entries.length - 1
-            const durationSuffix = index === 0 ? formatDuration(currentJobYear, currentJobMonth) : ''
+            const isLast = index === entries.length - 1;
+            const durationSuffix = index === 0 ? formatDuration(currentJobYear, currentJobMonth) : '';
 
             return (
               <li key={entry.company} className="flex flex-row">
@@ -137,10 +152,10 @@ export default function Experience() {
                   </ul>
                 </div>
               </li>
-            )
+            );
           })}
         </ol>
       </div>
     </section>
-  )
+  );
 }

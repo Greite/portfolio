@@ -1,10 +1,10 @@
-import AboutSkills from '@components/AboutSkills'
-import Experience from '@components/Experience'
-import Footer from '@components/Footer'
-import Formations from '@components/Formations'
-import Hero from '@components/Hero'
-import Navigation from '@components/Navigation'
-import Projects from '@components/Projects'
+import AboutSkills from '@components/AboutSkills';
+import Experience from '@components/Experience';
+import Footer from '@components/Footer';
+import Formations from '@components/Formations';
+import Hero from '@components/Hero';
+import Navigation from '@components/Navigation';
+import Projects from '@components/Projects';
 
 export default function Home() {
   const faqJsonLd = {
@@ -36,7 +36,7 @@ export default function Home() {
         },
       },
     ],
-  }
+  };
 
   const profilePageJsonLd = {
     '@context': 'https://schema.org',
@@ -45,11 +45,13 @@ export default function Home() {
       '@type': 'Person',
       '@id': 'https://gauthierpainteaux.fr/#person',
     },
-  }
+  };
 
   return (
     <>
+      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data for SEO, content is JSON-stringified and safe */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data for SEO, content is JSON-stringified and safe */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }} />
 
       <a
@@ -75,5 +77,5 @@ export default function Home() {
 
       <Footer />
     </>
-  )
+  );
 }
