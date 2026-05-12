@@ -1,4 +1,5 @@
 FROM node:krypton-alpine AS base
+ENV CI=true
 RUN corepack enable pnpm
 
 # Install dependencies only when needed
