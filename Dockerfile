@@ -1,4 +1,5 @@
 FROM node:krypton-alpine AS base
+RUN corepack enable pnpm
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -6,12 +7,13 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
-COPY package.json pnpm-lock.yaml* .npmrc* ./
-RUN \
-  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# Etape 1 : fetch des deps a partir du SEUL lockfile (cache stable insensible aux modifs de package.json)
+COPY pnpm-lock.yaml .npmrc* pnpm-workspace.yaml ./
+RUN pnpm fetch
+
+# Etape 2 : install offline depuis le store deja peuple (lance les postinstall scripts)
+COPY package.json ./
+RUN pnpm install --frozen-lockfile --offline
 
 
 # Rebuild the source code only when needed
@@ -23,10 +25,7 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN \
-  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+RUN pnpm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner
