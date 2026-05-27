@@ -1,24 +1,18 @@
-FROM node:krypton-alpine AS base
-ENV CI=true
-RUN corepack enable pnpm
-
 # Install dependencies only when needed
-FROM base AS deps
+FROM oven/bun:1-alpine AS deps
+ENV CI=true
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Etape 1 : fetch des deps a partir du SEUL lockfile (cache stable insensible aux modifs de package.json)
-COPY pnpm-lock.yaml .npmrc* pnpm-workspace.yaml ./
-RUN pnpm fetch
-
-# Etape 2 : install offline depuis le store deja peuple (lance les postinstall scripts)
-COPY package.json ./
-RUN pnpm install --frozen-lockfile --offline
+# Install deterministe depuis le lockfile (lance les postinstall des trustedDependencies)
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 
 
 # Rebuild the source code only when needed
-FROM base AS builder
+FROM oven/bun:1-alpine AS builder
+ENV CI=true
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -26,10 +20,10 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN pnpm run build
+RUN bun run build
 
 # Production image, copy all the files and run next
-FROM base AS runner
+FROM node:krypton-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production

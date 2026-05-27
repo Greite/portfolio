@@ -11,7 +11,6 @@
       "**",
       "!**/node_modules",
       "!**/.next",
-      "!**/.pnpm-store",
       "!**/out",
       "!**/build",
       "!**/public",
@@ -21,7 +20,7 @@
       "!**/*.tsbuildinfo",
       "!**/*.pen",
       "!next-env.d.ts",
-      "!pnpm-lock.yaml",
+      "!bun.lock",
       "!CLAUDE.md"
     ]
   },

@@ -8,14 +8,14 @@ Portfolio personnel / CV en ligne accessible sur [gauthierpainteaux.fr](https://
 - **Langage** : TypeScript (strict)
 - **Styling** : Tailwind CSS 4
 - **Linting / Formatting** : [Biome](https://biomejs.dev)
-- **Package manager** : pnpm
+- **Package manager** : [Bun](https://bun.com)
 - **Runtime** : Node LTS Krypton
 
 ## Getting started
 
 ```bash
-pnpm install
-pnpm dev
+bun install
+bun dev
 ```
 
 Le serveur de dev (Turbopack) tourne sur [localhost:3000](http://localhost:3000).
@@ -23,23 +23,25 @@ Le serveur de dev (Turbopack) tourne sur [localhost:3000](http://localhost:3000)
 ### Build de production
 
 ```bash
-pnpm build
-pnpm start
+bun run build
+bun start
 ```
 
 ## Scripts disponibles
 
-| Commande           | Description                          |
-| ------------------ | ------------------------------------ |
-| `pnpm dev`         | Serveur de dev avec Turbopack        |
-| `pnpm build`       | Build de production                  |
-| `pnpm start`       | Serveur de production (standalone)   |
-| `pnpm prod`        | Build + start                        |
-| `pnpm lint`        | Lint avec Biome                      |
-| `pnpm lint:fix`    | Lint + autofix                       |
-| `pnpm format`      | Formatage avec Biome                 |
-| `pnpm check`       | Lint + format check                  |
-| `pnpm check:fix`   | Lint + format autofix                |
+| Commande                  | Description                                            |
+| ------------------------- | ------------------------------------------------------ |
+| `bun dev`                 | Serveur de dev avec Turbopack                          |
+| `bun run build`           | Build de production (`run` requis, `bun build` reserve) |
+| `bun start`               | Serveur de production (standalone)                     |
+| `bun prod`                | Build + start                                          |
+| `bun lint`                | `next typegen` + `tsc` + Biome check + Biome format    |
+| `bun tsc`                 | Type-check TypeScript (`tsc --noEmit`)                 |
+| `bun biome:check`         | Lint Biome (lecture seule)                             |
+| `bun biome:check:write`   | Lint Biome + autofix                                   |
+| `bun biome:format`        | Format Biome (lecture seule)                           |
+| `bun biome:format:write`  | Format Biome + autofix                                 |
+| `bun biome:write`         | Lint + format Biome avec autofix                       |
 
 ## Docker
 

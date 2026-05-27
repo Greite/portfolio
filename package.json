@@ -7,9 +7,9 @@
     "build": "next build",
     "prestart": "cp -R .next/static/ .next/standalone/.next/static/ && cp -R public/ .next/standalone/public/",
     "start": "node .next/standalone/server.js",
-    "prod": "pnpm build && pnpm start",
+    "prod": "bun run build && bun start",
     "prelint": "next typegen",
-    "lint": "pnpm tsc && pnpm biome:check && pnpm biome:format",
+    "lint": "bun tsc && bun biome:check && bun biome:format",
     "tsc": "tsc --noEmit",
     "biome:check": "biome check .",
     "biome:check:write": "biome check --write .",
@@ -28,10 +28,14 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.15",
-    "@types/node": "^25.7.0",
-    "@types/react": "^19.2.14",
+    "@types/node": "^25.9.1",
+    "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "babel-plugin-react-compiler": "^1.0.0",
     "typescript": "^6.0.3"
-  }
+  },
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ]
 }
