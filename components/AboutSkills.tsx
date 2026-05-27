@@ -1,3 +1,5 @@
+import Reveal from './Reveal';
+
 interface SkillGroup {
   title: string;
   skills: string[];
@@ -16,7 +18,7 @@ export default function AboutSkills() {
       aria-labelledby="about-heading"
       className="w-full scroll-mt-20 border-y border-border bg-surface-raised"
     >
-      <div className="reveal mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
+      <Reveal className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="h-[3px] w-10 rounded-sm bg-accent" />
           <h2 id="about-heading" className="text-fg text-2xl font-semibold tracking-[var(--tracking-brand)]">
@@ -56,7 +58,7 @@ export default function AboutSkills() {
             </div>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

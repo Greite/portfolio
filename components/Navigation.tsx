@@ -193,10 +193,15 @@ export default function Navigation() {
             <Link
               href="/"
               aria-label="Accueil — Gauthier Painteaux"
-              className="rounded-md text-2xl font-bold text-fg"
+              className="inline-flex items-center gap-1 rounded-md transition-opacity hover:opacity-80"
               onClick={closeMenu}
             >
-              G.P
+              <span className="grid h-9 w-9 place-items-center rounded-full border-2 border-fg text-base font-bold text-fg">
+                G
+              </span>
+              <span className="text-base font-semibold tracking-[var(--tracking-brand-tight)] text-accent">
+                Painteaux
+              </span>
             </Link>
             <button
               ref={closeButtonRef}
@@ -215,7 +220,7 @@ export default function Navigation() {
               {links.map((link, index) => {
                 const isActive = activeId === link.id;
                 return (
-                  <li key={link.href}>
+                  <li key={link.href} className="stagger-item" style={{ animationDelay: `${60 + index * 60}ms` }}>
                     <a
                       href={link.href}
                       aria-current={isActive ? 'location' : undefined}

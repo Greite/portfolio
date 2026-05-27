@@ -1,3 +1,5 @@
+import Reveal from './Reveal';
+
 interface Formation {
   school: string;
   date: string;
@@ -33,7 +35,7 @@ const formations: Formation[] = [
 export default function Formations() {
   return (
     <section id="formations" aria-labelledby="formations-heading" className="w-full scroll-mt-20 bg-surface">
-      <div className="reveal mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
+      <Reveal className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="w-10 h-[3px] bg-accent rounded-sm" />
           <h2 id="formations-heading" className="text-fg text-2xl font-semibold tracking-[var(--tracking-brand)]">
@@ -63,7 +65,7 @@ export default function Formations() {
             );
           })}
         </ol>
-      </div>
+      </Reveal>
     </section>
   );
 }

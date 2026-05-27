@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 
+import Reveal from './Reveal';
+
 interface Project {
   name: string;
   description: string;
@@ -39,7 +41,7 @@ export default function Projects() {
       aria-labelledby="projects-heading"
       className="w-full scroll-mt-20 border-y border-border bg-surface-raised"
     >
-      <div className="reveal mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
+      <Reveal className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
         {/* Section Header */}
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="h-[3px] w-10 rounded-sm bg-accent" />
@@ -101,7 +103,7 @@ export default function Projects() {
             </Link>
           </li>
         </ul>
-      </div>
+      </Reveal>
     </section>
   );
 }

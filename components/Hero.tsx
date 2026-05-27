@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { LuGithub, LuLinkedin, LuMail } from 'react-icons/lu';
+import { LuArrowDown, LuGithub, LuLinkedin, LuMail } from 'react-icons/lu';
 
 const socials = [
   {
@@ -26,7 +26,7 @@ const socials = [
 export default function Hero() {
   return (
     <section aria-labelledby="hero-name" className="w-full bg-surface">
-      <div className="mx-auto flex w-full max-w-[1440px] min-h-[65dvh] flex-col items-center gap-12 px-6 py-12 md:px-[120px] sm:py-16 lg:flex-row lg:gap-20 lg:py-20">
+      <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-12 px-6 py-12 md:px-[120px] sm:py-16 lg:min-h-[65dvh] lg:flex-row lg:gap-20 lg:py-20">
         {/* Left Column */}
         <div className="reveal flex flex-1 flex-col gap-8 items-center lg:items-start">
           {/* Name block */}
@@ -46,14 +46,23 @@ export default function Hero() {
             Je conçois et développe des applications web modernes et performantes.
           </p>
 
-          {/* CTA Button */}
-          <Link
-            href="mailto:contact@gauthierpainteaux.fr"
-            className="inline-flex min-h-11 items-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-fg transition-opacity hover:opacity-90"
-          >
-            <LuMail size={16} aria-hidden="true" />
-            Me contacter
-          </Link>
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-stretch sm:items-center">
+            <Link
+              href="mailto:contact@gauthierpainteaux.fr"
+              className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-fg transition-opacity hover:opacity-90"
+            >
+              <LuMail size={16} aria-hidden="true" />
+              Me contacter
+            </Link>
+            <Link
+              href="#projets"
+              className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full border border-border-accent px-7 py-3.5 text-sm font-semibold text-accent transition-colors hover:bg-accent hover:text-accent-fg"
+            >
+              Voir mes projets
+              <LuArrowDown size={16} aria-hidden="true" />
+            </Link>
+          </div>
 
           {/* Social links */}
           <ul className="flex flex-wrap gap-x-1 gap-y-2 items-center social-list">
@@ -73,7 +82,7 @@ export default function Hero() {
         </div>
 
         {/* Right Column - Photo */}
-        <div className="reveal reveal-delay-1 flex-shrink-0">
+        <div className="reveal reveal-delay-1 flex-shrink-0 order-first lg:order-last">
           <div className="w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] lg:w-80 lg:h-80 rounded-full border-2 border-border-accent shadow-[var(--shadow-photo)] overflow-hidden">
             <Image
               className="rounded-full object-cover w-full h-full"

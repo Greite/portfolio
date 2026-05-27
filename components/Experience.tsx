@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import Reveal from './Reveal';
+
 interface ExperienceEntry {
   company: string;
   link?: string;
@@ -83,7 +85,7 @@ export default function Experience() {
 
   return (
     <section id="experience" aria-labelledby="experience-heading" className="w-full scroll-mt-20 bg-surface">
-      <div className="reveal mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
+      <Reveal className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
         {/* Section Header */}
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="h-[3px] w-10 rounded-sm bg-accent" />
@@ -155,7 +157,7 @@ export default function Experience() {
             );
           })}
         </ol>
-      </div>
+      </Reveal>
     </section>
   );
 }
