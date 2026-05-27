@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { LuGithub, LuLinkedin, LuMail, LuMenu, LuX } from 'react-icons/lu';
 
+import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 
 const links = [
@@ -117,14 +118,9 @@ export default function Navigation() {
           <Link
             href="/"
             aria-label="Accueil — Gauthier Painteaux"
-            className="inline-flex items-center gap-1 rounded-md transition-opacity hover:opacity-80"
+            className="inline-flex items-center rounded-md text-fg transition-opacity hover:opacity-80"
           >
-            <span className="grid h-9 w-9 place-items-center rounded-full border-2 border-fg text-base font-bold text-fg">
-              G
-            </span>
-            <span className="text-base font-semibold tracking-[var(--tracking-brand-tight)] text-accent">
-              Painteaux
-            </span>
+            <Logo size={36} />
           </Link>
 
           {/* Desktop navigation */}
@@ -193,15 +189,10 @@ export default function Navigation() {
             <Link
               href="/"
               aria-label="Accueil — Gauthier Painteaux"
-              className="inline-flex items-center gap-1 rounded-md transition-opacity hover:opacity-80"
+              className="inline-flex items-center rounded-md text-fg transition-opacity hover:opacity-80"
               onClick={closeMenu}
             >
-              <span className="grid h-9 w-9 place-items-center rounded-full border-2 border-fg text-base font-bold text-fg">
-                G
-              </span>
-              <span className="text-base font-semibold tracking-[var(--tracking-brand-tight)] text-accent">
-                Painteaux
-              </span>
+              <Logo size={36} />
             </Link>
             <button
               ref={closeButtonRef}
