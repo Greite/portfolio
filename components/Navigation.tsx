@@ -132,17 +132,13 @@ export default function Navigation() {
                   key={link.href}
                   href={link.href}
                   aria-current={isActive ? 'location' : undefined}
-                  className={`relative rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                    isActive ? 'text-accent' : 'text-fg hover:text-accent'
+                  className={`relative rounded-md px-3 py-2 text-sm font-medium transition-colors after:absolute after:-bottom-0.5 after:left-3 after:right-3 after:h-0.5 after:origin-left after:rounded-full after:bg-accent after:transition-transform after:duration-300 after:ease-out ${
+                    isActive
+                      ? 'text-accent after:scale-x-100'
+                      : 'text-fg hover:text-accent after:scale-x-0 hover:after:scale-x-100'
                   }`}
                 >
                   {link.label}
-                  {isActive && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute -bottom-0.5 left-3 right-3 h-0.5 rounded-full bg-accent"
-                    />
-                  )}
                 </a>
               );
             })}

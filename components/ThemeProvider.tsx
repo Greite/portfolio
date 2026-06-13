@@ -5,13 +5,7 @@ import type { PropsWithChildren } from 'react';
 
 export default function ThemeProvider({ children }: PropsWithChildren) {
   return (
-    <NextThemesProvider
-      attribute="data-theme"
-      defaultTheme="system"
-      enableSystem
-      themes={['light', 'dark']}
-      disableTransitionOnChange
-    >
+    <NextThemesProvider attribute="data-theme" defaultTheme="system" enableSystem themes={['light', 'dark']}>
       {children}
     </NextThemesProvider>
   );

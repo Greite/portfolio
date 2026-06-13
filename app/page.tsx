@@ -1,10 +1,12 @@
 import AboutSkills from '@components/AboutSkills';
+import BackToTop from '@components/BackToTop';
 import Experience from '@components/Experience';
 import Footer from '@components/Footer';
 import Formations from '@components/Formations';
 import Hero from '@components/Hero';
 import Navigation from '@components/Navigation';
 import Projects from '@components/Projects';
+import ScrollProgress from '@components/ScrollProgress';
 
 export default function Home() {
   const faqJsonLd = {
@@ -61,6 +63,8 @@ export default function Home() {
         Aller au contenu principal
       </a>
 
+      <ScrollProgress />
+
       <Navigation />
 
       <main id="main">
@@ -76,6 +80,8 @@ export default function Home() {
       </main>
 
       <Footer />
+
+      <BackToTop />
     </>
   );
 }

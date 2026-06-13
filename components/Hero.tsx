@@ -25,29 +25,37 @@ const socials = [
 
 export default function Hero() {
   return (
-    <section aria-labelledby="hero-name" className="w-full bg-surface">
+    <section aria-labelledby="hero-name" className="relative isolate w-full overflow-hidden bg-surface">
+      {/* Warm honey halo */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_var(--glow)_0%,_transparent_70%)] blur-2xl sm:h-[560px] sm:w-[560px] lg:left-auto lg:right-[6%] lg:translate-x-0"
+      />
+
       <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-12 px-6 py-12 md:px-[120px] sm:py-16 lg:min-h-[65dvh] lg:flex-row lg:gap-20 lg:py-20">
         {/* Left Column */}
-        <div className="reveal flex flex-1 flex-col gap-8 items-center lg:items-start">
+        <div className="flex flex-1 flex-col gap-8 items-center lg:items-start">
           {/* Name block */}
           <h1
             id="hero-name"
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[var(--tracking-brand)] sm:tracking-[var(--tracking-brand-wide)] uppercase text-center lg:text-left"
+            className="reveal text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[var(--tracking-brand)] sm:tracking-[var(--tracking-brand-wide)] uppercase text-center lg:text-left"
           >
             <span className="block text-fg leading-none">Gauthier</span>
             <span className="block text-accent leading-none">Painteaux</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-fg text-lg sm:text-xl font-medium text-center lg:text-left">Développeur Web Fullstack</p>
+          <p className="reveal reveal-delay-1 text-fg text-lg sm:text-xl font-medium text-center lg:text-left">
+            Développeur Web Fullstack
+          </p>
 
           {/* Intro text */}
-          <p className="text-fg-secondary text-base font-normal leading-relaxed max-w-[480px] text-center lg:text-left">
+          <p className="reveal reveal-delay-2 text-fg-secondary text-base font-normal leading-relaxed max-w-[480px] text-center lg:text-left">
             Je conçois et développe des applications web modernes et performantes.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-stretch sm:items-center">
+          <div className="reveal reveal-delay-3 flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-stretch sm:items-center">
             <Link
               href="mailto:contact@gauthierpainteaux.fr"
               className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-fg transition-opacity hover:opacity-90"
@@ -65,7 +73,7 @@ export default function Hero() {
           </div>
 
           {/* Social links */}
-          <ul className="flex flex-wrap gap-x-1 gap-y-2 items-center social-list">
+          <ul className="reveal reveal-delay-4 flex flex-wrap gap-x-1 gap-y-2 items-center social-list">
             {socials.map(({ label, href, Icon, external }) => (
               <li key={label}>
                 <Link
@@ -82,7 +90,7 @@ export default function Hero() {
         </div>
 
         {/* Right Column - Photo */}
-        <div className="reveal reveal-delay-1 flex-shrink-0 order-first lg:order-last">
+        <div className="reveal-photo reveal-delay-2 flex-shrink-0 order-first lg:order-last">
           <div className="w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] lg:w-80 lg:h-80 rounded-full border-2 border-border-accent shadow-[var(--shadow-photo)] overflow-hidden">
             <Image
               className="rounded-full object-cover w-full h-full"

@@ -146,7 +146,7 @@ export default function Experience() {
                     {entry.tags.map((tag) => (
                       <li
                         key={tag}
-                        className="rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent-soft-fg"
+                        className="rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent-soft-fg transition-transform duration-200 hover:-translate-y-0.5"
                       >
                         {tag}
                       </li>
