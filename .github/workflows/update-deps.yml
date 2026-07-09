@@ -70,6 +70,12 @@ jobs:
       - name: Update dependencies (semver ranges)
         run: bun update
 
+      # bun update (1.3.14) ne réécrit pas les plages embarquées dans bun.lock ;
+      # sans ce resync, le run suivant verrait un faux changement lockfile et
+      # publierait une release parasite
+      - name: Resync lockfile after update
+        run: bun install
+
       - name: Migrate Biome config
         run: bunx biome migrate --write
 

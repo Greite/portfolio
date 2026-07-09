@@ -48,9 +48,13 @@ Setup identique à `build.yml` : checkout, Node via `.nvmrc`, Bun, cache Bun,
 `bun install --frozen-lockfile`.
 
 1. `bun update` — met à jour minor/patch dans les plages caret
-2. `bunx biome migrate --write` — aligne le schéma de `biome.json`
-3. Si `git status --porcelain` est vide → étape « Majeures » directement
-4. Sinon `bun run lint` puis `bun run build` :
+2. `bun install` — resynchronise les plages embarquées dans `bun.lock`
+   (quirk de bun 1.3.14 : `bun update` ne les réécrit pas ; sans ce resync,
+   le run suivant verrait un faux changement lockfile et publierait une
+   release parasite)
+3. `bunx biome migrate --write` — aligne le schéma de `biome.json`
+4. Si `git status --porcelain` est vide → étape « Majeures » directement
+5. Sinon `bun run lint` puis `bun run build` :
    - **Vert** : la CI déroule le workflow de release du projet, en tant
      qu'auteur `github-actions[bot]` :
      1. Commit du bump —
