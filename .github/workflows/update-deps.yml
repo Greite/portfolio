@@ -1,0 +1,188 @@
+name: Update Dependencies
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: update-deps
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  actions: write
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.check.outputs.skip }}
+    steps:
+      - name: Skip if a failed update PR is still open
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          count=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --label dependencies --json number --jq 'length')
+          if [ "$count" -gt 0 ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Une PR de mise à jour est encore ouverte, run ignoré."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  update:
+    needs: guard
+    if: needs.guard.outputs.skip == 'false'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Setup Bun cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-store-${{ hashFiles('**/bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-store-
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Update dependencies (semver ranges)
+        run: bun update
+
+      - name: Migrate Biome config
+        run: bunx biome migrate --write
+
+      - name: Detect changes
+        id: changes
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Aucune mise à jour disponible."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: List updated packages
+        id: pkgs
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git show HEAD:package.json > /tmp/package.old.json
+          pkgs=$(jq -r --slurpfile old /tmp/package.old.json '
+            ((.dependencies // {}) + (.devDependencies // {})) as $new
+            | (($old[0].dependencies // {}) + ($old[0].devDependencies // {})) as $prev
+            | $new | to_entries | map(select($prev[.key] != .value) | .key) | join(", ")
+          ' package.json)
+          if [ -z "$pkgs" ]; then pkgs="lockfile"; fi
+          echo "list=$pkgs" >> "$GITHUB_OUTPUT"
+
+      - name: Configure git author
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Lint (tsc + Biome)
+        id: lint
+        if: steps.changes.outputs.changed == 'true'
+        continue-on-error: true
+        run: bun run lint
+
+      - name: Build project
+        id: build
+        if: steps.changes.outputs.changed == 'true' && steps.lint.outcome == 'success'
+        continue-on-error: true
+        run: bun run build
+
+      - name: Commit, tag, release and dispatch Docker build
+        if: steps.changes.outputs.changed == 'true' && steps.lint.outcome == 'success' && steps.build.outcome == 'success'
+        env:
+          PKGS: ${{ steps.pkgs.outputs.list }}
+        run: |
+          git add package.json bun.lock biome.json
+          git commit -m "Config - #PRT-NoId - Bump dependencies ($PKGS)"
+
+          current=$(jq -r .version package.json)
+          next=$(echo "$current" | awk -F. '{printf "%d.%d.%d", $1, $2, $3 + 1}')
+          sed -i "s/\"version\": \"$current\"/\"version\": \"$next\"/" package.json
+          git add package.json
+          git commit -m "Config - #PRT-NoId - Bump version to $next"
+
+          prev_tag=$(git describe --tags --abbrev=0)
+          git tag -a "v$next" -m "v$next - Bump dependencies"
+          git push origin main
+          git push origin "v$next"
+
+          gh release create "v$next" --title "v$next" \
+            --notes "**Full Changelog**: https://github.com/$GITHUB_REPOSITORY/compare/$prev_tag...v$next"
+
+          gh workflow run build.yml --ref "v$next"
+
+      - name: Open PR on failure
+        if: steps.changes.outputs.changed == 'true' && (steps.lint.outcome == 'failure' || steps.build.outcome == 'failure')
+        env:
+          PKGS: ${{ steps.pkgs.outputs.list }}
+          LINT_OUTCOME: ${{ steps.lint.outcome }}
+        run: |
+          failed_step="lint"
+          if [ "$LINT_OUTCOME" = "success" ]; then failed_step="build"; fi
+
+          branch="chore/deps-update-$(date -u +%F)"
+          git checkout -b "$branch"
+          git add package.json bun.lock biome.json
+          git commit -m "Config - #PRT-NoId - Bump dependencies ($PKGS)"
+          git push --force origin "$branch"
+
+          body=$(printf "La mise à jour quotidienne des dépendances a échoué à l'étape **%s**.\n\nRun en échec : %s/%s/actions/runs/%s" \
+            "$failed_step" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")
+          gh pr create --base main --head "$branch" \
+            --title "Config - #PRT-NoId - Bump dependencies ($PKGS)" \
+            --label dependencies \
+            --body "$body"
+
+          echo "::error::L'étape ${failed_step} a échoué après mise à jour des dépendances."
+          exit 1
+
+      - name: Detect available major updates
+        run: |
+          bun outdated > /tmp/outdated.txt || true
+          awk -F'|' '
+            NF >= 6 && $2 !~ /^[- ]*$/ && $2 !~ /Package/ {
+              pkg = $2; current = $3; latest = $5
+              gsub(/^ +| +$/, "", pkg); sub(/ \(dev\)$/, "", pkg)
+              gsub(/ /, "", current); gsub(/ /, "", latest)
+              split(current, c, "."); split(latest, l, ".")
+              if (l[1] + 0 > c[1] + 0) print pkg "|" current "|" latest
+            }' /tmp/outdated.txt > /tmp/majors.txt
+
+          while IFS='|' read -r pkg current latest; do
+            [ -z "$pkg" ] && continue
+            title="Major update available: $pkg $current → $latest"
+            existing=$(gh issue list --state open --label dependencies --json title \
+              | jq --arg pkg "$pkg" '[.[] | select(.title | startswith("Major update available: " + $pkg + " "))] | length')
+            if [ "$existing" -eq 0 ]; then
+              body=$(printf "Une nouvelle version majeure est disponible : %s %s → %s.\n\nDétectée par le workflow update-deps (%s/%s/actions/runs/%s). À appliquer manuellement." \
+                "$pkg" "$current" "$latest" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")
+              gh issue create --title "$title" --label dependencies --body "$body"
+            fi
+          done < /tmp/majors.txt
