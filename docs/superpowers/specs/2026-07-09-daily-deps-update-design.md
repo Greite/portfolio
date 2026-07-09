@@ -82,8 +82,10 @@ Après le flux principal (que le run soit vert ou sans changement) :
   « Latest » dépasse celui de « Current », ouvrir une issue
   `Major update available: <pkg> <current> → <latest>` avec label
   `dependencies`.
-- Dédoublonnage par titre exact : si une issue ouverte porte le même titre,
-  ne rien créer.
+- Dédoublonnage par paquet : si une issue ouverte commence par
+  `Major update available: <pkg> `, ne rien créer pour ce paquet (un titre
+  exact ne suffirait pas : chaque patch de la majeure — 20.0.0 puis
+  20.0.1 — changerait le titre et créerait un doublon).
 
 ## Contraintes et remarques
 
@@ -94,7 +96,8 @@ Après le flux principal (que le run soit vert ou sans changement) :
   sur la ref du tag (`gh workflow run build.yml --ref vX.Y.Z`). Le
   `github.ref` du run pointe alors sur `refs/tags/vX.Y.Z`, ce que
   `docker/metadata-action` (`type=semver`) exploite normalement.
-- Le label `dependencies` doit exister (il est fourni par défaut sur GitHub).
+- Le label `dependencies` n'existe pas par défaut sur un repo GitHub : il
+  est créé une fois lors de la mise en place (`gh label create`).
 - En cas d'échec du job lui-même (réseau, registry npm), la notification
   d'échec de workflow standard de GitHub suffit.
 
