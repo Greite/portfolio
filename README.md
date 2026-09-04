@@ -48,9 +48,16 @@ bun start
 ```bash
 docker build -t portfolio .
 docker run -p 3000:3000 portfolio
+# Unraid : uid/gid de l'utilisateur qui fait tourner le serveur
+docker run -p 3000:3000 -e PUID=99 -e PGID=100 portfolio
 ```
 
 L'image utilise un build multi-stage avec `node:krypton-alpine` et tourne avec un utilisateur non-root.
+
+| Variable | Défaut | Description |
+| -------- | ------ | ----------- |
+| `PUID`   | `1001` | UID du serveur ; `/app/.next` est chowné dessus au démarrage (style linuxserver.io). Unraid : `99` |
+| `PGID`   | `1001` | GID du serveur. Unraid : `100` |
 
 ## CI/CD
 
