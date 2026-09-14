@@ -25,7 +25,7 @@ export default function Hero() {
       {/* Warm honey halo */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-[26.25rem] w-[26.25rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_var(--glow)_0%,_transparent_70%)] sm:h-[35rem] sm:w-[35rem] lg:left-auto lg:right-[6%] lg:translate-x-0"
+        className="pointer-events-none absolute top-0 left-1/2 -z-10 h-[26.25rem] w-[26.25rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_var(--glow)_0%,_transparent_70%)] sm:h-[35rem] sm:w-[35rem] lg:left-auto lg:right-[6%] lg:translate-x-0"
       />
 
       <div className="mx-auto flex w-full max-w-[90rem] flex-col items-center gap-12 px-6 py-12 md:px-[7.5rem] sm:py-16 lg:min-h-[65dvh] lg:flex-row lg:gap-20 lg:py-20">
