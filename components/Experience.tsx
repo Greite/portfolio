@@ -85,11 +85,11 @@ export default function Experience() {
 
   return (
     <section id="experience" aria-labelledby="experience-heading" className="w-full scroll-mt-20 bg-surface">
-      <Reveal className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
+      <Reveal className="mx-auto flex max-w-[90rem] flex-col gap-12 px-6 py-16 md:px-[7.5rem] md:py-[6.25rem]">
         {/* Section Header */}
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="h-[3px] w-10 rounded-sm bg-accent" />
-          <h2 id="experience-heading" className="text-2xl font-semibold tracking-[var(--tracking-brand)] text-fg">
+          <h2 id="experience-heading" className="text-2xl font-semibold text-fg">
             Expérience
           </h2>
         </div>
@@ -138,8 +138,8 @@ export default function Experience() {
                       key={role.label}
                       className={
                         role.secondary
-                          ? 'text-[13px] font-normal text-fg-secondary'
-                          : 'text-[15px] font-medium text-fg-secondary'
+                          ? 'text-[0.8125rem] font-normal text-fg-secondary'
+                          : 'text-[0.9375rem] font-medium text-fg-secondary'
                       }
                     >
                       {role.label}

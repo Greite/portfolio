@@ -48,11 +48,11 @@ export default function Projects() {
       aria-labelledby="projects-heading"
       className="w-full scroll-mt-20 border-y border-border bg-surface-raised"
     >
-      <Reveal className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
+      <Reveal className="mx-auto flex max-w-[90rem] flex-col gap-12 px-6 py-16 md:px-[7.5rem] md:py-[6.25rem]">
         {/* Section Header */}
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="h-[3px] w-10 rounded-sm bg-accent" />
-          <h2 id="projects-heading" className="text-2xl font-semibold tracking-[var(--tracking-brand)] text-fg">
+          <h2 id="projects-heading" className="text-2xl font-semibold text-fg">
             Projets
           </h2>
         </div>
@@ -88,7 +88,7 @@ export default function Projects() {
                     {project.tags.map((tag) => (
                       <li
                         key={tag}
-                        className="rounded-full bg-accent-soft px-2.5 py-0.5 text-[11px] font-medium text-accent-soft-fg"
+                        className="rounded-full bg-accent-soft px-2.5 py-0.5 text-[0.6875rem] font-medium text-accent-soft-fg"
                       >
                         {tag}
                       </li>

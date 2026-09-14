@@ -42,7 +42,7 @@ export default function ThemeToggle({ variant = 'compact' }: ThemeToggleProps) {
         aria-hidden="true"
         className={
           variant === 'compact'
-            ? 'h-11 w-[132px] rounded-full border border-border'
+            ? 'h-11 w-[8.25rem] rounded-full border border-border'
             : 'h-12 w-full rounded-full border border-border'
         }
       />

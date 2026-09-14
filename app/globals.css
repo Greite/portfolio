@@ -41,14 +41,10 @@
   --shadow-nav: var(--shadow-nav-value);
   --shadow-photo: var(--shadow-photo-value);
 
-  --tracking-brand-tight: 2px;
-  --tracking-brand: 4px;
-  --tracking-brand-wide: 6px;
-
-  --section-px: 24px;
-  --section-px-md: 120px;
-  --section-py: 64px;
-  --section-py-md: 100px;
+  /* Tracking is size-specific: tight on large display text, wide only on small uppercase labels. */
+  --tracking-brand-tight: 0.06em;
+  --tracking-brand: 0.1em;
+  --tracking-brand-wide: 0.3em;
 
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -131,6 +127,7 @@
     font-family: var(--font-sans);
     color: var(--fg);
     background-color: var(--surface);
+    font-variant-numeric: lining-nums;
   }
 
   /* Film-grain atmosphere — subtle warm texture over flat surfaces */
@@ -172,6 +169,17 @@
     from {
       opacity: 0;
       transform: translate3d(0, 16px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -12px, 0);
     }
     to {
       opacity: 1;
@@ -230,6 +238,30 @@
   [data-state="open"] .stagger-item {
     animation: fadeInUp 240ms var(--ease-out-strong) both;
   }
+  /* The menu is anchored at the top: its items emerge from there. */
+  [data-state="open"] .stagger-item {
+    animation-name: fadeInDown;
+  }
+
+  /* Sticky nav: edge (border + shadow) only once content scrolls underneath. */
+  .nav-edge {
+    border-bottom: 1px solid transparent;
+    transition:
+      border-color 200ms ease,
+      box-shadow 200ms ease;
+  }
+  @container scroll-state(stuck: top) {
+    .nav-edge {
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-nav);
+    }
+  }
+  @supports not (container-type: scroll-state) {
+    .nav-edge {
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-nav);
+    }
+  }
 
   /* Scroll progress bar, CSS scroll-driven: no JS, off the main thread. Hidden where unsupported. */
   .scroll-progress {
@@ -264,5 +296,21 @@
     *::after {
       transition-property: opacity, color, background-color, border-color, box-shadow !important;
     }
+  }
+}
+
+/* Accessibility signals, unlayered so they win over utilities. */
+@media (prefers-reduced-transparency: reduce) {
+  .material {
+    background-color: var(--surface);
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root,
+  [data-theme="light"],
+  [data-theme="dark"] {
+    --border: var(--fg-muted);
   }
 }

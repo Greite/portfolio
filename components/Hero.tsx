@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { LuArrowDown, LuGithub, LuLinkedin, LuMail } from 'react-icons/lu';
 
+import CopyEmail from './CopyEmail';
+
 const socials = [
   {
     label: 'LinkedIn',
@@ -15,12 +17,6 @@ const socials = [
     Icon: LuGithub,
     external: true,
   },
-  {
-    label: 'Email',
-    href: 'mailto:contact@gauthierpainteaux.fr',
-    Icon: LuMail,
-    external: false,
-  },
 ];
 
 export default function Hero() {
@@ -29,16 +25,16 @@ export default function Hero() {
       {/* Warm honey halo */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_var(--glow)_0%,_transparent_70%)] blur-2xl sm:h-[560px] sm:w-[560px] lg:left-auto lg:right-[6%] lg:translate-x-0"
+        className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-[26.25rem] w-[26.25rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_var(--glow)_0%,_transparent_70%)] sm:h-[35rem] sm:w-[35rem] lg:left-auto lg:right-[6%] lg:translate-x-0"
       />
 
-      <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-12 px-6 py-12 md:px-[120px] sm:py-16 lg:min-h-[65dvh] lg:flex-row lg:gap-20 lg:py-20">
+      <div className="mx-auto flex w-full max-w-[90rem] flex-col items-center gap-12 px-6 py-12 md:px-[7.5rem] sm:py-16 lg:min-h-[65dvh] lg:flex-row lg:gap-20 lg:py-20">
         {/* Left Column */}
         <div className="flex flex-1 flex-col gap-8 items-center lg:items-start">
           {/* Name block */}
           <h1
             id="hero-name"
-            className="reveal text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[var(--tracking-brand)] sm:tracking-[var(--tracking-brand-wide)] uppercase text-center lg:text-left"
+            className="reveal text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-[var(--tracking-brand)] uppercase text-center lg:text-left"
           >
             <span className="block text-fg leading-none">Gauthier</span>
             <span className="block text-accent leading-none">Painteaux</span>
@@ -50,7 +46,7 @@ export default function Hero() {
           </p>
 
           {/* Intro text */}
-          <p className="reveal reveal-delay-2 text-fg-secondary text-base font-normal leading-relaxed max-w-[480px] text-center lg:text-left">
+          <p className="reveal reveal-delay-2 text-fg-secondary text-base font-normal leading-relaxed max-w-[30rem] text-center lg:text-left">
             Je conçois et développe des applications web modernes et performantes.
           </p>
 
@@ -82,16 +78,23 @@ export default function Hero() {
                   className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
                 >
                   <Icon size={18} aria-hidden="true" className="text-accent" />
-                  <span className="text-[13px] font-medium">{label}</span>
+                  <span className="text-[0.8125rem] font-medium">{label}</span>
                 </Link>
               </li>
             ))}
+            <li>
+              <CopyEmail
+                label="Email"
+                iconSize={18}
+                className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 text-[0.8125rem] font-medium text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
+              />
+            </li>
           </ul>
         </div>
 
         {/* Right Column - Photo */}
         <div className="reveal-photo reveal-delay-2 flex-shrink-0 order-first lg:order-last">
-          <div className="w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] lg:w-80 lg:h-80 rounded-full border-2 border-border-accent shadow-[var(--shadow-photo)] overflow-hidden">
+          <div className="w-[12.5rem] h-[12.5rem] sm:w-[18.75rem] sm:h-[18.75rem] lg:w-80 lg:h-80 rounded-full border-2 border-border-accent shadow-[var(--shadow-photo)] overflow-hidden">
             <Image
               className="rounded-full object-cover w-full h-full"
               src="/photo.webp"

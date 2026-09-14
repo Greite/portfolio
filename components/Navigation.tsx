@@ -110,63 +110,62 @@ export default function Navigation() {
 
   return (
     <>
-      <nav
-        aria-label="Navigation principale"
-        className="sticky top-0 z-40 w-full border-b border-border-strong bg-surface/[0.93] shadow-[var(--shadow-nav)] backdrop-blur-md"
-      >
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 lg:px-[120px]">
-          <Link
-            href="/"
-            aria-label="Accueil — Gauthier Painteaux"
-            className="inline-flex items-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
-          >
-            <Logo size={36} />
-          </Link>
+      <nav aria-label="Navigation principale" className="sticky top-0 z-40 w-full [container-type:scroll-state]">
+        <div className="nav-edge material bg-surface/[0.93] backdrop-blur-md">
+          <div className="mx-auto flex max-w-[90rem] items-center justify-between px-5 py-4 lg:px-[7.5rem]">
+            <Link
+              href="/"
+              aria-label="Accueil — Gauthier Painteaux"
+              className="inline-flex items-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
+            >
+              <Logo size={36} />
+            </Link>
 
-          {/* Desktop navigation */}
-          <div className="hidden items-center gap-2 lg:flex">
-            {links.map((link) => {
-              const isActive = activeId === link.id;
-              return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  aria-current={isActive ? 'location' : undefined}
-                  className={`relative rounded-md px-3 py-2 text-sm font-medium transition-colors duration-150 after:absolute after:-bottom-0.5 after:left-3 after:right-3 after:h-0.5 after:origin-left after:rounded-full after:bg-accent after:transition-transform after:duration-200 after:ease-out-strong ${
-                    isActive
-                      ? 'text-accent after:scale-x-100'
-                      : 'text-fg hover:text-accent after:scale-x-0 hover:after:scale-x-100'
-                  }`}
-                >
-                  {link.label}
-                </a>
-              );
-            })}
+            {/* Desktop navigation */}
+            <div className="hidden items-center gap-2 lg:flex">
+              {links.map((link) => {
+                const isActive = activeId === link.id;
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    aria-current={isActive ? 'location' : undefined}
+                    className={`relative rounded-md px-3 py-2 text-sm font-medium transition-colors duration-150 after:absolute after:-bottom-0.5 after:left-3 after:right-3 after:h-0.5 after:origin-left after:rounded-full after:bg-accent after:transition-transform after:duration-200 after:ease-out-strong ${
+                      isActive
+                        ? 'text-accent after:scale-x-100'
+                        : 'text-fg hover:text-accent after:scale-x-0 hover:after:scale-x-100'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
 
-            <div className="ml-3">
-              <ThemeToggle />
+              <div className="ml-3">
+                <ThemeToggle />
+              </div>
+
+              <a
+                href="mailto:contact@gauthierpainteaux.fr"
+                className="ml-3 inline-flex min-h-9 items-center rounded-full border border-border-accent px-5 py-2 text-sm font-semibold text-accent transition-[background-color,color,scale] duration-150 ease-out-strong hover:bg-accent hover:text-accent-fg active:scale-[0.97]"
+              >
+                Me contacter
+              </a>
             </div>
 
-            <a
-              href="mailto:contact@gauthierpainteaux.fr"
-              className="ml-3 inline-flex min-h-9 items-center rounded-full border border-border-accent px-5 py-2 text-sm font-semibold text-accent transition-[background-color,color,scale] duration-150 ease-out-strong hover:bg-accent hover:text-accent-fg active:scale-[0.97]"
+            {/* Mobile hamburger button */}
+            <button
+              ref={hamburgerRef}
+              type="button"
+              className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97] lg:hidden"
+              onClick={() => setIsMenuOpen(true)}
+              aria-label="Ouvrir le menu"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
-              Me contacter
-            </a>
+              <LuMenu size={24} aria-hidden="true" />
+            </button>
           </div>
-
-          {/* Mobile hamburger button */}
-          <button
-            ref={hamburgerRef}
-            type="button"
-            className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97] lg:hidden"
-            onClick={() => setIsMenuOpen(true)}
-            aria-label="Ouvrir le menu"
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            <LuMenu size={24} aria-hidden="true" />
-          </button>
         </div>
       </nav>
 
@@ -179,7 +178,7 @@ export default function Navigation() {
         aria-label="Menu de navigation"
         data-state={isMenuOpen ? 'open' : 'closed'}
         inert={!isMenuOpen}
-        className="fixed inset-0 z-50 flex flex-col bg-surface transition-opacity ease-out-strong data-[state=closed]:pointer-events-none data-[state=closed]:opacity-0 data-[state=closed]:duration-150 data-[state=open]:duration-[180ms] lg:hidden"
+        className="material fixed inset-0 z-50 flex origin-top-right flex-col bg-surface/90 backdrop-blur-xl transition-[opacity,scale] ease-out-strong data-[state=closed]:pointer-events-none data-[state=closed]:scale-[0.98] data-[state=closed]:opacity-0 data-[state=closed]:duration-150 data-[state=open]:duration-[180ms] data-[state=open]:will-change-[opacity,scale] lg:hidden"
       >
         {/* Top bar */}
         <div className="flex items-center justify-between px-5 py-4">
@@ -217,7 +216,7 @@ export default function Navigation() {
                     } ${isActive ? 'text-accent' : 'text-fg'}`}
                     onClick={closeMenu}
                   >
-                    <span className="text-[13px] font-semibold text-accent">{link.num}</span>
+                    <span className="text-[0.8125rem] font-semibold text-accent">{link.num}</span>
                     <span className="text-3xl font-bold tracking-[var(--tracking-brand-tight)]">{link.label}</span>
                   </a>
                 </li>
@@ -246,7 +245,7 @@ export default function Navigation() {
                 className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
               >
                 <LuLinkedin size={18} aria-hidden="true" className="text-accent" />
-                <span className="text-[13px] font-medium">LinkedIn</span>
+                <span className="text-[0.8125rem] font-medium">LinkedIn</span>
               </Link>
               <Link
                 href="https://github.com/Greite"
@@ -255,7 +254,7 @@ export default function Navigation() {
                 className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
               >
                 <LuGithub size={18} aria-hidden="true" className="text-accent" />
-                <span className="text-[13px] font-medium">GitHub</span>
+                <span className="text-[0.8125rem] font-medium">GitHub</span>
               </Link>
             </div>
           </div>

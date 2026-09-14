@@ -18,10 +18,10 @@ export default function AboutSkills() {
       aria-labelledby="about-heading"
       className="w-full scroll-mt-20 border-y border-border bg-surface-raised"
     >
-      <Reveal className="mx-auto flex max-w-[1440px] flex-col gap-12 px-6 py-16 md:px-[120px] md:py-[100px]">
+      <Reveal className="mx-auto flex max-w-[90rem] flex-col gap-12 px-6 py-16 md:px-[7.5rem] md:py-[6.25rem]">
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="h-[3px] w-10 rounded-sm bg-accent" />
-          <h2 id="about-heading" className="text-fg text-2xl font-semibold tracking-[var(--tracking-brand)]">
+          <h2 id="about-heading" className="text-fg text-2xl font-semibold">
             À propos
           </h2>
         </div>
@@ -37,12 +37,12 @@ export default function AboutSkills() {
           </div>
 
           <div className="flex-1 flex flex-col gap-6">
-            <h3 className="text-accent text-xs font-semibold tracking-[var(--tracking-brand)]">COMPÉTENCES</h3>
+            <h3 className="text-accent text-xs font-semibold tracking-[var(--tracking-brand-wide)]">COMPÉTENCES</h3>
 
             <div className="flex flex-col gap-5">
               {skillGroups.map((group) => (
                 <div key={group.title} className="flex flex-col gap-3">
-                  <span className="text-[13px] font-semibold text-fg">{group.title}</span>
+                  <span className="text-[0.8125rem] font-semibold text-fg">{group.title}</span>
                   <ul className="flex flex-wrap gap-2" aria-label={`Compétences ${group.title.toLowerCase()}`}>
                     {group.skills.map((skill) => (
                       <li

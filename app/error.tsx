@@ -9,7 +9,7 @@ export default function ErrorPage() {
       <div className="flex flex-col items-center gap-5">
         <span
           aria-hidden="true"
-          className="text-[80px] font-bold tracking-[var(--tracking-brand-wide)] text-accent sm:text-[120px]"
+          className="text-[80px] font-bold tracking-[var(--tracking-brand-tight)] text-accent sm:text-[120px]"
         >
           500
         </span>
