@@ -55,7 +55,10 @@ export default function Footer() {
           {/* Right - Contact */}
           <div className="flex flex-col gap-3">
             <h3 className="text-xs font-semibold tracking-[var(--tracking-brand-wide)] text-accent">CONTACT</h3>
-            <CopyEmail className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]" />
+            <CopyEmail
+              label="Email"
+              className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
+            />
             <Link
               href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/"
               target="_blank"
