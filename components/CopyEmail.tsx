@@ -30,7 +30,13 @@ export default function CopyEmail({ label = EMAIL, iconSize = 16, className }: C
   return (
     <button type="button" onClick={copy} aria-label={`Copier l'adresse ${EMAIL}`} className={className}>
       <Icon size={iconSize} aria-hidden="true" className="text-accent" />
-      <span>{copied ? 'Copié !' : label}</span>
+      {/* Both labels share one grid cell so the width never changes on toggle */}
+      <span className="grid">
+        <span className={`col-start-1 row-start-1 ${copied ? 'invisible' : ''}`}>{label}</span>
+        <span aria-hidden="true" className={`col-start-1 row-start-1 ${copied ? '' : 'invisible'}`}>
+          Copié !
+        </span>
+      </span>
       <span role="status" className="sr-only">
         {copied ? 'Adresse email copiée' : ''}
       </span>
