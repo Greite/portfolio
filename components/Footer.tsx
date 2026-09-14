@@ -26,25 +26,25 @@ export default function Footer() {
             <h3 className="text-xs font-semibold tracking-[var(--tracking-brand)] text-accent">NAVIGATION</h3>
             <a
               href="#a-propos"
-              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-opacity hover:opacity-80"
+              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               À propos
             </a>
             <a
               href="#experience"
-              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-opacity hover:opacity-80"
+              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               Expérience
             </a>
             <a
               href="#projets"
-              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-opacity hover:opacity-80"
+              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               Projets
             </a>
             <a
               href="#formations"
-              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-opacity hover:opacity-80"
+              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               Formations
             </a>
@@ -55,7 +55,7 @@ export default function Footer() {
             <h3 className="text-xs font-semibold tracking-[var(--tracking-brand)] text-accent">CONTACT</h3>
             <Link
               href="mailto:contact@gauthierpainteaux.fr"
-              className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-fg transition-opacity hover:opacity-80"
+              className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               <LuMail size={16} aria-hidden="true" className="text-accent" />
               <span>contact@gauthierpainteaux.fr</span>
@@ -64,7 +64,7 @@ export default function Footer() {
               href="https://www.linkedin.com/in/gauthier-painteaux-1018a2167/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-fg transition-opacity hover:opacity-80"
+              className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               <LuLinkedin size={16} aria-hidden="true" className="text-accent" />
               <span>LinkedIn</span>
@@ -73,7 +73,7 @@ export default function Footer() {
               href="https://github.com/Greite"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-fg transition-opacity hover:opacity-80"
+              className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               <LuGithub size={16} aria-hidden="true" className="text-accent" />
               <span>GitHub / Greite</span>

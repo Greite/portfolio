@@ -49,6 +49,8 @@
   --section-px-md: 120px;
   --section-py: 64px;
   --section-py-md: 100px;
+
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 :root,
@@ -177,17 +179,6 @@
     }
   }
 
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translate3d(0, -12px, 0);
-    }
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
-  }
-
   @keyframes popIn {
     from {
       opacity: 0;
@@ -199,51 +190,79 @@
     }
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal {
-      animation: fadeInUp 480ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  @keyframes growX {
+    from {
+      transform: scaleX(0);
     }
-    .reveal-delay-1 {
-      animation-delay: 80ms;
-    }
-    .reveal-delay-2 {
-      animation-delay: 160ms;
-    }
-    .reveal-delay-3 {
-      animation-delay: 240ms;
-    }
-    .stagger-item {
-      animation: fadeInDown 320ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
-    }
-    .reveal-photo {
-      animation: popIn 640ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
-    }
-    .reveal-delay-4 {
-      animation-delay: 320ms;
-    }
-    .reveal-delay-5 {
-      animation-delay: 400ms;
+    to {
+      transform: scaleX(1);
     }
   }
 
-  /* Smooth cross-fade of themed colors when toggling light/dark.
-     :where() keeps specificity at 0 so Tailwind utilities always win. */
-  @media (prefers-reduced-motion: no-preference) {
-    :where(body *) {
-      transition-property: background-color, border-color, color, fill, box-shadow;
-      transition-duration: 0.4s;
-      transition-timing-function: ease;
+  /* Hidden until revealed by JS. Only when scripting is on, so no-JS users see the content. */
+  @media (scripting: enabled) {
+    .reveal-pending {
+      opacity: 0;
     }
   }
 
+  .reveal {
+    animation: fadeInUp 380ms var(--ease-out-strong) both;
+  }
+  .reveal-photo {
+    animation: popIn 450ms var(--ease-out-strong) both;
+  }
+  .reveal-delay-1 {
+    animation-delay: 50ms;
+  }
+  .reveal-delay-2 {
+    animation-delay: 100ms;
+  }
+  .reveal-delay-3 {
+    animation-delay: 150ms;
+  }
+  .reveal-delay-4 {
+    animation-delay: 200ms;
+  }
+
+  /* Children stagger: plays once the parent is revealed / the menu is open (inline animation-delay per item). */
+  .reveal .stagger-item,
+  [data-state="open"] .stagger-item {
+    animation: fadeInUp 240ms var(--ease-out-strong) both;
+  }
+
+  /* Scroll progress bar, CSS scroll-driven: no JS, off the main thread. Hidden where unsupported. */
+  .scroll-progress {
+    animation: growX linear both;
+    animation-timeline: scroll(root);
+  }
+  @supports not (animation-timeline: scroll()) {
+    .scroll-progress {
+      display: none;
+    }
+  }
+
+  /* Cross-fade of themed colors, only while the theme is toggling (class set by ThemeToggle). */
+  html.theme-transition :where(body *) {
+    transition-property: background-color, border-color, color, fill;
+    transition-duration: 300ms;
+    transition-timing-function: ease;
+  }
+
+  /* Reduced motion: keep fades, drop movement. */
   @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal-photo,
+    .reveal .stagger-item,
+    [data-state="open"] .stagger-item {
+      animation: fadeIn 200ms ease both;
+      animation-delay: 0ms;
+    }
+
     *,
     *::before,
     *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
+      transition-property: opacity, color, background-color, border-color, box-shadow !important;
     }
   }
 }

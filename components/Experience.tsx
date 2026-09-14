@@ -101,7 +101,11 @@ export default function Experience() {
             const durationSuffix = index === 0 ? formatDuration(currentJobYear, currentJobMonth) : '';
 
             return (
-              <li key={entry.company} className="flex flex-row">
+              <li
+                key={entry.company}
+                className="stagger-item flex flex-row"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
                 {/* Dot Column */}
                 <div aria-hidden="true" className="flex w-10 shrink-0 flex-col items-center">
                   <div className="h-3.5 w-3.5 shrink-0 rounded-full bg-accent" />
@@ -120,7 +124,7 @@ export default function Experience() {
                       href={entry.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block rounded-md text-xl font-semibold text-fg transition-opacity hover:opacity-80"
+                      className="inline-block rounded-md text-xl font-semibold text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
                     >
                       {entry.company}
                       <span className="sr-only"> (ouvre dans un nouvel onglet)</span>
@@ -146,7 +150,7 @@ export default function Experience() {
                     {entry.tags.map((tag) => (
                       <li
                         key={tag}
-                        className="rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent-soft-fg transition-transform duration-200 hover:-translate-y-0.5"
+                        className="rounded-full bg-accent-soft px-3 py-1 text-xs font-medium text-accent-soft-fg"
                       >
                         {tag}
                       </li>

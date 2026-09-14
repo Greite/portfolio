@@ -26,8 +26,10 @@ export default function BackToTop() {
       onClick={scrollToTop}
       aria-label="Retour en haut de la page"
       tabIndex={visible ? 0 : -1}
-      className={`fixed bottom-6 right-6 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full border border-border-accent bg-surface-raised/90 text-accent shadow-[var(--shadow-photo)] backdrop-blur-md transition-[opacity,transform,background-color,color] duration-300 hover:bg-accent hover:text-accent-fg ${
-        visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
+      className={`fixed bottom-6 right-6 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full border border-border-accent bg-surface-raised/90 text-accent shadow-[var(--shadow-photo)] backdrop-blur-md transition-[opacity,translate,scale,background-color,color] ease-out-strong hover:bg-accent hover:text-accent-fg active:scale-[0.97] ${
+        visible
+          ? 'translate-y-0 opacity-100 duration-[220ms]'
+          : 'pointer-events-none translate-y-4 opacity-0 duration-150'
       }`}
     >
       <LuArrowUp size={20} aria-hidden="true" />

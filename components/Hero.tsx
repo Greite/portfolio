@@ -58,14 +58,14 @@ export default function Hero() {
           <div className="reveal reveal-delay-3 flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-stretch sm:items-center">
             <Link
               href="mailto:contact@gauthierpainteaux.fr"
-              className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-fg transition-opacity hover:opacity-90"
+              className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-fg transition-[background-color,scale] duration-150 ease-out-strong hover:bg-accent-strong active:scale-[0.97]"
             >
               <LuMail size={16} aria-hidden="true" />
               Me contacter
             </Link>
             <Link
               href="#projets"
-              className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full border border-border-accent px-7 py-3.5 text-sm font-semibold text-accent transition-colors hover:bg-accent hover:text-accent-fg"
+              className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full border border-border-accent px-7 py-3.5 text-sm font-semibold text-accent transition-[background-color,color,scale] duration-150 ease-out-strong hover:bg-accent hover:text-accent-fg active:scale-[0.97]"
             >
               Voir mes projets
               <LuArrowDown size={16} aria-hidden="true" />
@@ -79,10 +79,10 @@ export default function Hero() {
                 <Link
                   href={href}
                   {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 transition-opacity hover:opacity-80"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
                 >
                   <Icon size={18} aria-hidden="true" className="text-accent" />
-                  <span className="text-fg text-[13px] font-medium">{label}</span>
+                  <span className="text-[13px] font-medium">{label}</span>
                 </Link>
               </li>
             ))}

@@ -48,7 +48,11 @@ export default function Formations() {
             const isLast = index === formations.length - 1;
 
             return (
-              <li key={formation.school} className="flex flex-row">
+              <li
+                key={formation.school}
+                className="stagger-item flex flex-row"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
                 <div aria-hidden="true" className="flex w-10 flex-col items-center">
                   <div className="w-3.5 h-3.5 rounded-full bg-accent shrink-0" />
                   {!isLast && <div className="w-0.5 flex-1 bg-accent" />}
