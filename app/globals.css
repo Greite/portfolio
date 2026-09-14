@@ -274,13 +274,6 @@
     }
   }
 
-  /* Cross-fade of themed colors, only while the theme is toggling (class set by ThemeToggle). */
-  html.theme-transition :where(body *) {
-    transition-property: background-color, border-color, color, fill;
-    transition-duration: 300ms;
-    transition-timing-function: ease;
-  }
-
   /* Reduced motion: keep fades, drop movement. */
   @media (prefers-reduced-motion: reduce) {
     .reveal,
@@ -297,6 +290,14 @@
       transition-property: opacity, color, background-color, border-color, box-shadow !important;
     }
   }
+}
+
+/* Cross-fade of themed colors, only while the theme is toggling (class set by ThemeToggle).
+   Unlayered so it wins over per-element transition utilities during the switch. */
+html.theme-transition :where(body *) {
+  transition-property: background-color, border-color, color, fill;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
 }
 
 /* Accessibility signals, unlayered so they win over utilities. */
