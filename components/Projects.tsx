@@ -19,6 +19,13 @@ const projects: Project[] = [
     repoUrl: 'https://github.com/Greite/speedtest-monitor',
   },
   {
+    name: 'Ravelli Smart Wi-Fi',
+    description:
+      'Intégration Home Assistant pour les poêles à granulés Ravelli équipés du module Smart Wi-Fi : thermostat, niveau de puissance, état de combustion et alarmes, en local sans compte cloud. Distribuée via HACS.',
+    tags: ['Python', 'Home Assistant', 'HACS', 'Domotique'],
+    repoUrl: 'https://github.com/Greite/ha-ravelli-smart-wifi',
+  },
+  {
     name: 'Database Backup',
     description:
       'Container Docker léger pour automatiser les sauvegardes PostgreSQL, MariaDB/MySQL, MongoDB et SQLite : scheduler Go intégré, rotation, chiffrement GPG/age et healthcheck natif.',
@@ -33,11 +40,11 @@ const projects: Project[] = [
     repoUrl: 'https://github.com/Greite/unraid-btop',
   },
   {
-    name: 'Unraid TUI',
+    name: 'Unraid Traefik Rolling Update',
     description:
-      'Interface en terminal pour superviser et piloter un serveur Unraid sans quitter sa ligne de commande.',
-    tags: ['Go', 'TUI', 'Unraid'],
-    repoUrl: 'https://github.com/Greite/unraid-tui',
+      "Plugin Unraid pour mettre à jour sans interruption les containers derrière Traefik : la nouvelle version démarre à côté de l'ancienne, Traefik bascule dès qu'elle est healthy, rollback automatique sinon.",
+    tags: ['PHP', 'Unraid', 'Traefik', 'Docker'],
+    repoUrl: 'https://github.com/Greite/unraid-traefik-rolling-update',
   },
 ];
 
@@ -105,7 +112,10 @@ export default function Projects() {
           ))}
 
           {/* CTA card vers GitHub */}
-          <li className="stagger-item sm:col-span-2" style={{ animationDelay: `${projects.length * 50}ms` }}>
+          <li
+            className={`stagger-item ${projects.length % 2 === 0 ? 'sm:col-span-2' : ''}`}
+            style={{ animationDelay: `${projects.length * 50}ms` }}
+          >
             <Link
               href="https://github.com/Greite"
               target="_blank"
