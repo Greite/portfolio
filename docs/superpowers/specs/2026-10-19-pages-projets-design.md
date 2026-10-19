@@ -94,7 +94,8 @@ Réutilise `Navigation`, `Footer`, `Reveal`, `ScrollProgress` et les jetons de `
   - `title` : `<nom> · Gauthier Painteaux` ;
   - `description` : `description` du projet ;
   - `alternates.canonical` : `/projets/<slug>` (obligatoire : le layout déclare `canonical: '/'` pour tout le site) ;
-  - `openGraph` complet (`type`, `siteName`, `locale`, `url`, `images`) car Next remplace l'objet du layout au lieu de le fusionner ; image = première capture claire, sinon image par défaut du site.
+  - `openGraph` complet (`type: 'website'`, `siteName`, `locale`, `url`, `title`, `description`, `images`) car Next remplace l'objet du layout au lieu de le fusionner (le layout déclare `type: 'profile'`) ; image = première capture claire, sinon `/photo.webp` du layout ;
+  - `twitter` complet (`card`, `title`, `description`, `images`) pour la même raison : le layout fixe titre, description et photo de l'accueil. `card: 'summary_large_image'` avec la première capture claire, sinon `card: 'summary'` avec `/photo.webp`.
 - JSON-LD par page :
   - `SoftwareSourceCode` : `name`, `description`, `codeRepository`, `keywords` (tags), `author: { '@id': 'https://gauthierpainteaux.fr/#person' }` ;
   - `BreadcrumbList` à deux niveaux : Accueil (`https://gauthierpainteaux.fr`) › projet (dernier élément sans `item`). Pas de niveau « Projets » : il n'existe pas de page `/projets`, et `/#projets` se confond avec l'accueil pour Google.
