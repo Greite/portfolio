@@ -108,6 +108,13 @@ export const projects: Project[] = [
           'Une commande n’est jamais renvoyée en double, et l’allumage est refusé tant qu’une alarme est active.',
       },
     ],
+    screenshots: [
+      {
+        light: '/projets/ha-ravelli-smart-wifi/device.webp',
+        dark: '/projets/ha-ravelli-smart-wifi/device.webp',
+        alt: 'Poêle Ravelli dans Home Assistant : thermostat, niveau de puissance, capteurs d’état et d’alarme, réglages du confort climat',
+      },
+    ],
   },
   {
     slug: 'database-backup',
