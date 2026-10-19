@@ -74,19 +74,22 @@ Volume : 2 appels par projet et par jour, très en dessous de la limite non auth
 
 ## Page projet
 
-Ordre des blocs :
+Direction « Vitrine » (révision du 19 oct. 2026, la première version jugée trop fade). Ordre des blocs :
 
 1. `Navigation` partagée, `ScrollProgress`.
-2. Fil d'Ariane visible `<nav aria-label="Fil d'Ariane">` : « Accueil › <nom> », identique au JSON-LD.
-3. En-tête : `h1` nom, pitch, tags (style des cartes), CTA « Voir sur GitHub » (nouvel onglet), bloc GitHub discret (release, étoiles, licence, date de mise à jour en format FR) masqué si `null`.
-4. Visuel principal : première capture en 16:10 via `next/image`, version claire/sombre basculée en CSS (`dark:hidden` / `hidden dark:block`, variante `dark` basée sur `data-theme`). Avec deux variantes, pas de `preload` (les deux seraient téléchargées) : lazy-loading + `fetchPriority="high"`, conformément à la doc Next (`image.md`, « Theme detection ») ; image unique (`light === dark`) : `preload`. Sans capture : `codeSample` dans un `<pre>` monospace aux couleurs du site, sans coloration syntaxique.
-5. « Points forts » : grille 2 colonnes (1 en mobile), cartes au style existant (`rounded-2xl`, `border-border`).
+2. En-tête en deux colonnes, dans le halo miel du Hero de l'accueil :
+   - à gauche : fil d'Ariane visible `<nav aria-label="Fil d'Ariane">` « Accueil › <nom> » (identique au JSON-LD), `h1`, pitch, tags, CTA « Voir sur GitHub », bloc GitHub (release, étoiles, licence, date de mise à jour) masqué si `null` ;
+   - à droite, légèrement inclinée sur grand écran : première capture 16:10 via `next/image`, clair/sombre basculés en CSS (`dark:hidden` / `hidden dark:block`). Deux variantes : pas de `preload` (les deux seraient téléchargées), lazy-loading + `fetchPriority="high"` (doc Next `image.md`, « Theme detection ») ; image unique (`light === dark`) : `preload`. Sans capture : `codeSample` dans un `<pre>`.
+3. Bandeau pleine largeur des chiffres clés (`stats`, 3 ou 4 valeurs réelles tirées des dépôts).
+4. « Comment ça marche » : frise d'étapes numérotées (`steps`, une vraie séquence), horizontale en `lg`, verticale en mobile.
+5. « Points forts » (`features`) : liste en 2 colonnes, sans cartes.
 6. Galerie : captures suivantes, si plus d'une.
-7. Lien « Installation et documentation » vers le README du dépôt.
-8. Navigation précédent/suivant : deux cartes compactes, ordre du tableau, circulaire (le suivant du dernier est le premier).
-9. `Footer` partagé.
+7. « Choix techniques » (`stack`) : techno et raison du choix.
+8. « Installation rapide » (`install`), bandeau pleine largeur, adaptée au projet : étapes numérotées, CTA éventuel (HACS), snippets réellement utilisables avec bouton copier (`components/CopyButton.tsx`), lien vers le README.
+9. Navigation précédent/suivant : deux cartes compactes, ordre du tableau, circulaire.
+10. `Footer` partagé.
 
-Réutilise `Navigation`, `Footer`, `Reveal`, `ScrollProgress` et les jetons de `globals.css`. Pas de nouveau composant générique.
+Réutilise `Navigation`, `Footer`, `Reveal`, `ScrollProgress` et les jetons de `globals.css`. Si cette direction ne convient toujours pas, piste suivante : une teinte par projet sur la même structure.
 
 ## SEO
 

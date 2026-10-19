@@ -15,6 +15,18 @@ export interface CodeSample {
   code: string;
 }
 
+export interface Stat {
+  value: string;
+  label: string;
+}
+
+export interface Install {
+  steps: string[];
+  /** Contenus à coller tels quels (bouton copier). */
+  snippets?: (CodeSample & { label: string })[];
+  cta?: { label: string; href: string };
+}
+
 export interface Project {
   slug: string;
   name: string;
@@ -22,7 +34,13 @@ export interface Project {
   pitch: string;
   tags: string[];
   repoUrl: string;
+  stats: Stat[];
+  /** Fonctionnement, dans l'ordre d'exécution. */
+  steps: Feature[];
   features: Feature[];
+  /** Choix techniques : `title` = techno, `description` = raison du choix. */
+  stack: Feature[];
+  install: Install;
   screenshots?: Screenshot[];
   codeSample?: CodeSample;
 }
@@ -37,6 +55,34 @@ export const projects: Project[] = [
       'Votre FAI promet un débit, Speedtest Monitor vérifie qu’il le tient. Il mesure la connexion à intervalle régulier avec le moteur de Cloudflare, conserve tout l’historique et prévient dès que le débit ou la latence se dégradent.',
     tags: ['Next.js', 'Bun', 'TypeScript', 'SQLite'],
     repoUrl: 'https://github.com/Greite/speedtest-monitor',
+    stats: [
+      { value: '−700 Mo', label: 'sur l’image Docker depuis l’abandon de Chromium' },
+      { value: '5', label: 'canaux d’alerte : webhook, ntfy, Discord, Slack, e-mail' },
+      { value: '1 à 1440 min', label: 'entre deux mesures, réglable à chaud' },
+    ],
+    steps: [
+      {
+        title: 'Planification',
+        description: 'Un scheduler intégré déclenche une mesure à l’intervalle choisi dans l’interface.',
+      },
+      {
+        title: 'Mesure',
+        description: 'Le moteur Cloudflare Speed Test mesure débit, latence, gigue et bufferbloat, en HTTP pur.',
+      },
+      {
+        title: 'Stockage',
+        description: 'Chaque résultat est enregistré dans une base SQLite persistée sur un volume.',
+      },
+      {
+        title: 'Diffusion',
+        description: 'Le serveur pousse la nouvelle mesure au dashboard ouvert, par WebSocket.',
+      },
+      {
+        title: 'Alerte',
+        description:
+          'Les seuils sont évalués à chaque mesure ; une alerte part au passage en dégradation, puis au retour.',
+      },
+    ],
     features: [
       {
         title: 'Dashboard en temps réel',
@@ -64,6 +110,42 @@ export const projects: Project[] = [
           'Rôles administrateur et lecteur, connexion par mot de passe ou OIDC (Authelia, Authentik, Keycloak).',
       },
     ],
+    stack: [
+      {
+        title: 'Next.js + serveur Bun',
+        description:
+          'Un seul serveur sert l’application et le WebSocket sur le même port : un seul container, un seul port à exposer.',
+      },
+      {
+        title: 'SQLite + Drizzle',
+        description:
+          'Une base dans un fichier, sans service à côté, et des migrations versionnées appliquées au démarrage.',
+      },
+      {
+        title: 'Cloudflare Speed Test',
+        description: 'Une mesure en HTTP pur, là où l’ancien moteur demandait un Chromium headless et ses ~700 Mo.',
+      },
+      {
+        title: 'Better Auth',
+        description:
+          'Rôles administrateur et lecteur, sessions en base et SSO OIDC sans réimplémenter l’authentification.',
+      },
+    ],
+    install: {
+      steps: [
+        'Cloner le dépôt et lancer la stack Docker avec un secret d’authentification.',
+        'Ouvrir l’application et créer le premier administrateur sur /setup.',
+      ],
+      snippets: [
+        {
+          label: 'Commandes',
+          language: 'bash',
+          code: `git clone https://github.com/Greite/speedtest-monitor.git
+cd speedtest-monitor
+AUTH_SECRET=$(openssl rand -base64 32) docker compose up -d --build`,
+        },
+      ],
+    },
     screenshots: [
       {
         light: '/projets/speedtest-monitor/dashboard-light.webp',
@@ -81,6 +163,37 @@ export const projects: Project[] = [
       'Piloter son poêle à granulés depuis Home Assistant, sans cloud ni boîtier supplémentaire. L’intégration dialogue directement avec le module Wi-Fi du poêle sur le réseau local et expose tout ce qu’il sait faire sous forme d’entités.',
     tags: ['Python', 'Home Assistant', 'HACS', 'Domotique'],
     repoUrl: 'https://github.com/Greite/ha-ravelli-smart-wifi',
+    stats: [
+      { value: '0', label: 'compte cloud : tout passe par le réseau local' },
+      { value: '6', label: 'programmes horaires pilotables depuis Home Assistant' },
+      { value: '1 à 5', label: 'niveaux de puissance, comme sur le poêle' },
+      { value: '10 à 300 s', label: 'entre deux lectures du module' },
+    ],
+    steps: [
+      {
+        title: 'Découverte',
+        description:
+          'Home Assistant repère le module sur le réseau, ou le cherche sur les réseaux auxquels il est connecté.',
+      },
+      {
+        title: 'Identification',
+        description:
+          'L’intégration lit la carte électronique du poêle et refuse les modèles qu’elle ne sait pas piloter.',
+      },
+      {
+        title: 'Lecture',
+        description: 'Le module est interrogé à intervalle régulier : état, températures, alarmes, programmes.',
+      },
+      {
+        title: 'Entités',
+        description:
+          'Chaque valeur devient une entité Home Assistant : thermostat, capteurs, calendrier, interrupteur.',
+      },
+      {
+        title: 'Commande',
+        description: 'Une commande est vérifiée avant envoi, jamais répétée, et refusée si le poêle est en alarme.',
+      },
+    ],
     features: [
       {
         title: '100 % local',
@@ -108,6 +221,36 @@ export const projects: Project[] = [
           'Une commande n’est jamais renvoyée en double, et l’allumage est refusé tant qu’une alarme est active.',
       },
     ],
+    stack: [
+      {
+        title: 'Python',
+        description: 'Le langage des intégrations Home Assistant, ce qui permet la distribution par HACS.',
+      },
+      {
+        title: 'Config flow',
+        description:
+          'Installation et reconfiguration depuis l’interface, sans YAML, en gardant l’historique des entités.',
+      },
+      {
+        title: 'Découverte DHCP',
+        description: 'Home Assistant propose l’intégration dès que le module apparaît sur le réseau.',
+      },
+      {
+        title: 'Simulateur du module',
+        description: 'Les tests tournent contre un faux module : pas besoin d’un poêle pour valider une modification.',
+      },
+    ],
+    install: {
+      steps: [
+        'Ouvrir le dépôt dans HACS, télécharger Ravelli Smart Wi-Fi et redémarrer Home Assistant.',
+        'Dans Paramètres › Appareils et services, ajouter l’intégration Ravelli Smart Wi-Fi.',
+        'Choisir la recherche sur le réseau local, ou saisir l’adresse du module.',
+      ],
+      cta: {
+        label: 'Ouvrir dans HACS',
+        href: 'https://my.home-assistant.io/redirect/hacs_repository/?owner=Greite&repository=ha-ravelli-smart-wifi&category=integration',
+      },
+    },
     screenshots: [
       {
         light: '/projets/ha-ravelli-smart-wifi/device.webp',
@@ -125,6 +268,34 @@ export const projects: Project[] = [
       'Un seul container pour sauvegarder toutes vos bases de données. Un fichier YAML décrit les jobs, le scheduler Go intégré s’occupe du reste : dumps compressés, rotation, chiffrement et healthcheck.',
     tags: ['Go', 'Docker', 'PostgreSQL', 'MongoDB'],
     repoUrl: 'https://github.com/Greite/database-backup',
+    stats: [
+      { value: '4', label: 'moteurs : PostgreSQL, MariaDB/MySQL, MongoDB, SQLite' },
+      { value: '~126 Mo', label: 'd’image, sans client préinstallé' },
+      { value: '2', label: 'architectures publiées : amd64 et arm64' },
+      { value: '4 × / jour', label: 'vérification de l’image de base Debian' },
+    ],
+    steps: [
+      {
+        title: 'Validation',
+        description: 'Le fichier backups.yml est lu et entièrement validé au démarrage du container.',
+      },
+      {
+        title: 'Clients',
+        description: 'Seuls les clients de base de données utilisés par la configuration sont installés.',
+      },
+      {
+        title: 'Planification',
+        description: 'Le scheduler Go déclenche chaque job selon son expression cron.',
+      },
+      {
+        title: 'Dump',
+        description: 'Le dump est compressé en streaming, puis chiffré avec GPG ou age si c’est configuré.',
+      },
+      {
+        title: 'Rotation',
+        description: 'Les sauvegardes plus anciennes que la rétention du job sont supprimées.',
+      },
+    ],
     features: [
       {
         title: 'Quatre moteurs',
@@ -156,6 +327,45 @@ export const projects: Project[] = [
         description: 'Images amd64 et arm64 reconstruites automatiquement dès que l’image de base Debian évolue.',
       },
     ],
+    stack: [
+      {
+        title: 'Go',
+        description:
+          'Un binaire unique qui embarque le scheduler et les drivers natifs du healthcheck, sans cron externe.',
+      },
+      {
+        title: 'Debian slim',
+        description:
+          'Une base légère où les clients de chaque moteur s’installent à la demande, dans la version voulue.',
+      },
+      {
+        title: 'GPG et age',
+        description: 'Deux formats de chiffrement standards, déchiffrables sans l’outil, dont un par clé publique.',
+      },
+      {
+        title: 'GitHub Actions',
+        description: 'Tests, images multi-architecture et reconstruction automatique quand l’image Debian change.',
+      },
+    ],
+    install: {
+      steps: [
+        'Copier backups.yml.example en backups.yml et y décrire les jobs, en chmod 600.',
+        'Lancer le container avec le dossier des sauvegardes et le fichier de configuration montés.',
+      ],
+      snippets: [
+        {
+          label: 'compose.yml',
+          language: 'yaml',
+          code: `services:
+  db-backup:
+    image: ghcr.io/greite/database-backup:latest
+    restart: unless-stopped
+    volumes:
+      - ./backups:/backups
+      - ./backups.yml:/config/backups.yml:ro`,
+        },
+      ],
+    },
     codeSample: {
       language: 'yaml',
       code: `# backups.yml
@@ -199,6 +409,33 @@ jobs:
       'btop dans le terminal d’Unraid, et l’essentiel de ce qu’il montre directement sur le dashboard. Le plugin package le binaire officiel de btop et ajoute une tuile native avec ce que le dashboard d’origine n’affiche pas.',
     tags: ['PHP', 'Unraid', 'CI/CD', 'Monitoring'],
     repoUrl: 'https://github.com/Greite/unraid-btop',
+    stats: [
+      { value: '1', label: 'tuile native sur le dashboard Unraid' },
+      { value: '24 h', label: 'entre deux vérifications des releases de btop' },
+      { value: '0', label: 'dépendance : le binaire officiel est statique' },
+    ],
+    steps: [
+      {
+        title: 'Détection',
+        description: 'Chaque jour, la CI vérifie si une nouvelle version de btop est sortie.',
+      },
+      {
+        title: 'Build',
+        description: 'Le paquet Unraid est reconstruit autour du binaire officiel de cette version.',
+      },
+      {
+        title: 'Tests',
+        description: 'Le contenu du paquet et la syntaxe PHP sont vérifiés, puis le binaire est lancé en smoke test.',
+      },
+      {
+        title: 'Publication',
+        description: 'La release GitHub est publiée et le manifeste du plugin est mis à jour sur main.',
+      },
+      {
+        title: 'Mise à jour',
+        description: 'Unraid propose la nouvelle version du plugin, comme pour n’importe quel plugin.',
+      },
+    ],
     features: [
       {
         title: 'btop prêt à l’emploi',
@@ -221,6 +458,38 @@ jobs:
           'La CI surveille chaque jour les releases de btop, reconstruit le paquet, le teste et publie la mise à jour du plugin.',
       },
     ],
+    stack: [
+      {
+        title: 'PHP',
+        description:
+          'Les pages de réglages et les tuiles du dashboard Unraid sont des pages PHP servies par le webGUI.',
+      },
+      {
+        title: 'Binaire statique de btop',
+        description: 'Le binaire officiel fonctionne sur Unraid sans bibliothèque à installer.',
+      },
+      {
+        title: 'Shell',
+        description: 'Le build assemble le paquet Unraid et vérifie son contenu avant publication.',
+      },
+      {
+        title: 'GitHub Actions',
+        description: 'Suivi quotidien des releases de btop, build, tests et publication sans intervention.',
+      },
+    ],
+    install: {
+      steps: [
+        'Dans Unraid, ouvrir Plugins › Install Plugin et coller l’adresse du plugin.',
+        'La tuile apparaît sur le dashboard ; ses réglages sont dans Settings › User Utilities › btop.',
+      ],
+      snippets: [
+        {
+          label: 'Adresse du plugin',
+          language: 'text',
+          code: 'https://raw.githubusercontent.com/Greite/unraid-btop/main/btop.plg',
+        },
+      ],
+    },
     screenshots: [
       {
         light: '/projets/unraid-btop/dashboard-tile.webp',
@@ -243,6 +512,35 @@ jobs:
       'Sur Unraid, mettre à jour un container signifie l’arrêter, le supprimer puis le recréer : le site est coupé pendant toute l’opération. Derrière Traefik, ce n’est pas nécessaire. Ce plugin démarre la nouvelle version à côté de l’ancienne et ne bascule qu’une fois qu’elle est prête.',
     tags: ['PHP', 'Unraid', 'Traefik', 'Docker'],
     repoUrl: 'https://github.com/Greite/unraid-traefik-rolling-update',
+    stats: [
+      { value: '1 à 2', label: 'requêtes en échec sur ~500 pendant la bascule' },
+      { value: '~50', label: 'avec la mise à jour native d’Unraid' },
+      { value: '0', label: 'label ou healthcheck à écrire' },
+    ],
+    steps: [
+      {
+        title: 'Pull',
+        description: 'L’image est téléchargée ; si le pull échoue, rien d’autre ne se passe.',
+      },
+      {
+        title: 'Démarrage',
+        description:
+          'Une seconde instance démarre à côté de la première, avec les labels Traefik et le healthcheck qui manquaient.',
+      },
+      {
+        title: 'Health gate',
+        description:
+          'Traefik ne lui envoie du trafic qu’une fois healthy ; sinon elle est supprimée et l’image restaurée.',
+      },
+      {
+        title: 'Bascule',
+        description: 'L’ancienne instance est arrêtée, Traefik la retire, la nouvelle reprend son nom.',
+      },
+      {
+        title: 'Nettoyage',
+        description: 'L’ancien container et son image sont supprimés, puis une notification est envoyée.',
+      },
+    ],
     features: [
       {
         title: 'Zéro interruption',
@@ -270,6 +568,41 @@ jobs:
           'Les containers non cochés gardent la mise à jour d’Unraid, et désinstaller le plugin rétablit le comportement d’origine.',
       },
     ],
+    stack: [
+      {
+        title: 'PHP',
+        description:
+          'Le plugin se branche sur les boutons Update de la page Docker d’Unraid et ajoute sa page de réglages.',
+      },
+      {
+        title: 'Healthchecks Docker',
+        description:
+          'Traefik ignore les containers qui ne sont pas healthy : c’est ce qui sert de porte avant la bascule.',
+      },
+      {
+        title: 'Labels Traefik',
+        description:
+          'Le service et le port implicites de l’ancienne instance sont recopiés, selon les règles de Traefik.',
+      },
+      {
+        title: 'Self-tests',
+        description: 'La logique de décision est testée en local, sans Docker ni serveur Unraid.',
+      },
+    ],
+    install: {
+      steps: [
+        'Dans Unraid, ouvrir Plugins › Install Plugin et coller l’adresse du plugin.',
+        'Dans Settings › Utilities › Traefik Rolling Update, passer les containers voulus en zero-downtime.',
+        'Recharger la page Docker : Update et Update All utilisent désormais la bascule.',
+      ],
+      snippets: [
+        {
+          label: 'Adresse du plugin',
+          language: 'text',
+          code: 'https://raw.githubusercontent.com/Greite/unraid-traefik-rolling-update/main/traefik.rolling.update.plg',
+        },
+      ],
+    },
     screenshots: [
       {
         light: '/projets/unraid-traefik-rolling-update/settings.webp',
