@@ -1,52 +1,8 @@
+import { projects } from '@root/lib/projects';
 import Link from 'next/link';
 import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
 
 import Reveal from './Reveal';
-
-interface Project {
-  name: string;
-  description: string;
-  tags: string[];
-  repoUrl: string;
-}
-
-const projects: Project[] = [
-  {
-    name: 'Speedtest Monitor',
-    description:
-      'Outil self-hosted de supervision de connexion internet basé sur Cloudflare Speedtest : dashboard temps réel, alertes et authentification OIDC.',
-    tags: ['Next.js', 'Bun', 'TypeScript', 'SQLite'],
-    repoUrl: 'https://github.com/Greite/speedtest-monitor',
-  },
-  {
-    name: 'Ravelli Smart Wi-Fi',
-    description:
-      'Intégration Home Assistant pour les poêles à granulés Ravelli équipés du module Smart Wi-Fi : thermostat, niveau de puissance, état de combustion et alarmes, en local sans compte cloud. Distribuée via HACS.',
-    tags: ['Python', 'Home Assistant', 'HACS', 'Domotique'],
-    repoUrl: 'https://github.com/Greite/ha-ravelli-smart-wifi',
-  },
-  {
-    name: 'Database Backup',
-    description:
-      'Container Docker léger pour automatiser les sauvegardes PostgreSQL, MariaDB/MySQL, MongoDB et SQLite : scheduler Go intégré, rotation, chiffrement GPG/age et healthcheck natif.',
-    tags: ['Go', 'Docker', 'PostgreSQL', 'MongoDB'],
-    repoUrl: 'https://github.com/Greite/database-backup',
-  },
-  {
-    name: 'Unraid btop',
-    description:
-      'Plugin Unraid qui embarque btop dans le terminal et ajoute une tuile au dashboard natif (charge, températures, I/O disque et réseau, processus). Releases automatisées par CI à chaque version de btop.',
-    tags: ['PHP', 'Unraid', 'CI/CD', 'Monitoring'],
-    repoUrl: 'https://github.com/Greite/unraid-btop',
-  },
-  {
-    name: 'Unraid Traefik Rolling Update',
-    description:
-      "Plugin Unraid pour mettre à jour sans interruption les containers derrière Traefik : la nouvelle version démarre à côté de l'ancienne, Traefik bascule dès qu'elle est healthy, rollback automatique sinon.",
-    tags: ['PHP', 'Unraid', 'Traefik', 'Docker'],
-    repoUrl: 'https://github.com/Greite/unraid-traefik-rolling-update',
-  },
-];
 
 export default function Projects() {
   return (
