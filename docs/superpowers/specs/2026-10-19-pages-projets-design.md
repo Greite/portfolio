@@ -79,7 +79,7 @@ Ordre des blocs :
 1. `Navigation` partagée, `ScrollProgress`.
 2. Fil d'Ariane visible `<nav aria-label="Fil d'Ariane">` : « Accueil › <nom> », identique au JSON-LD.
 3. En-tête : `h1` nom, pitch, tags (style des cartes), CTA « Voir sur GitHub » (nouvel onglet), bloc GitHub discret (release, étoiles, licence, date de mise à jour en format FR) masqué si `null`.
-4. Visuel principal : première capture en 16:10 via `next/image` `priority`, version claire/sombre basculée en CSS (`dark:hidden` / `hidden dark:block`, variante `dark` basée sur `data-theme`). Sans capture : `codeSample` dans un `<pre>` monospace aux couleurs du site, sans coloration syntaxique.
+4. Visuel principal : première capture en 16:10 via `next/image`, version claire/sombre basculée en CSS (`dark:hidden` / `hidden dark:block`, variante `dark` basée sur `data-theme`). Avec deux variantes, pas de `preload` (les deux seraient téléchargées) : lazy-loading + `fetchPriority="high"`, conformément à la doc Next (`image.md`, « Theme detection ») ; image unique (`light === dark`) : `preload`. Sans capture : `codeSample` dans un `<pre>` monospace aux couleurs du site, sans coloration syntaxique.
 5. « Points forts » : grille 2 colonnes (1 en mobile), cartes au style existant (`rounded-2xl`, `border-border`).
 6. Galerie : captures suivantes, si plus d'une.
 7. Lien « Installation et documentation » vers le README du dépôt.
@@ -110,7 +110,7 @@ Réutilise `Navigation`, `Footer`, `Reveal`, `ScrollProgress` et les jetons de `
 ## Captures
 
 - Prises pendant l'implémentation, navigateur piloté, l'utilisateur se connectant lui-même aux interfaces protégées ; aucun identifiant échangé ni commité.
-- WebP 16:10, versions claire et sombre, dans `public/projets/<slug>/`.
+- WebP 16:10 dans `public/projets/<slug>/`, versions claire et sombre quand l'outil propose les deux sans toucher aux réglages de l'utilisateur ; sinon une seule image (`light === dark`). Unraid et Home Assistant : une seule version, changer leur thème modifierait la configuration des serveurs.
 - Dépôt public : chaque image est contrôlée avant commit. Aucun nom de machine, IP privée, domaine interne, nom de conteneur tiers ni prénom ; recadrage ou masquage sinon, signalé à l'utilisateur.
 - Projets sans interface : `codeSample` tiré de la configuration ou des logs, valeurs réelles remplacées par des valeurs neutres (ex. `app-db`).
 

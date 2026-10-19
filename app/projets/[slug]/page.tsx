@@ -56,19 +56,22 @@ export async function generateMetadata({ params }: PageProps<'/projets/[slug]'>)
   };
 }
 
-/** Pas de `preload` : les deux variantes seraient chargées ; le lazy-loading ne charge que celle du thème actif. */
+/**
+ * Variantes clair/sombre : pas de `preload`, sinon les deux seraient chargées ; le lazy-loading ne charge que
+ * celle du thème actif. Image unique : la couverture peut être préchargée.
+ */
 function ThemedScreenshot({ screenshot, cover = false }: { screenshot: Screenshot; cover?: boolean }) {
   const props = {
     alt: screenshot.alt,
     width: 1600,
     height: 1000,
-    sizes: '(min-width: 90rem) 75rem, 100vw',
+    sizes: cover ? '(min-width: 90rem) 75rem, 100vw' : '(min-width: 90rem) 37rem, (min-width: 64rem) 50vw, 100vw',
     fetchPriority: cover ? ('high' as const) : undefined,
   };
   const className = 'h-auto w-full rounded-2xl border border-border';
 
   if (screenshot.light === screenshot.dark) {
-    return <Image {...props} src={screenshot.light} className={className} />;
+    return <Image {...props} src={screenshot.light} preload={cover} className={className} />;
   }
 
   return (
