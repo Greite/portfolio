@@ -90,14 +90,14 @@ git commit -m "Improve - #PRT-NoId - Move projects data to lib and add showcase 
 - Produces:
   ```ts
   export interface RepoStats { stars: number; license?: string; pushedAt: string; latestRelease?: string }
-  export async function getRepoStats(repoUrl: string): Promise<RepoStats | null>;
+  export async function getRepoStats(repoUrl: string): Promise<RepoStats | null>; // ne lève jamais
   ```
 
 - [ ] **Step 1: Implémenter `getRepoStats`**
 
 Extraire `owner/repo` de `repoUrl`. Deux `fetch` en parallèle vers `https://api.github.com/repos/{owner}/{repo}` et `.../releases/latest`, en-têtes `Accept: application/vnd.github+json`, `X-GitHub-Api-Version: 2022-11-28`, option `next: { revalidate: 86400 }`.
-- Dépôt : erreur réseau ou `!res.ok` → `null`. Sinon `stars = stargazers_count`, `license = license?.spdx_id` (omis si absent ou `NOASSERTION`), `pushedAt = pushed_at`.
-- Release : `res.ok` → `latestRelease = tag_name` ; tout autre cas (404 compris) → champ omis, sans faire échouer l'ensemble.
+- Dépôt : `fetch` qui lève (réseau), `!res.ok` (403 quota, 404, 5xx) ou JSON illisible → `null`. Tout le corps est dans un `try/catch` : la fonction ne lève jamais, donc ni le rendu ni le build ne peuvent échouer à cause de GitHub. Sinon `stars = stargazers_count`, `license = license?.spdx_id` (omis si absent ou `NOASSERTION`), `pushedAt = pushed_at`.
+- Release : `fetch` qui lève ou `!res.ok` (404 compris) → `latestRelease` omis, sans faire échouer l'ensemble.
 
 - [ ] **Step 2: Vérifier les valeurs réelles**
 
@@ -107,7 +107,14 @@ Note : hors runtime Next, l'option `next` est ignorée par `fetch`, sans effet s
 
 - [ ] **Step 3: Vérifier les cas d'échec (Review Focus 1, 2)**
 
-Même script : `getRepoStats('https://github.com/Greite/depot-inexistant')` → `null` ; `getRepoStats('https://github.com/octocat/Hello-World')` → objet sans `latestRelease`.
+Même script jetable, `getRepoStats` appelé avec `https://github.com/Greite/speedtest-monitor` sauf mention :
+- `globalThis.fetch` remplacé par une fonction qui lève `new TypeError('fetch failed')` → `null`, sans exception ;
+- `globalThis.fetch` remplacé par `async () => new Response('{"message":"API rate limit exceeded"}', { status: 403 })` → `null` ;
+- `globalThis.fetch` répondant 200 avec un JSON de dépôt valide pour `/repos/…` mais levant pour `/releases/latest` → objet sans `latestRelease` ;
+- `fetch` réel, `https://github.com/Greite/depot-inexistant` → `null` ;
+- `fetch` réel, `https://github.com/octocat/Hello-World` (sans release) → objet sans `latestRelease`.
+
+Les `fetch` levés ou en 403 empêchent le rendu ou le build seulement si `getRepoStats` lève ; ces cas prouvent qu'elle ne lève pas. Le rendu avec `null` est contrôlé en Task 3, Step 4.
 
 - [ ] **Step 4: Commit**
 
