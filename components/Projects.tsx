@@ -63,11 +63,11 @@ export default function Projects() {
                     href={project.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${project.name} — code sur GitHub (ouvre dans un nouvel onglet)`}
                     className="relative z-10 inline-flex items-center gap-1.5 self-start rounded-md text-xs font-medium text-fg-secondary transition-colors duration-150 hover:text-accent"
                   >
                     <LuGithub size={14} aria-hidden="true" />
                     Greite/{project.repoUrl.split('/').pop()}
+                    <span className="sr-only"> — code de {project.name} sur GitHub (ouvre dans un nouvel onglet)</span>
                   </Link>
                 </div>
               </div>

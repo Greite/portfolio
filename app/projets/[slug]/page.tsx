@@ -11,7 +11,7 @@ import { notFound } from 'next/navigation';
 import { LuArrowLeft, LuArrowRight, LuArrowUpRight, LuBookOpen, LuGithub, LuStar } from 'react-icons/lu';
 
 const siteUrl = 'https://gauthierpainteaux.fr';
-const dateFormat = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' });
+const dateFormat = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long', timeZone: 'Europe/Paris' });
 
 export const dynamicParams = false;
 
