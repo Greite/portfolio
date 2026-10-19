@@ -349,10 +349,21 @@ AUTH_SECRET=$(openssl rand -base64 32) docker compose up -d --build`,
     ],
     install: {
       steps: [
-        'Copier backups.yml.example en backups.yml et y décrire les jobs, en chmod 600.',
-        'Lancer le container avec le dossier des sauvegardes et le fichier de configuration montés.',
+        'Décrire les jobs dans backups.yml (ici une base SQLite sauvegardée chaque nuit), en chmod 600.',
+        'Monter dans le container ce fichier, le dossier des sauvegardes et les données à sauvegarder.',
+        'Lancer docker compose up -d : les dumps compressés arrivent dans ./backups.',
       ],
       snippets: [
+        {
+          label: 'backups.yml',
+          language: 'yaml',
+          code: `jobs:
+  - name: app
+    type: sqlite
+    path: /sources/app/app.db
+    schedule: "0 3 * * *"
+    retention_days: 7`,
+        },
         {
           label: 'compose.yml',
           language: 'yaml',
@@ -362,7 +373,8 @@ AUTH_SECRET=$(openssl rand -base64 32) docker compose up -d --build`,
     restart: unless-stopped
     volumes:
       - ./backups:/backups
-      - ./backups.yml:/config/backups.yml:ro`,
+      - ./backups.yml:/config/backups.yml:ro
+      - ./data:/sources/app:ro`,
         },
       ],
     },
