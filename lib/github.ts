@@ -10,14 +10,15 @@ const init = {
   next: { revalidate: 86400 },
 };
 
-/** Ne lève jamais : `null` si GitHub ne répond pas, pour que ni le rendu ni le build n'en dépendent. */
+/** Ne lève jamais : `null` si GitHub ne répond pas (ou pas en 5 s), pour que ni le rendu ni le build n'en dépendent. */
 export async function getRepoStats(repoUrl: string): Promise<RepoStats | null> {
   const api = `https://api.github.com/repos/${new URL(repoUrl).pathname.slice(1)}`;
+  const options = { ...init, signal: AbortSignal.timeout(5000) };
 
   try {
     const [repoResponse, releaseResponse] = await Promise.all([
-      fetch(api, init),
-      fetch(`${api}/releases/latest`, init).catch(() => null),
+      fetch(api, options),
+      fetch(`${api}/releases/latest`, options).catch(() => null),
     ]);
 
     if (!repoResponse.ok) {
