@@ -72,13 +72,18 @@ Le workflow GitHub Actions (`.github/workflows/build.yml`) se declenche sur les 
 ```
 app/
 ├── layout.tsx        # Layout racine, metadata, JSON-LD
-├── page.tsx          # Page unique (CV)
+├── page.tsx          # Page d'accueil (CV)
+├── projets/[slug]/   # Pages projet (statiques, une par projet)
 ├── globals.css       # Styles globaux + tokens Tailwind
 ├── error.tsx         # Page d'erreur
 └── not-found.tsx     # Page 404
 components/
 ├── Container.tsx     # Conteneur de section
 └── Divider.tsx       # Separateur decoratif
+lib/
+├── projects.ts       # Données et contenu des projets (accueil, pages projet, sitemap)
+└── github.ts         # Stats GitHub des projets (revalidées chaque jour)
 public/
-└── photo.webp        # Photo de profil
+├── photo.webp        # Photo de profil
+└── projets/          # Captures des projets
 ```

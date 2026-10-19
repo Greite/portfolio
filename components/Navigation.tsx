@@ -8,10 +8,10 @@ import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 
 const links = [
-  { label: 'À propos', href: '#a-propos', id: 'a-propos', num: '01' },
-  { label: 'Expérience', href: '#experience', id: 'experience', num: '02' },
-  { label: 'Projets', href: '#projets', id: 'projets', num: '03' },
-  { label: 'Formations', href: '#formations', id: 'formations', num: '04' },
+  { label: 'À propos', href: '/#a-propos', id: 'a-propos', num: '01' },
+  { label: 'Expérience', href: '/#experience', id: 'experience', num: '02' },
+  { label: 'Projets', href: '/#projets', id: 'projets', num: '03' },
+  { label: 'Formations', href: '/#formations', id: 'formations', num: '04' },
 ];
 
 export default function Navigation() {

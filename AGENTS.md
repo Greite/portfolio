@@ -14,7 +14,7 @@ bun run lint    # tsc --noEmit + biome check + biome format (à lancer avant de 
 
 - `next.config.ts` a `typescript.ignoreBuildErrors: true` : `bun run build` passe même avec des erreurs de type. `bun run lint` est le seul contrôle de types.
 - `.github/workflows/update-deps.yml` tourne chaque jour : `bun update`, puis lint + build ; si tout passe, il commite sur `main`, bumpe le patch, tagge, publie la release et lance `build.yml`. Un échec ouvre une PR labellisée `dependencies` et bloque les runs suivants tant qu'elle est ouverte.
-- Le contenu (expériences, projets, formations) est en dur dans `components/`. Les JSON-LD de `app/layout.tsx` et `app/page.tsx` (FAQ, employeur, `knowsAbout`) en répètent une partie et sont à mettre à jour avec.
+- Le contenu (expériences, formations) est en dur dans `components/` ; les projets sont dans `lib/projects.ts`, source unique de la grille d'accueil, des pages `/projets/<slug>` et du sitemap (captures dans `public/projets/<slug>/`). Les JSON-LD de `app/layout.tsx` et `app/page.tsx` (FAQ, employeur, `knowsAbout`) répètent une partie du contenu et sont à mettre à jour avec.
 
 ## Commit convention
 

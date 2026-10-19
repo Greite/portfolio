@@ -1,6 +1,6 @@
 import { projects } from '@root/lib/projects';
 import Link from 'next/link';
-import { LuArrowUpRight, LuGithub } from 'react-icons/lu';
+import { LuArrowRight, LuGithub } from 'react-icons/lu';
 
 import Reveal from './Reveal';
 
@@ -23,13 +23,7 @@ export default function Projects() {
         <ul className="grid gap-6 sm:grid-cols-2">
           {projects.map((project, index) => (
             <li key={project.name} className="stagger-item" style={{ animationDelay: `${index * 50}ms` }}>
-              <Link
-                href={project.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${project.name} — voir le code sur GitHub (ouvre dans un nouvel onglet)`}
-                className="group relative isolate flex h-full flex-col rounded-2xl border border-border bg-surface-raised p-6 transition-[translate,scale,border-color] duration-200 ease-out-strong hover:-translate-y-1 hover:border-border-accent active:scale-[0.98]"
-              >
+              <div className="group relative isolate flex h-full flex-col rounded-2xl border border-border bg-surface-raised p-6 transition-[translate,scale,border-color] duration-200 ease-out-strong hover:-translate-y-1 hover:border-border-accent active:scale-[0.98]">
                 <span
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-0 -z-10 rounded-2xl opacity-0 shadow-[var(--shadow-photo)] transition-opacity duration-200 ease-out-strong group-hover:opacity-100 bg-[radial-gradient(120%_80%_at_50%_0%,_var(--glow-soft)_0%,_transparent_70%)]"
@@ -37,11 +31,18 @@ export default function Projects() {
 
                 <div className="flex flex-1 flex-col gap-4">
                   <div className="flex items-start justify-between gap-4">
-                    <h3 className="text-lg font-semibold text-fg">{project.name}</h3>
-                    <LuArrowUpRight
+                    <h3 className="text-lg font-semibold text-fg">
+                      <Link
+                        href={`/projets/${project.slug}`}
+                        className="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-3 focus-visible:after:outline-accent focus-visible:after:outline-solid"
+                      >
+                        {project.name}
+                      </Link>
+                    </h3>
+                    <LuArrowRight
                       size={18}
                       aria-hidden="true"
-                      className="shrink-0 text-fg-secondary transition-[color,translate] duration-200 ease-out-strong group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+                      className="shrink-0 text-fg-secondary transition-[color,translate] duration-200 ease-out-strong group-hover:translate-x-0.5 group-hover:text-accent"
                     />
                   </div>
 
@@ -58,12 +59,18 @@ export default function Projects() {
                     ))}
                   </ul>
 
-                  <span className="inline-flex items-center gap-1.5 text-xs font-medium text-fg-secondary">
+                  <Link
+                    href={project.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${project.name} — code sur GitHub (ouvre dans un nouvel onglet)`}
+                    className="relative z-10 inline-flex items-center gap-1.5 self-start rounded-md text-xs font-medium text-fg-secondary transition-colors duration-150 hover:text-accent"
+                  >
                     <LuGithub size={14} aria-hidden="true" />
                     Greite/{project.repoUrl.split('/').pop()}
-                  </span>
+                  </Link>
                 </div>
-              </Link>
+              </div>
             </li>
           ))}
 

@@ -27,25 +27,25 @@ export default function Footer() {
           <nav aria-label="Navigation pied de page" className="flex flex-col gap-3">
             <h3 className="text-xs font-semibold tracking-[var(--tracking-brand-wide)] text-accent">NAVIGATION</h3>
             <a
-              href="#a-propos"
+              href="/#a-propos"
               className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               À propos
             </a>
             <a
-              href="#experience"
+              href="/#experience"
               className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               Expérience
             </a>
             <a
-              href="#projets"
+              href="/#projets"
               className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               Projets
             </a>
             <a
-              href="#formations"
+              href="/#formations"
               className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               Formations
