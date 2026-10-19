@@ -64,6 +64,13 @@ export const projects: Project[] = [
           'Rôles administrateur et lecteur, connexion par mot de passe ou OIDC (Authelia, Authentik, Keycloak).',
       },
     ],
+    screenshots: [
+      {
+        light: '/projets/speedtest-monitor/dashboard-light.webp',
+        dark: '/projets/speedtest-monitor/dashboard-dark.webp',
+        alt: 'Dashboard de Speedtest Monitor : débit descendant, montant et latence, historique sur 24 heures et dernières mesures',
+      },
+    ],
   },
   {
     slug: 'ha-ravelli-smart-wifi',
@@ -207,6 +214,18 @@ jobs:
           'La CI surveille chaque jour les releases de btop, reconstruit le paquet, le teste et publie la mise à jour du plugin.',
       },
     ],
+    screenshots: [
+      {
+        light: '/projets/unraid-btop/dashboard-tile.webp',
+        dark: '/projets/unraid-btop/dashboard-tile.webp',
+        alt: 'Tuile btop du dashboard Unraid : charge, débits disque et réseau, processus les plus gourmands',
+      },
+      {
+        light: '/projets/unraid-btop/settings.webp',
+        dark: '/projets/unraid-btop/settings.webp',
+        alt: 'Réglages du plugin btop dans Unraid : sections de la tuile, tri et nombre de processus affichés',
+      },
+    ],
   },
   {
     slug: 'unraid-traefik-rolling-update',
@@ -242,6 +261,13 @@ jobs:
         title: 'Natif partout ailleurs',
         description:
           'Les containers non cochés gardent la mise à jour d’Unraid, et désinstaller le plugin rétablit le comportement d’origine.',
+      },
+    ],
+    screenshots: [
+      {
+        light: '/projets/unraid-traefik-rolling-update/settings.webp',
+        dark: '/projets/unraid-traefik-rolling-update/settings.webp',
+        alt: 'Réglages de Traefik Rolling Update dans Unraid : délai du health gate, notifications et healthcheck d’un container en mise à jour sans interruption',
       },
     ],
   },
