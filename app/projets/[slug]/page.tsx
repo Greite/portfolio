@@ -56,27 +56,25 @@ export async function generateMetadata({ params }: PageProps<'/projets/[slug]'>)
   };
 }
 
-function ThemedScreenshot({ screenshot, priority = false }: { screenshot: Screenshot; priority?: boolean }) {
+/** Pas de `preload` : les deux variantes seraient chargées ; le lazy-loading ne charge que celle du thème actif. */
+function ThemedScreenshot({ screenshot, cover = false }: { screenshot: Screenshot; cover?: boolean }) {
+  const props = {
+    alt: screenshot.alt,
+    width: 1600,
+    height: 1000,
+    sizes: '(min-width: 90rem) 75rem, 100vw',
+    fetchPriority: cover ? ('high' as const) : undefined,
+  };
   const className = 'h-auto w-full rounded-2xl border border-border';
+
+  if (screenshot.light === screenshot.dark) {
+    return <Image {...props} src={screenshot.light} className={className} />;
+  }
 
   return (
     <>
-      <Image
-        src={screenshot.light}
-        alt={screenshot.alt}
-        width={1600}
-        height={1000}
-        priority={priority}
-        className={`${className} dark:hidden`}
-      />
-      <Image
-        src={screenshot.dark}
-        alt={screenshot.alt}
-        width={1600}
-        height={1000}
-        priority={priority}
-        className={`${className} hidden dark:block`}
-      />
+      <Image {...props} src={screenshot.light} className={`${className} dark:hidden`} />
+      <Image {...props} src={screenshot.dark} className={`${className} hidden dark:block`} />
     </>
   );
 }
@@ -208,7 +206,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
           </header>
 
           {cover ? (
-            <ThemedScreenshot screenshot={cover} priority />
+            <ThemedScreenshot screenshot={cover} cover />
           ) : (
             project.codeSample && (
               <pre className="overflow-x-auto rounded-2xl border border-border bg-surface-raised p-6 font-mono text-sm leading-relaxed text-fg">
