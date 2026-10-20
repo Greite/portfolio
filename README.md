@@ -71,19 +71,36 @@ Le workflow GitHub Actions (`.github/workflows/build.yml`) se declenche sur les 
 
 ```
 app/
-├── layout.tsx        # Layout racine, metadata, JSON-LD
-├── page.tsx          # Page d'accueil (CV)
-├── projets/[slug]/   # Pages projet (statiques, une par projet)
-├── globals.css       # Styles globaux + tokens Tailwind
-├── error.tsx         # Page d'erreur
-└── not-found.tsx     # Page 404
+├── [lang]/               # Toutes les pages, en /fr et /en (rendu statique)
+│   ├── layout.tsx        # Layout racine, metadata, hreflang, JSON-LD
+│   ├── page.tsx          # Page d'accueil (CV)
+│   ├── projects/[slug]/  # Pages projet (une par projet et par langue)
+│   ├── [...rest]/        # URL inconnue -> 404 dans la langue de l'URL
+│   ├── error.tsx         # Page d'erreur
+│   └── not-found.tsx     # Page 404
+├── globals.css           # Styles globaux + tokens Tailwind
+└── sitemap.ts            # Sitemap bilingue
+proxy.ts                  # Redirige (307) les URL sans langue selon Accept-Language
+dictionaries/
+├── fr.ts                 # Textes FR de l'interface et de l'accueil (référence du type)
+├── en.ts                 # Textes EN, typés par fr.ts
+└── error.ts              # Libellés de la page d'erreur (composant client)
 components/
-├── Container.tsx     # Conteneur de section
-└── Divider.tsx       # Separateur decoratif
+├── Container.tsx         # Conteneur de section
+└── Divider.tsx           # Separateur decoratif
 lib/
-├── projects.ts       # Données et contenu des projets (accueil, pages projet, sitemap)
-└── github.ts         # Stats GitHub des projets (revalidées chaque jour)
+├── locales.ts            # Langues, négociation Accept-Language, chemins (+ locales.check.ts)
+├── i18n.ts               # getDictionary(), getLang(), alternates() côté serveur
+├── projects.ts           # Données communes des projets et fusion avec les textes
+├── projects/{fr,en}.ts   # Textes des projets par langue
+└── github.ts             # Stats GitHub des projets (revalidées chaque jour)
 public/
-├── photo.webp        # Photo de profil
-└── projets/          # Captures des projets
+├── photo.webp            # Photo de profil
+└── projets/              # Captures des projets
 ```
+
+### Traductions
+
+- Un texte s'ajoute dans `dictionaries/fr.ts` **et** `dictionaries/en.ts` (ou `lib/projects/{fr,en}.ts` pour un projet) : une clé absente côté anglais fait échouer `bun run lint`.
+- Les composants client ne lisent pas le dictionnaire : leurs libellés leur sont passés en props.
+- `bun lib/locales.check.ts` vérifie la négociation de langue et le calcul des redirections.
