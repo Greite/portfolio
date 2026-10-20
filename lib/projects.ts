@@ -56,7 +56,7 @@ export const projects: Project[] = [
     tags: ['Next.js', 'Bun', 'TypeScript', 'SQLite'],
     repoUrl: 'https://github.com/Greite/speedtest-monitor',
     stats: [
-      { value: '−700 Mo', label: 'sur l’image Docker depuis l’abandon de Chromium' },
+      { value: '6 h à 30 j', label: 'd’historique affiché, en 5 périodes au choix' },
       { value: '5', label: 'canaux d’alerte : webhook, ntfy, Discord, Slack, e-mail' },
       { value: '1 à 1440 min', label: 'entre deux mesures, réglable à chaud' },
     ],
@@ -90,9 +90,9 @@ export const projects: Project[] = [
           'Chaque mesure arrive en direct par WebSocket : débit descendant et montant, latence, gigue et bufferbloat, sur 6 heures comme sur 30 jours.',
       },
       {
-        title: 'Mesures sans navigateur',
+        title: 'Mesures fiables',
         description:
-          'Le moteur Cloudflare Speed Test tourne en HTTP pur : pas de Chromium embarqué, une image Docker allégée d’environ 700 Mo.',
+          'Débit, latence, gigue et bufferbloat mesurés avec Cloudflare Speed Test, et réglables pour saturer les liens multi-gigabit.',
       },
       {
         title: 'Alertes à la dégradation',
@@ -123,7 +123,7 @@ export const projects: Project[] = [
       },
       {
         title: 'Cloudflare Speed Test',
-        description: 'Une mesure en HTTP pur, là où l’ancien moteur demandait un Chromium headless et ses ~700 Mo.',
+        description: 'Une mesure en HTTP pur, sans navigateur, sur le réseau mondial de Cloudflare.',
       },
       {
         title: 'Better Auth',
