@@ -248,7 +248,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
           </div>
         </section>
 
-        <section aria-label="Chiffres clés" className="border-y border-border bg-surface-raised">
+        <section aria-label="Chiffres clés" className="bg-surface-raised">
           <dl
             className={`${wrap} grid gap-10 py-12 sm:grid-cols-2 lg:py-14 ${project.stats.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'}`}
           >
@@ -330,8 +330,8 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
           </div>
         </div>
 
-        <section aria-labelledby="install-heading" className="border-y border-border bg-surface-raised">
-          <Reveal className={`${wrap} grid gap-12 py-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:py-20`}>
+        <section aria-labelledby="install-heading" className="bg-surface-raised">
+          <Reveal className={`${wrap} grid gap-12 pb-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:pb-24`}>
             <div className="flex flex-col gap-8">
               <SectionHeading id="install-heading">Installation rapide</SectionHeading>
               <ol className="flex flex-col gap-5">
