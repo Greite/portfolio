@@ -7,12 +7,12 @@ import Reveal from './Reveal';
 
 export default async function Projects() {
   const lang = await getLang();
-  const { projects: labels } = await getDictionary();
+  const { projects: labels, nav } = await getDictionary();
   const projects = getProjects(lang);
 
   return (
     <section
-      id="projets"
+      id={nav.sections.projects.id}
       aria-labelledby="projects-heading"
       className="w-full scroll-mt-20 border-y border-border bg-surface-raised"
     >

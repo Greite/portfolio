@@ -29,7 +29,7 @@ export default async function Footer() {
           {/* Center - Navigation */}
           <nav aria-label={footer.nav} className="flex flex-col gap-3">
             <h3 className="text-xs font-semibold tracking-[var(--tracking-brand-wide)] text-accent">NAVIGATION</h3>
-            {Object.entries(nav.links).map(([id, label]) => (
+            {Object.values(nav.sections).map(({ id, label }) => (
               <a
                 key={id}
                 href={`/${lang}#${id}`}

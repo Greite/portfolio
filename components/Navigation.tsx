@@ -10,13 +10,6 @@ import { LuGithub, LuLinkedin, LuMail, LuMenu, LuX } from 'react-icons/lu';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 
-const links = [
-  { id: 'a-propos', num: '01' },
-  { id: 'experience', num: '02' },
-  { id: 'projets', num: '03' },
-  { id: 'formations', num: '04' },
-] as const;
-
 interface NavigationProps {
   nav: Dictionary['nav'];
   theme: Dictionary['common']['theme'];
@@ -24,6 +17,7 @@ interface NavigationProps {
 
 export default function Navigation({ nav, theme }: NavigationProps) {
   const { lang } = useParams<{ lang: Locale }>();
+  const links = Object.values(nav.sections);
   const otherLang: Locale = lang === 'fr' ? 'en' : 'fr';
   // <a> et non <Link> : le root layout change de langue, un chargement complet met à jour <html lang>.
   const langSwitch = (
@@ -100,8 +94,8 @@ export default function Navigation({ nav, theme }: NavigationProps) {
   }, [isMenuOpen, closeMenu]);
 
   useEffect(() => {
-    const sections = links
-      .map((link) => document.getElementById(link.id))
+    const sections = Object.values(nav.sections)
+      .map(({ id }) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);
 
     if (sections.length === 0) {
@@ -128,7 +122,7 @@ export default function Navigation({ nav, theme }: NavigationProps) {
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [nav.sections]);
 
   return (
     <>
@@ -158,7 +152,7 @@ export default function Navigation({ nav, theme }: NavigationProps) {
                         : 'text-fg hover:text-accent after:scale-x-0 hover:after:scale-x-100'
                     }`}
                   >
-                    {nav.links[link.id]}
+                    {link.label}
                   </a>
                 );
               })}
@@ -239,10 +233,10 @@ export default function Navigation({ nav, theme }: NavigationProps) {
                     } ${isActive ? 'text-accent' : 'text-fg'}`}
                     onClick={closeMenu}
                   >
-                    <span className="text-[0.8125rem] font-semibold text-accent">{link.num}</span>
-                    <span className="text-3xl font-bold tracking-[var(--tracking-brand-tight)]">
-                      {nav.links[link.id]}
+                    <span className="text-[0.8125rem] font-semibold text-accent">
+                      {String(index + 1).padStart(2, '0')}
                     </span>
+                    <span className="text-3xl font-bold tracking-[var(--tracking-brand-tight)]">{link.label}</span>
                   </a>
                 </li>
               );

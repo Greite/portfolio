@@ -9,10 +9,14 @@ const formations = [
 ] as const;
 
 export default async function Formations() {
-  const { formations: labels } = await getDictionary();
+  const { formations: labels, nav } = await getDictionary();
 
   return (
-    <section id="formations" aria-labelledby="formations-heading" className="w-full scroll-mt-20 bg-surface">
+    <section
+      id={nav.sections.education.id}
+      aria-labelledby="formations-heading"
+      className="w-full scroll-mt-20 bg-surface"
+    >
       <Reveal className="mx-auto flex max-w-[90rem] flex-col gap-12 px-6 py-16 md:px-[7.5rem] md:py-[6.25rem]">
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="w-10 h-[3px] bg-accent rounded-sm" />

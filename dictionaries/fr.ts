@@ -36,7 +36,13 @@ export const fr = {
     closeMenu: 'Fermer le menu',
     menu: 'Menu de navigation',
     contact: 'Me contacter',
-    links: { 'a-propos': 'À propos', experience: 'Expérience', projets: 'Projets', formations: 'Formations' },
+    /** Sections de l'accueil : `id` = ancre dans l'URL (`/fr#projets`), traduite comme le libellé. */
+    sections: {
+      about: { id: 'a-propos', label: 'À propos' },
+      experience: { id: 'experience', label: 'Expérience' },
+      projects: { id: 'projets', label: 'Projets' },
+      education: { id: 'formations', label: 'Formations' },
+    },
     /** Lien vers l'autre langue : code affiché, et nom complet écrit dans cette langue. */
     otherLang: { code: 'EN', name: 'English' },
   },

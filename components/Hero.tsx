@@ -63,7 +63,7 @@ export default async function Hero() {
               {nav.contact}
             </Link>
             <Link
-              href="#projets"
+              href={`#${nav.sections.projects.id}`}
               className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full border border-border-accent px-7 py-3.5 text-sm font-semibold text-accent transition-[background-color,color,scale] duration-150 ease-out-strong hover:bg-accent hover:text-accent-fg active:scale-[0.97]"
             >
               {hero.seeProjects}

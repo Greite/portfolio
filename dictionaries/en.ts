@@ -36,7 +36,12 @@ export const en: Dictionary = {
     closeMenu: 'Close menu',
     menu: 'Navigation menu',
     contact: 'Get in touch',
-    links: { 'a-propos': 'About', experience: 'Experience', projets: 'Projects', formations: 'Education' },
+    sections: {
+      about: { id: 'about', label: 'About' },
+      experience: { id: 'experience', label: 'Experience' },
+      projects: { id: 'projects', label: 'Projects' },
+      education: { id: 'education', label: 'Education' },
+    },
     otherLang: { code: 'FR', name: 'Français' },
   },
   common: {

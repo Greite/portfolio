@@ -9,12 +9,12 @@ const skillGroups = [
 ] as const;
 
 export default async function AboutSkills() {
-  const { about } = await getDictionary();
+  const { about, nav } = await getDictionary();
   const [before, role, middle, passion, after] = about.intro;
 
   return (
     <section
-      id="a-propos"
+      id={nav.sections.about.id}
       aria-labelledby="about-heading"
       className="w-full scroll-mt-20 border-y border-border bg-surface-raised"
     >
