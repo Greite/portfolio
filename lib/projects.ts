@@ -61,28 +61,11 @@ export const projects: Project[] = [
       { value: '1 à 1440 min', label: 'entre deux mesures, réglable à chaud' },
     ],
     steps: [
-      {
-        title: 'Scheduling',
-        description: 'Un scheduler intégré déclenche une mesure à l’intervalle choisi dans l’interface.',
-      },
-      {
-        title: 'Mesure',
-        description:
-          'Le moteur Cloudflare Speed Test mesure le débit, la latence, le jitter et le bufferbloat, en HTTP pur.',
-      },
-      {
-        title: 'Stockage',
-        description: 'Chaque résultat est enregistré dans une base SQLite persistée sur un volume.',
-      },
-      {
-        title: 'Push',
-        description: 'Le serveur pousse la nouvelle mesure au dashboard ouvert, par WebSocket.',
-      },
-      {
-        title: 'Alerte',
-        description:
-          'Les seuils sont évalués à chaque mesure ; une alerte part au passage en dégradation, puis au retour.',
-      },
+      { title: 'Scheduling', description: 'Une mesure part à l’intervalle choisi.' },
+      { title: 'Mesure', description: 'Cloudflare Speed Test, en HTTP pur.' },
+      { title: 'Stockage', description: 'Le résultat va dans SQLite.' },
+      { title: 'Push', description: 'Le dashboard le reçoit par WebSocket.' },
+      { title: 'Alerte', description: 'Les seuils sont évalués à chaque mesure.' },
     ],
     features: [
       {
@@ -99,11 +82,6 @@ export const projects: Project[] = [
         title: 'Alertes à la dégradation',
         description:
           'Seuils sur le débit, la latence, le bufferbloat ou les échecs consécutifs, envoyés par webhook, ntfy, Discord, Slack ou e-mail, une seule fois par incident.',
-      },
-      {
-        title: 'Scheduler modifiable à chaud',
-        description:
-          'L’intervalle entre deux mesures se règle depuis l’interface et s’applique immédiatement, sans redémarrage.',
       },
       {
         title: 'Comptes et SSO',
@@ -167,6 +145,11 @@ docker compose up -d`,
     },
     screenshots: [
       {
+        light: '/projets/speedtest-monitor/focus-light.webp',
+        dark: '/projets/speedtest-monitor/focus-dark.webp',
+        alt: 'Speedtest Monitor : download, upload et latence de la dernière mesure, et leur historique sur 24 heures',
+      },
+      {
         light: '/projets/speedtest-monitor/dashboard-light.webp',
         dark: '/projets/speedtest-monitor/dashboard-dark.webp',
         alt: 'Dashboard de Speedtest Monitor : download, upload et latence, historique sur 24 heures et dernières mesures',
@@ -189,36 +172,13 @@ docker compose up -d`,
       { value: '10 à 300 s', label: 'd’intervalle de polling du module' },
     ],
     steps: [
-      {
-        title: 'Découverte',
-        description:
-          'Home Assistant repère le module sur le réseau, ou le cherche sur les réseaux auxquels il est connecté.',
-      },
-      {
-        title: 'Identification',
-        description:
-          'L’intégration lit la carte électronique du poêle et refuse les modèles qu’elle ne sait pas piloter.',
-      },
-      {
-        title: 'Polling',
-        description: 'Le module est pollé à intervalle régulier : état, températures, alarmes, programmes.',
-      },
-      {
-        title: 'Entités',
-        description:
-          'Chaque valeur devient une entité Home Assistant : thermostat, capteurs, calendrier, interrupteur.',
-      },
-      {
-        title: 'Commande',
-        description: 'Une commande est vérifiée avant envoi, jamais répétée, et refusée si le poêle est en alarme.',
-      },
+      { title: 'Découverte', description: 'Home Assistant trouve le module sur le réseau.' },
+      { title: 'Identification', description: 'La carte du poêle est lue et vérifiée.' },
+      { title: 'Polling', description: 'Le module est interrogé à intervalle régulier.' },
+      { title: 'Entités', description: 'Chaque valeur devient une entité.' },
+      { title: 'Commande', description: 'Vérifiée avant envoi, jamais répétée.' },
     ],
     features: [
-      {
-        title: '100 % local',
-        description:
-          'Aucun compte cloud : Home Assistant interroge le module sur le réseau domestique, qu’il retrouve tout seul lors de la configuration.',
-      },
       {
         title: 'Thermostat complet',
         description:
@@ -273,6 +233,11 @@ docker compose up -d`,
     },
     screenshots: [
       {
+        light: '/projets/ha-ravelli-smart-wifi/focus.webp',
+        dark: '/projets/ha-ravelli-smart-wifi/focus.webp',
+        alt: 'Thermostat du poêle Ravelli dans Home Assistant, avec les contrôles et capteurs de l’appareil',
+      },
+      {
         light: '/projets/ha-ravelli-smart-wifi/device.webp',
         dark: '/projets/ha-ravelli-smart-wifi/device.webp',
         alt: 'Poêle Ravelli dans Home Assistant : thermostat, niveau de puissance, capteurs d’état et d’alarme, réglages du confort climat',
@@ -295,37 +260,17 @@ docker compose up -d`,
       { value: '4 × / jour', label: 'vérification de l’image de base Debian' },
     ],
     steps: [
-      {
-        title: 'Validation',
-        description: 'Le fichier backups.yml est lu et entièrement validé au démarrage du container.',
-      },
-      {
-        title: 'Clients',
-        description: 'Seuls les clients de base de données utilisés par la configuration sont installés.',
-      },
-      {
-        title: 'Scheduling',
-        description: 'Le scheduler Go déclenche chaque job selon son expression cron.',
-      },
-      {
-        title: 'Dump',
-        description: 'Le dump est compressé en streaming, puis chiffré avec GPG ou age si c’est configuré.',
-      },
-      {
-        title: 'Rotation',
-        description: 'Les backups plus anciens que la rétention du job sont supprimés.',
-      },
+      { title: 'Validation', description: 'backups.yml est validé au démarrage.' },
+      { title: 'Clients', description: 'Seuls les clients utiles sont installés.' },
+      { title: 'Scheduling', description: 'Chaque job part selon son cron.' },
+      { title: 'Dump', description: 'Compressé en streaming, chiffré si besoin.' },
+      { title: 'Rotation', description: 'Les vieux backups sont supprimés.' },
     ],
     features: [
       {
         title: 'Quatre moteurs',
         description:
           'PostgreSQL (toute version cliente du repo PGDG), MariaDB/MySQL, MongoDB et SQLite, avec un snapshot cohérent même en cours d’écriture.',
-      },
-      {
-        title: 'Image légère',
-        description:
-          'Environ 126 Mo : aucun client préinstallé, seuls ceux dont la configuration a besoin sont installés au démarrage.',
       },
       {
         title: 'Scheduler intégré',
@@ -341,10 +286,6 @@ docker compose up -d`,
         title: 'Sûr par défaut',
         description:
           'Exécution non root, credentials jamais visibles dans la ligne de commande, healthcheck par drivers natifs.',
-      },
-      {
-        title: 'Toujours à jour',
-        description: 'Images amd64 et arm64 rebuildées automatiquement dès que l’image de base Debian évolue.',
       },
     ],
     stack: [
@@ -442,31 +383,15 @@ jobs:
     tags: ['PHP', 'Unraid', 'CI/CD', 'Monitoring'],
     repoUrl: 'https://github.com/Greite/unraid-btop',
     stats: [
-      { value: '1', label: 'tuile native sur le dashboard Unraid' },
       { value: '24 h', label: 'entre deux vérifications des releases de btop' },
-      { value: '0', label: 'dépendance : le binaire officiel est statique' },
+      { value: '6.12+', label: 'versions d’Unraid supportées, en x86_64' },
     ],
     steps: [
-      {
-        title: 'Détection',
-        description: 'Chaque jour, la CI vérifie si une nouvelle version de btop est sortie.',
-      },
-      {
-        title: 'Build',
-        description: 'Le package Unraid est rebuildé autour du binaire officiel de cette version.',
-      },
-      {
-        title: 'Tests',
-        description: 'Le contenu du package et la syntaxe PHP sont vérifiés, puis le binaire est lancé en smoke test.',
-      },
-      {
-        title: 'Publication',
-        description: 'La release GitHub est publiée et le manifest du plugin est mis à jour sur main.',
-      },
-      {
-        title: 'Update',
-        description: 'Unraid propose la nouvelle version du plugin, comme pour n’importe quel plugin.',
-      },
+      { title: 'Détection', description: 'La CI repère chaque release de btop.' },
+      { title: 'Build', description: 'Le package Unraid est rebuildé.' },
+      { title: 'Tests', description: 'Contenu, syntaxe PHP et smoke test.' },
+      { title: 'Publication', description: 'Release GitHub et manifest à jour.' },
+      { title: 'Update', description: 'Unraid propose la nouvelle version.' },
     ],
     features: [
       {
@@ -545,40 +470,17 @@ jobs:
     tags: ['PHP', 'Unraid', 'Traefik', 'Docker'],
     repoUrl: 'https://github.com/Greite/unraid-traefik-rolling-update',
     stats: [
-      { value: '1 à 2', label: 'requêtes en échec sur ~500 pendant le switch' },
-      { value: '~50', label: 'avec l’update natif d’Unraid' },
+      { value: '1–2 vs ~50', label: 'requêtes perdues sur ~500 pendant le switch, contre l’update natif d’Unraid' },
       { value: '0', label: 'label ou healthcheck à écrire' },
     ],
     steps: [
-      {
-        title: 'Pull',
-        description: 'L’image est téléchargée ; si le pull échoue, rien d’autre ne se passe.',
-      },
-      {
-        title: 'Démarrage',
-        description:
-          'Une seconde instance démarre à côté de la première, avec les labels Traefik et le healthcheck qui manquaient.',
-      },
-      {
-        title: 'Health gate',
-        description:
-          'Traefik ne lui envoie du trafic qu’une fois healthy ; sinon elle est supprimée et l’image restaurée.',
-      },
-      {
-        title: 'Switch',
-        description: 'L’ancienne instance est arrêtée, Traefik la retire, la nouvelle reprend son nom.',
-      },
-      {
-        title: 'Cleanup',
-        description: 'L’ancien container et son image sont supprimés, puis une notification est envoyée.',
-      },
+      { title: 'Pull', description: 'La nouvelle image est téléchargée.' },
+      { title: 'Démarrage', description: 'Une 2ᵉ instance démarre à côté.' },
+      { title: 'Health gate', description: 'Traefik attend qu’elle soit healthy.' },
+      { title: 'Switch', description: 'L’ancienne instance est arrêtée.' },
+      { title: 'Cleanup', description: 'Ancien container et image supprimés.' },
     ],
     features: [
-      {
-        title: 'Zero downtime',
-        description:
-          'Mesuré sur un vrai serveur : 1 ou 2 requêtes en échec sur environ 500 pendant le switch, contre une cinquantaine avec l’update natif.',
-      },
       {
         title: 'Rollback automatique',
         description:
@@ -636,6 +538,11 @@ jobs:
       ],
     },
     screenshots: [
+      {
+        light: '/projets/unraid-traefik-rolling-update/focus.webp',
+        dark: '/projets/unraid-traefik-rolling-update/focus.webp',
+        alt: 'Container réglé en zero-downtime update avec son healthcheck : chemin, scheme, port et code attendu',
+      },
       {
         light: '/projets/unraid-traefik-rolling-update/settings.webp',
         dark: '/projets/unraid-traefik-rolling-update/settings.webp',

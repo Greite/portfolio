@@ -89,7 +89,7 @@ Direction « Vitrine » (révision du 19 oct. 2026, la première version jugée 
 9. Navigation précédent/suivant : deux cartes compactes, ordre du tableau, circulaire.
 10. `Footer` partagé.
 
-Réutilise `Navigation`, `Footer`, `Reveal`, `ScrollProgress` et les jetons de `globals.css`. Si cette direction ne convient toujours pas, piste suivante : une teinte par projet sur la même structure.
+Réutilise `Navigation`, `Footer`, `ScrollProgress` et les jetons de `globals.css`. Seule animation : l'entrée du Hero (classes `reveal` / `reveal-photo` de l'accueil) ; les sections suivantes s'affichent sans animation. Le visuel du Hero est une capture recadrée sur la zone utile, la capture entière va en galerie. Si cette direction ne convient toujours pas, piste suivante : une teinte par projet sur la même structure.
 
 ## SEO
 

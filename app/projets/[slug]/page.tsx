@@ -1,7 +1,6 @@
 import CopyButton from '@components/CopyButton';
 import Footer from '@components/Footer';
 import Navigation from '@components/Navigation';
-import Reveal from '@components/Reveal';
 import ScrollProgress from '@components/ScrollProgress';
 import { getRepoStats } from '@root/lib/github';
 import { getAdjacentProjects, getProject, projects, type Screenshot } from '@root/lib/projects';
@@ -15,6 +14,8 @@ import { LuArrowLeft, LuArrowRight, LuArrowUpRight, LuBookOpen, LuCheck, LuGithu
 const siteUrl = 'https://gauthierpainteaux.fr';
 const dateFormat = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long', timeZone: 'Europe/Paris' });
 const wrap = 'mx-auto w-full max-w-[90rem] px-6 md:px-[7.5rem]';
+/** Classes complètes pour que Tailwind les génère. */
+const statColumns: Record<number, string> = { 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4' };
 
 export const dynamicParams = false;
 
@@ -63,14 +64,20 @@ export async function generateMetadata({ params }: PageProps<'/projets/[slug]'>)
  * Variantes clair/sombre : pas de `preload`, sinon les deux seraient chargées ; le lazy-loading ne charge que
  * celle du thème actif. Image unique : la couverture peut être préchargée.
  */
-function ThemedScreenshot({ screenshot, cover = false }: { screenshot: Screenshot; cover?: boolean }) {
+function ThemedScreenshot({
+  screenshot,
+  cover = false,
+  sizes = '(min-width: 90rem) 37rem, (min-width: 64rem) 50vw, 100vw',
+}: {
+  screenshot: Screenshot;
+  cover?: boolean;
+  sizes?: string;
+}) {
   const props = {
     alt: screenshot.alt,
     width: 1600,
     height: 1000,
-    sizes: cover
-      ? '(min-width: 90rem) 40rem, (min-width: 64rem) 50vw, 100vw'
-      : '(min-width: 90rem) 37rem, (min-width: 64rem) 50vw, 100vw',
+    sizes: cover ? '(min-width: 90rem) 40rem, (min-width: 64rem) 50vw, 100vw' : sizes,
     fetchPriority: cover ? ('high' as const) : undefined,
   };
   const className = 'h-auto w-full rounded-2xl border border-border';
@@ -158,7 +165,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
           <div
             className={`${wrap} grid items-center gap-12 py-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16 lg:py-16`}
           >
-            <div className="flex flex-col gap-6">
+            <div className="reveal flex flex-col gap-6">
               <nav aria-label="Fil d'Ariane">
                 <ol className="flex flex-wrap items-center gap-2 text-sm text-fg-secondary">
                   <li>
@@ -232,8 +239,8 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
               </div>
             </div>
 
-            <div className="min-w-0 lg:rotate-[1.5deg]">
-              <div className="rounded-2xl shadow-[var(--shadow-photo)]">
+            <div className="reveal-photo reveal-delay-2 min-w-0 lg:rotate-[1.5deg]">
+              <div className="rounded-2xl shadow-[var(--shadow-photo)] dark:shadow-[0_16px_48px_rgba(0,0,0,0.55)]">
                 {cover ? (
                   <ThemedScreenshot screenshot={cover} cover />
                 ) : (
@@ -250,7 +257,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
 
         <section aria-label="Chiffres clés" className="bg-surface-raised">
           <dl
-            className={`${wrap} grid gap-10 py-12 sm:grid-cols-2 lg:py-14 ${project.stats.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'}`}
+            className={`${wrap} grid gap-10 py-12 sm:grid-cols-2 lg:py-14 ${statColumns[project.stats.length] ?? 'lg:grid-cols-3'}`}
           >
             {project.stats.map((stat) => (
               <div key={stat.label} className="flex flex-col gap-2">
@@ -263,7 +270,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
 
         <div className="bg-surface-raised">
           <div className={`${wrap} flex flex-col gap-24 pt-12 pb-20 lg:pt-10 lg:pb-24`}>
-            <Reveal className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10">
               <SectionHeading>Comment ça marche</SectionHeading>
               <ol className="grid gap-8 lg:grid-cols-5 lg:gap-6">
                 {project.steps.map((step, index) => (
@@ -284,9 +291,9 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
                   </li>
                 ))}
               </ol>
-            </Reveal>
+            </div>
 
-            <Reveal className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10">
               <SectionHeading>Points forts</SectionHeading>
               <ul className="grid gap-x-16 gap-y-8 sm:grid-cols-2">
                 {project.features.map((feature) => (
@@ -301,37 +308,45 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
                   </li>
                 ))}
               </ul>
-            </Reveal>
+            </div>
 
             {gallery.length > 0 && (
-              <Reveal className="flex flex-col gap-10">
+              <div className="flex flex-col gap-10">
                 <SectionHeading>En images</SectionHeading>
-                <ul className="grid gap-6 lg:grid-cols-2">
+                <ul className={`grid gap-6 ${gallery.length > 1 ? 'lg:grid-cols-2' : 'max-w-[56rem]'}`}>
                   {gallery.map((screenshot) => (
                     <li key={screenshot.light}>
-                      <ThemedScreenshot screenshot={screenshot} />
+                      <ThemedScreenshot
+                        screenshot={screenshot}
+                        sizes={gallery.length > 1 ? undefined : '(min-width: 64rem) 56rem, 100vw'}
+                      />
                     </li>
                   ))}
                 </ul>
-              </Reveal>
+              </div>
             )}
 
-            <Reveal className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10">
               <SectionHeading>Choix techniques</SectionHeading>
-              <dl className="grid gap-x-16 gap-y-8 lg:grid-cols-2">
+              <dl className="divide-y divide-border">
                 {project.stack.map((choice) => (
-                  <div key={choice.title} className="flex flex-col gap-1.5 border-l-2 border-accent pl-5">
+                  <div
+                    key={choice.title}
+                    className="grid gap-1 py-5 first:pt-0 last:pb-0 sm:grid-cols-[16rem_minmax(0,1fr)] sm:gap-10"
+                  >
                     <dt className="text-base font-semibold text-fg">{choice.title}</dt>
-                    <dd className="text-sm leading-relaxed text-fg-secondary">{choice.description}</dd>
+                    <dd className="max-w-[44rem] text-sm leading-relaxed text-fg-secondary sm:text-base">
+                      {choice.description}
+                    </dd>
                   </div>
                 ))}
               </dl>
-            </Reveal>
+            </div>
           </div>
         </div>
 
         <section aria-labelledby="install-heading" className="bg-surface-raised">
-          <Reveal className={`${wrap} grid gap-12 pb-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:pb-24`}>
+          <div className={`${wrap} grid gap-12 pb-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:pb-24`}>
             <div className="flex flex-col gap-8">
               <SectionHeading id="install-heading">Installation rapide</SectionHeading>
               <ol className="flex flex-col gap-5">
@@ -377,7 +392,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
                     key={snippet.label}
                     className="overflow-hidden rounded-2xl border border-border bg-surface-raised"
                   >
-                    <figcaption className="flex items-center justify-between gap-4 border-b border-border py-1.5 pr-2 pl-5 text-xs font-medium text-fg-secondary">
+                    <figcaption className="flex items-center justify-between gap-4 border-b border-border pr-1 pl-5 text-xs font-medium text-fg-secondary">
                       {snippet.label}
                       <CopyButton text={snippet.code} subject={snippet.label} />
                     </figcaption>
@@ -390,29 +405,46 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
                 ))}
               </div>
             )}
-          </Reveal>
+          </div>
         </section>
 
         <nav aria-label="Autres projets" className={`${wrap} grid gap-6 py-16 sm:grid-cols-2`}>
           {[
             { target: previous, label: 'Projet précédent', isNext: false },
             { target: next, label: 'Projet suivant', isNext: true },
-          ].map(({ target, label, isNext }) => (
-            <Link
-              key={label}
-              href={`/projets/${target.slug}`}
-              className={`group flex flex-col gap-1 rounded-2xl border border-border bg-surface-raised p-6 transition-[translate,border-color] duration-200 ease-out-strong hover:-translate-y-1 hover:border-border-accent ${isNext ? 'sm:items-end sm:text-right' : ''}`}
-            >
-              <span className="flex items-center gap-1.5 text-xs font-medium text-fg-secondary">
-                {!isNext && <LuArrowLeft size={14} aria-hidden="true" />}
-                {label}
-                {isNext && <LuArrowRight size={14} aria-hidden="true" />}
-              </span>
-              <span className="text-lg font-semibold text-fg transition-colors duration-200 group-hover:text-accent">
-                {target.name}
-              </span>
-            </Link>
-          ))}
+          ].map(({ target, label, isNext }) => {
+            const thumbnail = target.screenshots?.[0];
+
+            return (
+              <Link
+                key={label}
+                href={`/projets/${target.slug}`}
+                className={`group flex items-center gap-5 rounded-2xl border border-border bg-surface-raised p-5 transition-[translate,border-color] duration-200 ease-out-strong hover:-translate-y-1 hover:border-border-accent ${isNext ? 'sm:flex-row-reverse sm:text-right' : ''}`}
+              >
+                {thumbnail && (
+                  <Image
+                    src={thumbnail.light}
+                    alt=""
+                    width={1600}
+                    height={1000}
+                    sizes="8rem"
+                    className="hidden aspect-[16/10] w-32 shrink-0 rounded-lg border border-border object-cover sm:block"
+                  />
+                )}
+                <span className={`flex min-w-0 flex-col gap-1 ${isNext ? 'sm:items-end' : ''}`}>
+                  <span className="flex items-center gap-1.5 text-xs font-medium text-fg-secondary">
+                    {!isNext && <LuArrowLeft size={14} aria-hidden="true" />}
+                    {label}
+                    {isNext && <LuArrowRight size={14} aria-hidden="true" />}
+                  </span>
+                  <span className="text-lg font-semibold text-fg transition-colors duration-200 group-hover:text-accent">
+                    {target.name}
+                  </span>
+                  <span className="line-clamp-2 text-sm text-fg-secondary">{target.description}</span>
+                </span>
+              </Link>
+            );
+          })}
         </nav>
       </main>
 
