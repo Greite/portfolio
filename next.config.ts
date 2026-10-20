@@ -4,6 +4,8 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   reactCompiler: true,
   poweredByHeader: false,
+  // Origines autorisées en dev (liste séparée par des virgules), définie dans `.env.local`, non versionné.
+  allowedDevOrigins: process.env.DEV_ORIGINS?.split(','),
   typescript: {
     ignoreBuildErrors: true,
   },
