@@ -1,8 +1,10 @@
 import ThemeProvider from '@components/ThemeProvider';
+import { alternates, getDictionary, getLang, ogLocale } from '@root/lib/i18n';
+import { locales } from '@root/lib/locales';
 import type { Metadata, Viewport } from 'next';
 import { Raleway } from 'next/font/google';
 
-import './globals.css';
+import '../globals.css';
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -12,53 +14,46 @@ const raleway = Raleway({
 });
 
 const siteUrl = 'https://gauthierpainteaux.fr';
-const siteDescription =
-  "Gauthier Painteaux, Lead Développeur Web Fullstack basé à Reims. Plus de 7 ans d'expérience sur des applications modernes en Next.js, React, TypeScript, Symfony et Docker.";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: 'Gauthier Painteaux · Lead Développeur Web Fullstack',
-  description: siteDescription,
-  applicationName: 'Gauthier Painteaux',
-  keywords: [
-    'Gauthier Painteaux',
-    'Painteaux',
-    'Développeur Web',
-    'Lead Developer',
-    'Next.js',
-    'React',
-    'TypeScript',
-    'Symfony',
-    'Reims',
-  ],
-  authors: { name: 'Gauthier Painteaux', url: siteUrl },
-  creator: 'Gauthier Painteaux',
-  publisher: 'Gauthier Painteaux',
-  alternates: { canonical: '/' },
-  openGraph: {
-    type: 'profile',
-    siteName: 'Gauthier Painteaux',
-    title: 'Gauthier Painteaux · Lead Développeur Web Fullstack',
-    description: siteDescription,
-    url: siteUrl,
-    locale: 'fr_FR',
-    images: [
-      {
-        url: '/photo.webp',
-        width: 320,
-        height: 320,
-        alt: 'Photo de profil de Gauthier Painteaux',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary',
-    title: 'Gauthier Painteaux · Lead Développeur Web Fullstack',
-    description: siteDescription,
-    images: ['/photo.webp'],
-  },
-  robots: { index: true, follow: true },
-};
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const lang = await getLang();
+  const { meta } = await getDictionary();
+
+  return {
+    metadataBase: new URL(siteUrl),
+    title: meta.title,
+    description: meta.description,
+    applicationName: 'Gauthier Painteaux',
+    keywords: meta.keywords,
+    authors: { name: 'Gauthier Painteaux', url: siteUrl },
+    creator: 'Gauthier Painteaux',
+    publisher: 'Gauthier Painteaux',
+    alternates: alternates(lang, ''),
+    openGraph: {
+      type: 'profile',
+      siteName: 'Gauthier Painteaux',
+      title: meta.title,
+      description: meta.description,
+      url: `/${lang}`,
+      locale: ogLocale[lang],
+      alternateLocale: locales.filter((other) => other !== lang).map((other) => ogLocale[other]),
+      images: [{ url: '/photo.webp', width: 320, height: 320, alt: meta.photoAlt }],
+    },
+    twitter: {
+      card: 'summary',
+      title: meta.title,
+      description: meta.description,
+      images: ['/photo.webp'],
+    },
+    robots: { index: true, follow: true },
+  };
+}
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -70,11 +65,9 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function RootLayout({ children }: LayoutProps<'/[lang]'>) {
+  const lang = await getLang();
+  const { person } = await getDictionary();
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -83,15 +76,16 @@ export default function RootLayout({
         '@id': 'https://gauthierpainteaux.fr/#website',
         name: 'Gauthier Painteaux',
         alternateName: 'GP',
-        url: 'https://gauthierpainteaux.fr/',
+        url: `${siteUrl}/${lang}`,
+        inLanguage: lang,
       },
       {
         '@type': 'Person',
         '@id': 'https://gauthierpainteaux.fr/#person',
         name: 'Gauthier Painteaux',
-        jobTitle: 'Lead Développeur',
-        description: 'Développeur Web Fullstack basé à Reims, France',
-        url: 'https://gauthierpainteaux.fr',
+        jobTitle: person.jobTitle,
+        description: person.description,
+        url: `${siteUrl}/${lang}`,
         email: 'contact@gauthierpainteaux.fr',
         worksFor: {
           '@type': 'Organization',
@@ -110,7 +104,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="fr" className={raleway.variable} suppressHydrationWarning>
+    <html lang={lang} className={raleway.variable} suppressHydrationWarning>
       <head>
         {/* biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data for SEO, content is JSON-stringified and safe */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />

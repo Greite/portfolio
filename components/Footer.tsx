@@ -1,9 +1,11 @@
+import { getLang } from '@root/lib/i18n';
 import Link from 'next/link';
 import { LuGithub, LuLinkedin } from 'react-icons/lu';
 
 import CopyEmail from './CopyEmail';
 
-export default function Footer() {
+export default async function Footer() {
+  const lang = await getLang();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -27,25 +29,25 @@ export default function Footer() {
           <nav aria-label="Navigation pied de page" className="flex flex-col gap-3">
             <h3 className="text-xs font-semibold tracking-[var(--tracking-brand-wide)] text-accent">NAVIGATION</h3>
             <a
-              href="/#a-propos"
+              href={`/${lang}#a-propos`}
               className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               À propos
             </a>
             <a
-              href="/#experience"
+              href={`/${lang}#experience`}
               className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               Expérience
             </a>
             <a
-              href="/#projets"
+              href={`/${lang}#projets`}
               className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               Projets
             </a>
             <a
-              href="/#formations"
+              href={`/${lang}#formations`}
               className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               Formations

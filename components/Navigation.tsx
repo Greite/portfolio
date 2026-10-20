@@ -1,6 +1,8 @@
 'use client';
 
+import type { Locale } from '@root/lib/locales';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { LuGithub, LuLinkedin, LuMail, LuMenu, LuX } from 'react-icons/lu';
 
@@ -8,13 +10,14 @@ import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 
 const links = [
-  { label: 'À propos', href: '/#a-propos', id: 'a-propos', num: '01' },
-  { label: 'Expérience', href: '/#experience', id: 'experience', num: '02' },
-  { label: 'Projets', href: '/#projets', id: 'projets', num: '03' },
-  { label: 'Formations', href: '/#formations', id: 'formations', num: '04' },
+  { label: 'À propos', id: 'a-propos', num: '01' },
+  { label: 'Expérience', id: 'experience', num: '02' },
+  { label: 'Projets', id: 'projets', num: '03' },
+  { label: 'Formations', id: 'formations', num: '04' },
 ];
 
 export default function Navigation() {
+  const { lang } = useParams<{ lang: Locale }>();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
@@ -114,7 +117,7 @@ export default function Navigation() {
         <div className="nav-edge material bg-surface/[0.93] backdrop-blur-md">
           <div className="mx-auto flex max-w-[90rem] items-center justify-between px-5 py-4 lg:px-[7.5rem]">
             <Link
-              href="/"
+              href={`/${lang}`}
               aria-label="Accueil — Gauthier Painteaux"
               className="inline-flex items-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
@@ -127,8 +130,8 @@ export default function Navigation() {
                 const isActive = activeId === link.id;
                 return (
                   <a
-                    key={link.href}
-                    href={link.href}
+                    key={link.id}
+                    href={`/${lang}#${link.id}`}
                     aria-current={isActive ? 'location' : undefined}
                     className={`relative rounded-md px-3 py-2 text-sm font-medium transition-colors duration-150 after:absolute after:-bottom-0.5 after:left-3 after:right-3 after:h-0.5 after:origin-left after:rounded-full after:bg-accent after:transition-transform after:duration-200 after:ease-out-strong ${
                       isActive
@@ -183,7 +186,7 @@ export default function Navigation() {
         {/* Top bar */}
         <div className="flex items-center justify-between px-5 py-4">
           <Link
-            href="/"
+            href={`/${lang}`}
             aria-label="Accueil — Gauthier Painteaux"
             className="inline-flex items-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             onClick={closeMenu}
@@ -207,9 +210,9 @@ export default function Navigation() {
             {links.map((link, index) => {
               const isActive = activeId === link.id;
               return (
-                <li key={link.href} className="stagger-item" style={{ animationDelay: `${60 + index * 60}ms` }}>
+                <li key={link.id} className="stagger-item" style={{ animationDelay: `${60 + index * 60}ms` }}>
                   <a
-                    href={link.href}
+                    href={`/${lang}#${link.id}`}
                     aria-current={isActive ? 'location' : undefined}
                     className={`flex items-center gap-4 py-6 transition-colors duration-150 hover:text-accent ${
                       index < links.length - 1 ? 'border-b border-border' : ''

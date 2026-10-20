@@ -3,6 +3,7 @@ import Footer from '@components/Footer';
 import Navigation from '@components/Navigation';
 import ScrollProgress from '@components/ScrollProgress';
 import { getRepoStats } from '@root/lib/github';
+import { alternates, getDictionary, getLang, ogLocale } from '@root/lib/i18n';
 import { getAdjacentProjects, getProject, projects, type Screenshot } from '@root/lib/projects';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -23,32 +24,34 @@ export function generateStaticParams() {
   return projects.map(({ slug }) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: PageProps<'/projets/[slug]'>): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<'/[lang]/projects/[slug]'>): Promise<Metadata> {
   const project = getProject((await params).slug);
 
   if (!project) {
     return {};
   }
 
+  const lang = await getLang();
+  const { meta } = await getDictionary();
   const title = project.seoTitle;
-  const url = `/projets/${project.slug}`;
+  const path = `/projects/${project.slug}`;
   const cover = project.screenshots?.[0];
 
   return {
     title,
     description: project.description,
-    alternates: { canonical: url },
+    alternates: alternates(lang, path),
     openGraph: {
       type: 'website',
       siteName: 'Gauthier Painteaux',
-      locale: 'fr_FR',
-      url,
+      locale: ogLocale[lang],
+      url: `/${lang}${path}`,
       title,
       description: project.description,
       images: [
         cover
           ? { url: cover.light, width: 1600, height: 1000, alt: cover.alt }
-          : { url: '/photo.webp', width: 320, height: 320, alt: 'Photo de profil de Gauthier Painteaux' },
+          : { url: '/photo.webp', width: 320, height: 320, alt: meta.photoAlt },
       ],
     },
     twitter: {
@@ -105,8 +108,9 @@ function SectionHeading({ id, children }: { id?: string; children: ReactNode }) 
   );
 }
 
-export default async function ProjectPage({ params }: PageProps<'/projets/[slug]'>) {
+export default async function ProjectPage({ params }: PageProps<'/[lang]/projects/[slug]'>) {
   const project = getProject((await params).slug);
+  const lang = await getLang();
 
   if (!project) {
     notFound();
@@ -124,7 +128,8 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
     '@type': 'SoftwareSourceCode',
     name: project.name,
     description: project.description,
-    url: `${siteUrl}/projets/${project.slug}`,
+    url: `${siteUrl}/${lang}/projects/${project.slug}`,
+    inLanguage: lang,
     codeRepository: project.repoUrl,
     keywords: project.tags.join(', '),
     programmingLanguage: project.programmingLanguage,
@@ -136,7 +141,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: siteUrl },
+      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${siteUrl}/${lang}` },
       { '@type': 'ListItem', position: 2, name: project.name },
     ],
   };
@@ -173,7 +178,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
               <nav aria-label="Fil d'Ariane">
                 <ol className="flex flex-wrap items-center gap-2 text-sm text-fg-secondary">
                   <li>
-                    <Link href="/" className="rounded-md transition-colors duration-150 hover:text-accent">
+                    <Link href={`/${lang}`} className="rounded-md transition-colors duration-150 hover:text-accent">
                       Accueil
                     </Link>
                   </li>
@@ -422,7 +427,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
             return (
               <Link
                 key={label}
-                href={`/projets/${target.slug}`}
+                href={`/${lang}/projects/${target.slug}`}
                 className={`group flex items-center gap-5 rounded-2xl border border-border bg-surface-raised p-5 transition-[translate,border-color] duration-200 ease-out-strong hover:-translate-y-1 hover:border-border-accent ${isNext ? 'sm:flex-row-reverse sm:text-right' : ''}`}
               >
                 {thumbnail && (

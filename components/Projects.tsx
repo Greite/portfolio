@@ -1,10 +1,13 @@
+import { getLang } from '@root/lib/i18n';
 import { projects } from '@root/lib/projects';
 import Link from 'next/link';
 import { LuArrowRight, LuGithub } from 'react-icons/lu';
 
 import Reveal from './Reveal';
 
-export default function Projects() {
+export default async function Projects() {
+  const lang = await getLang();
+
   return (
     <section
       id="projets"
@@ -33,7 +36,7 @@ export default function Projects() {
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="text-lg font-semibold text-fg">
                       <Link
-                        href={`/projets/${project.slug}`}
+                        href={`/${lang}/projects/${project.slug}`}
                         className="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-3 focus-visible:after:outline-accent focus-visible:after:outline-solid"
                       >
                         {project.name}
