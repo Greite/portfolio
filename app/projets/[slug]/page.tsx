@@ -262,7 +262,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
         </section>
 
         <div className="bg-surface-raised">
-          <div className={`${wrap} flex flex-col gap-24 py-20 lg:py-24`}>
+          <div className={`${wrap} flex flex-col gap-24 pt-12 pb-20 lg:pt-10 lg:pb-24`}>
             <Reveal className="flex flex-col gap-10">
               <SectionHeading>Comment ça marche</SectionHeading>
               <ol className="grid gap-8 lg:grid-cols-5 lg:gap-6">
