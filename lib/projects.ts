@@ -133,16 +133,34 @@ export const projects: Project[] = [
     ],
     install: {
       steps: [
-        'Cloner le dépôt et lancer la stack Docker avec un secret d’authentification.',
-        'Ouvrir l’application et créer le premier administrateur sur /setup.',
+        'Créer un compose.yml avec l’image publiée sur ghcr.io (amd64 et arm64).',
+        'Générer le secret d’authentification puis démarrer le container.',
+        'Ouvrir http://localhost:3000/setup et créer le premier administrateur.',
       ],
       snippets: [
         {
+          label: 'compose.yml',
+          language: 'yaml',
+          code: `services:
+  speedtest:
+    image: ghcr.io/greite/speedtest-monitor:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      AUTH_SECRET: \${AUTH_SECRET}
+      TZ: Europe/Paris
+    volumes:
+      - speedtest-data:/data
+
+volumes:
+  speedtest-data:`,
+        },
+        {
           label: 'Commandes',
           language: 'bash',
-          code: `git clone https://github.com/Greite/speedtest-monitor.git
-cd speedtest-monitor
-AUTH_SECRET=$(openssl rand -base64 32) docker compose up -d --build`,
+          code: `echo "AUTH_SECRET=$(openssl rand -base64 32)" > .env
+docker compose up -d`,
         },
       ],
     },
