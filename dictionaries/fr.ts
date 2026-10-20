@@ -1,3 +1,6 @@
+/** Élision : « d’Unraid btop », « de Speedtest Monitor ». */
+const elide = (name: string) => (/^[aeiouyh]/i.test(name) ? `d’${name}` : `de ${name}`);
+
 export const fr = {
   meta: {
     title: 'Gauthier Painteaux · Lead Développeur Web Fullstack',
@@ -45,6 +48,7 @@ export const fr = {
     copiedSubject: 'Copié :',
     copyEmail: "Copier l'adresse",
     emailCopied: 'Adresse email copiée',
+    newTab: '(ouvre dans un nouvel onglet)',
     theme: { group: 'Choix du thème', light: 'Thème clair', system: 'Thème système', dark: 'Thème sombre' },
   },
   footer: {
@@ -74,7 +78,6 @@ export const fr = {
   },
   experience: {
     heading: 'Expérience',
-    newTab: '(ouvre dans un nouvel onglet)',
     techAt: (company: string) => `Technologies utilisées chez ${company}`,
     duration: (years: number, months: number) =>
       [years > 0 && `${years} ${years > 1 ? 'ans' : 'an'}`, months > 0 && `${months} mois`]
@@ -119,6 +122,26 @@ export const fr = {
         'Gauthier Painteaux a travaillé chez Koul (2023-présent) en tant que Lead Développeur, Globalis media system (2018-2023) comme Développeur Fullstack, Appartoo (2018) en stage, et DTI Soft (2016) en stage de développement avec Talend.',
     },
   ],
+  projectPage: {
+    dateLocale: 'fr-FR',
+    breadcrumb: "Fil d'Ariane",
+    home: 'Accueil',
+    viewOnGitHub: 'Voir sur GitHub',
+    version: 'Version',
+    stars: 'Étoiles',
+    license: 'Licence',
+    updated: 'Mis à jour le',
+    keyFigures: 'Chiffres clés',
+    howItWorks: (name: string) => `Comment fonctionne ${name}`,
+    highlights: (name: string) => `Points forts ${elide(name)}`,
+    gallery: 'En images',
+    techChoices: (name: string) => `Choix techniques ${elide(name)}`,
+    install: (name: string) => `Installer ${name}`,
+    docs: (repo: string) => `Documentation complète de ${repo}`,
+    otherProjects: 'Autres projets',
+    previous: 'Projet précédent',
+    next: 'Projet suivant',
+  },
 };
 
 export type Dictionary = typeof fr;

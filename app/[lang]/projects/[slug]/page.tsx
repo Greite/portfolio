@@ -4,7 +4,7 @@ import Navigation from '@components/Navigation';
 import ScrollProgress from '@components/ScrollProgress';
 import { getRepoStats } from '@root/lib/github';
 import { alternates, getDictionary, getLang, ogLocale } from '@root/lib/i18n';
-import { getAdjacentProjects, getProject, projects, type Screenshot } from '@root/lib/projects';
+import { getAdjacentProjects, getProject, type Screenshot, slugs } from '@root/lib/projects';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,7 +13,6 @@ import type { ReactNode } from 'react';
 import { LuArrowLeft, LuArrowRight, LuArrowUpRight, LuBookOpen, LuCheck, LuGithub, LuStar } from 'react-icons/lu';
 
 const siteUrl = 'https://gauthierpainteaux.fr';
-const dateFormat = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long', timeZone: 'Europe/Paris' });
 const wrap = 'mx-auto w-full max-w-[90rem] px-6 md:px-[7.5rem]';
 /** Classes complètes pour que Tailwind les génère. */
 const statColumns: Record<number, string> = { 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4' };
@@ -21,17 +20,17 @@ const statColumns: Record<number, string> = { 2: 'lg:grid-cols-2', 3: 'lg:grid-c
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return projects.map(({ slug }) => ({ slug }));
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<'/[lang]/projects/[slug]'>): Promise<Metadata> {
-  const project = getProject((await params).slug);
+  const lang = await getLang();
+  const project = getProject((await params).slug, lang);
 
   if (!project) {
     return {};
   }
 
-  const lang = await getLang();
   const { meta } = await getDictionary();
   const title = project.seoTitle;
   const path = `/projects/${project.slug}`;
@@ -109,20 +108,19 @@ function SectionHeading({ id, children }: { id?: string; children: ReactNode }) 
 }
 
 export default async function ProjectPage({ params }: PageProps<'/[lang]/projects/[slug]'>) {
-  const project = getProject((await params).slug);
   const lang = await getLang();
-  const { nav, common } = await getDictionary();
+  const project = getProject((await params).slug, lang);
+  const { nav, common, projects: projectLabels, projectPage: t } = await getDictionary();
 
   if (!project) {
     notFound();
   }
 
   const stats = await getRepoStats(project.repoUrl);
-  const { previous, next } = getAdjacentProjects(project.slug);
+  const { previous, next } = getAdjacentProjects(project.slug, lang);
   const [cover, ...gallery] = project.screenshots ?? [];
   const repoName = project.repoUrl.split('/').pop();
-  // Élision : « d’Unraid btop », « de Speedtest Monitor ».
-  const ofName = /^[aeiouyh]/i.test(project.name) ? `d’${project.name}` : `de ${project.name}`;
+  const dateFormat = new Intl.DateTimeFormat(t.dateLocale, { dateStyle: 'long', timeZone: 'Europe/Paris' });
 
   const softwareJsonLd = {
     '@context': 'https://schema.org',
@@ -142,7 +140,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${siteUrl}/${lang}` },
+      { '@type': 'ListItem', position: 1, name: t.home, item: `${siteUrl}/${lang}` },
       { '@type': 'ListItem', position: 2, name: project.name },
     ],
   };
@@ -176,11 +174,11 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
             className={`${wrap} grid items-center gap-12 py-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16 lg:py-16`}
           >
             <div className="reveal flex flex-col gap-6">
-              <nav aria-label="Fil d'Ariane">
+              <nav aria-label={t.breadcrumb}>
                 <ol className="flex flex-wrap items-center gap-2 text-sm text-fg-secondary">
                   <li>
                     <Link href={`/${lang}`} className="rounded-md transition-colors duration-150 hover:text-accent">
-                      Accueil
+                      {t.home}
                     </Link>
                   </li>
                   <li aria-hidden="true">›</li>
@@ -194,7 +192,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
                 {project.name}
               </h1>
               <p className="max-w-[38rem] text-lg leading-relaxed text-fg-secondary">{project.pitch}</p>
-              <ul className="flex flex-wrap gap-2" aria-label={`Technologies de ${project.name}`}>
+              <ul className="flex flex-wrap gap-2" aria-label={projectLabels.techOf(project.name)}>
                 {project.tags.map((tag) => (
                   <li
                     key={tag}
@@ -213,33 +211,33 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
                   className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-fg transition-[background-color,scale] duration-150 ease-out-strong hover:bg-accent-strong active:scale-[0.97]"
                 >
                   <LuGithub size={16} aria-hidden="true" />
-                  Voir sur GitHub
-                  <span className="sr-only">(ouvre dans un nouvel onglet)</span>
+                  {t.viewOnGitHub}
+                  <span className="sr-only">{common.newTab}</span>
                 </Link>
 
                 {stats && (
                   <dl className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-fg-secondary">
                     {stats.latestRelease && (
                       <div className="flex gap-1">
-                        <dt>Version</dt>
+                        <dt>{t.version}</dt>
                         <dd className="font-medium text-fg">{stats.latestRelease}</dd>
                       </div>
                     )}
                     <div className="flex items-center gap-1">
                       <dt>
                         <LuStar size={12} aria-hidden="true" />
-                        <span className="sr-only">Étoiles</span>
+                        <span className="sr-only">{t.stars}</span>
                       </dt>
                       <dd className="font-medium text-fg">{stats.stars}</dd>
                     </div>
                     {stats.license && (
                       <div className="flex gap-1">
-                        <dt>Licence</dt>
+                        <dt>{t.license}</dt>
                         <dd className="font-medium text-fg">{stats.license}</dd>
                       </div>
                     )}
                     <div className="flex gap-1">
-                      <dt>Mis à jour le</dt>
+                      <dt>{t.updated}</dt>
                       <dd className="font-medium text-fg">
                         <time dateTime={stats.pushedAt}>{dateFormat.format(new Date(stats.pushedAt))}</time>
                       </dd>
@@ -265,7 +263,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
           </div>
         </section>
 
-        <section aria-label="Chiffres clés" className="bg-surface-raised">
+        <section aria-label={t.keyFigures} className="bg-surface-raised">
           <dl
             className={`${wrap} grid gap-10 py-12 sm:grid-cols-2 lg:py-14 ${statColumns[project.stats.length] ?? 'lg:grid-cols-3'}`}
           >
@@ -281,7 +279,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
         <div className="bg-surface-raised">
           <div className={`${wrap} flex flex-col gap-24 pt-12 pb-20 lg:pt-10 lg:pb-24`}>
             <div className="flex flex-col gap-10">
-              <SectionHeading>{project.stepsHeading ?? `Comment fonctionne ${project.name}`}</SectionHeading>
+              <SectionHeading>{project.stepsHeading ?? t.howItWorks(project.name)}</SectionHeading>
               <ol className="grid gap-8 lg:grid-cols-5 lg:gap-6">
                 {project.steps.map((step, index) => (
                   <li key={step.title} className="relative flex gap-5 lg:flex-col lg:gap-4">
@@ -304,7 +302,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
             </div>
 
             <div className="flex flex-col gap-10">
-              <SectionHeading>Points forts {ofName}</SectionHeading>
+              <SectionHeading>{t.highlights(project.name)}</SectionHeading>
               <ul className="grid gap-x-16 gap-y-8 sm:grid-cols-2">
                 {project.features.map((feature) => (
                   <li key={feature.title} className="flex gap-4">
@@ -322,7 +320,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
 
             {gallery.length > 0 && (
               <div className="flex flex-col gap-10">
-                <SectionHeading>En images</SectionHeading>
+                <SectionHeading>{t.gallery}</SectionHeading>
                 <ul className={`grid gap-6 ${gallery.length > 1 ? 'lg:grid-cols-2' : 'max-w-[56rem]'}`}>
                   {gallery.map((screenshot) => (
                     <li key={screenshot.light}>
@@ -337,7 +335,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
             )}
 
             <div className="flex flex-col gap-10">
-              <SectionHeading>Choix techniques {ofName}</SectionHeading>
+              <SectionHeading>{t.techChoices(project.name)}</SectionHeading>
               <dl className="divide-y divide-border">
                 {project.stack.map((choice) => (
                   <div
@@ -358,7 +356,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
         <section aria-labelledby="install-heading" className="bg-surface-raised">
           <div className={`${wrap} grid gap-12 pb-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:pb-24`}>
             <div className="flex flex-col gap-8">
-              <SectionHeading id="install-heading">Installer {project.name}</SectionHeading>
+              <SectionHeading id="install-heading">{t.install(project.name)}</SectionHeading>
               <ol className="flex flex-col gap-5">
                 {project.install.steps.map((step, index) => (
                   <li key={step} className="flex gap-4">
@@ -379,7 +377,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
                   >
                     {project.install.cta.label}
                     <LuArrowUpRight size={16} aria-hidden="true" />
-                    <span className="sr-only">(ouvre dans un nouvel onglet)</span>
+                    <span className="sr-only">{common.newTab}</span>
                   </Link>
                 )}
                 <Link
@@ -389,8 +387,8 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
                   className="inline-flex items-center gap-2 rounded-md text-sm font-medium text-accent transition-colors duration-150 hover:text-accent-strong"
                 >
                   <LuBookOpen size={16} aria-hidden="true" />
-                  Documentation complète de Greite/{repoName}
-                  <span className="sr-only">(ouvre dans un nouvel onglet)</span>
+                  {t.docs(`Greite/${repoName}`)}
+                  <span className="sr-only">{common.newTab}</span>
                 </Link>
               </div>
             </div>
@@ -418,10 +416,10 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
           </div>
         </section>
 
-        <nav aria-label="Autres projets" className={`${wrap} grid gap-6 py-16 sm:grid-cols-2`}>
+        <nav aria-label={t.otherProjects} className={`${wrap} grid gap-6 py-16 sm:grid-cols-2`}>
           {[
-            { target: previous, label: 'Projet précédent', isNext: false },
-            { target: next, label: 'Projet suivant', isNext: true },
+            { target: previous, label: t.previous, isNext: false },
+            { target: next, label: t.next, isNext: true },
           ].map(({ target, label, isNext }) => {
             const thumbnail = target.screenshots?.[0];
 

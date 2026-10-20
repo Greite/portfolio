@@ -46,6 +46,7 @@ export const en: Dictionary = {
     copiedSubject: 'Copied:',
     copyEmail: 'Copy email address',
     emailCopied: 'Email address copied',
+    newTab: '(opens in a new tab)',
     theme: { group: 'Theme', light: 'Light theme', system: 'System theme', dark: 'Dark theme' },
   },
   footer: {
@@ -74,7 +75,6 @@ export const en: Dictionary = {
   },
   experience: {
     heading: 'Experience',
-    newTab: '(opens in a new tab)',
     techAt: (company: string) => `Technologies used at ${company}`,
     duration: (years: number, months: number) =>
       [
@@ -121,4 +121,24 @@ export const en: Dictionary = {
         'Gauthier Painteaux has worked at Koul (2023-present) as Lead Developer, Globalis media system (2018-2023) as a Full-Stack Developer, Appartoo (2018) as an intern, and DTI Soft (2016) as a development intern working with Talend.',
     },
   ],
+  projectPage: {
+    dateLocale: 'en-US',
+    breadcrumb: 'Breadcrumb',
+    home: 'Home',
+    viewOnGitHub: 'View on GitHub',
+    version: 'Version',
+    stars: 'Stars',
+    license: 'License',
+    updated: 'Updated',
+    keyFigures: 'Key figures',
+    howItWorks: (name: string) => `How ${name} works`,
+    highlights: (name: string) => `${name} highlights`,
+    gallery: 'Screenshots',
+    techChoices: (name: string) => `Technical choices behind ${name}`,
+    install: (name: string) => `Install ${name}`,
+    docs: (repo: string) => `Full ${repo} documentation`,
+    otherProjects: 'More projects',
+    previous: 'Previous project',
+    next: 'Next project',
+  },
 };

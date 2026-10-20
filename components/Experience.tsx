@@ -46,7 +46,7 @@ function diffYearsMonths(startISO: string): { years: number; months: number } {
 }
 
 export default async function Experience() {
-  const { experience } = await getDictionary();
+  const { experience, common } = await getDictionary();
   const { years: currentJobYear, months: currentJobMonth } = diffYearsMonths('2023-06-01');
   const currentJobDuration = experience.duration(currentJobYear, currentJobMonth);
 
@@ -94,7 +94,7 @@ export default async function Experience() {
                       className="inline-block rounded-md text-xl font-semibold text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
                     >
                       {entry.company}
-                      <span className="sr-only"> {experience.newTab}</span>
+                      <span className="sr-only"> {common.newTab}</span>
                     </Link>
                   ) : (
                     <span className="text-xl font-semibold text-fg">{entry.company}</span>
