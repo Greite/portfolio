@@ -21,7 +21,7 @@ const socials = [
 ];
 
 export default async function Hero() {
-  const { common } = await getDictionary();
+  const { common, hero, nav } = await getDictionary();
 
   return (
     <section aria-labelledby="hero-name" className="relative isolate w-full overflow-hidden bg-surface">
@@ -45,12 +45,12 @@ export default async function Hero() {
 
           {/* Subtitle */}
           <p className="reveal reveal-delay-1 text-fg text-lg sm:text-xl font-medium text-center lg:text-left">
-            Développeur Web Fullstack
+            {hero.role}
           </p>
 
           {/* Intro text */}
           <p className="reveal reveal-delay-2 text-fg-secondary text-base font-normal leading-relaxed max-w-[30rem] text-center lg:text-left">
-            Je conçois et développe des applications web modernes et performantes.
+            {hero.intro}
           </p>
 
           {/* CTA Buttons */}
@@ -60,13 +60,13 @@ export default async function Hero() {
               className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-accent-fg transition-[background-color,scale] duration-150 ease-out-strong hover:bg-accent-strong active:scale-[0.97]"
             >
               <LuMail size={16} aria-hidden="true" />
-              Me contacter
+              {nav.contact}
             </Link>
             <Link
               href="#projets"
               className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full border border-border-accent px-7 py-3.5 text-sm font-semibold text-accent transition-[background-color,color,scale] duration-150 ease-out-strong hover:bg-accent hover:text-accent-fg active:scale-[0.97]"
             >
-              Voir mes projets
+              {hero.seeProjects}
               <LuArrowDown size={16} aria-hidden="true" />
             </Link>
           </div>
@@ -102,7 +102,7 @@ export default async function Hero() {
             <Image
               className="rounded-full object-cover w-full h-full"
               src="/photo.webp"
-              alt="Photo de profil de Gauthier Painteaux, développeur fullstack"
+              alt={hero.photoAlt}
               width={320}
               height={320}
               sizes="(max-width: 640px) 200px, (max-width: 1024px) 300px, 320px"

@@ -1,4 +1,4 @@
-import { getLang } from '@root/lib/i18n';
+import { getDictionary, getLang } from '@root/lib/i18n';
 import { projects } from '@root/lib/projects';
 import Link from 'next/link';
 import { LuArrowRight, LuGithub } from 'react-icons/lu';
@@ -7,6 +7,7 @@ import Reveal from './Reveal';
 
 export default async function Projects() {
   const lang = await getLang();
+  const { projects: labels } = await getDictionary();
 
   return (
     <section
@@ -19,7 +20,7 @@ export default async function Projects() {
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="h-[3px] w-10 rounded-sm bg-accent" />
           <h2 id="projects-heading" className="text-2xl font-semibold text-fg">
-            Projets
+            {labels.heading}
           </h2>
         </div>
 
@@ -51,7 +52,7 @@ export default async function Projects() {
 
                   <p className="text-sm leading-relaxed text-fg-secondary flex-1">{project.description}</p>
 
-                  <ul className="flex flex-wrap gap-2" aria-label={`Technologies de ${project.name}`}>
+                  <ul className="flex flex-wrap gap-2" aria-label={labels.techOf(project.name)}>
                     {project.tags.map((tag) => (
                       <li
                         key={tag}
@@ -70,7 +71,7 @@ export default async function Projects() {
                   >
                     <LuGithub size={14} aria-hidden="true" />
                     Greite/{project.repoUrl.split('/').pop()}
-                    <span className="sr-only"> — code de {project.name} sur GitHub (ouvre dans un nouvel onglet)</span>
+                    <span className="sr-only">{labels.codeOn(project.name)}</span>
                   </Link>
                 </div>
               </div>
@@ -93,7 +94,7 @@ export default async function Projects() {
                 aria-hidden="true"
                 className="text-accent transition-transform duration-200 ease-out-strong group-hover:scale-110"
               />
-              <span className="text-base font-semibold text-fg">Tous mes projets</span>
+              <span className="text-base font-semibold text-fg">{labels.all}</span>
             </Link>
           </li>
         </ul>

@@ -1,45 +1,23 @@
+import { getDictionary } from '@root/lib/i18n';
+
 import Reveal from './Reveal';
 
-interface Formation {
-  school: string;
-  date: string;
-  startDate: string;
-  endDate: string;
-  degree: string;
-}
+const formations = [
+  { school: 'IUT Nancy Charlemagne', startDate: '2017', endDate: '2018' },
+  { school: 'Lycée Raymond Poincaré', startDate: '2015', endDate: '2017' },
+  { school: 'IUT Metz', startDate: '2014', endDate: '2015' },
+] as const;
 
-const formations: Formation[] = [
-  {
-    school: 'IUT Nancy Charlemagne',
-    date: '2017 - 2018',
-    startDate: '2017',
-    endDate: '2018',
-    degree: "L.P. Concepteur intégrateur en système internet et intranet pour l'entreprise",
-  },
-  {
-    school: 'Lycée Raymond Poincaré',
-    date: '2015 - 2017',
-    startDate: '2015',
-    endDate: '2017',
-    degree: 'BTS SNIR - Systèmes numériques opt. A : Informatique et réseaux',
-  },
-  {
-    school: 'IUT Metz',
-    date: '2014 - 2015',
-    startDate: '2014',
-    endDate: '2015',
-    degree: 'DUT Informatique',
-  },
-];
+export default async function Formations() {
+  const { formations: labels } = await getDictionary();
 
-export default function Formations() {
   return (
     <section id="formations" aria-labelledby="formations-heading" className="w-full scroll-mt-20 bg-surface">
       <Reveal className="mx-auto flex max-w-[90rem] flex-col gap-12 px-6 py-16 md:px-[7.5rem] md:py-[6.25rem]">
         <div className="flex items-center gap-4">
           <div aria-hidden="true" className="w-10 h-[3px] bg-accent rounded-sm" />
           <h2 id="formations-heading" className="text-fg text-2xl font-semibold">
-            Formations
+            {labels.heading}
           </h2>
         </div>
 
@@ -60,10 +38,12 @@ export default function Formations() {
 
                 <div className={`flex flex-1 flex-col gap-1.5 pl-4${isLast ? '' : ' pb-10'}`}>
                   <time dateTime={formation.startDate} className="text-accent text-xs font-semibold">
-                    {formation.date}
+                    {formation.startDate} - {formation.endDate}
                   </time>
                   <span className="text-fg text-xl font-semibold">{formation.school}</span>
-                  <span className="text-fg-secondary text-base font-normal leading-[1.4]">{formation.degree}</span>
+                  <span className="text-fg-secondary text-base font-normal leading-[1.4]">
+                    {labels.degrees[formation.school]}
+                  </span>
                 </div>
               </li>
             );

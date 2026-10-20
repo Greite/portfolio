@@ -7,44 +7,26 @@ import Hero from '@components/Hero';
 import Navigation from '@components/Navigation';
 import Projects from '@components/Projects';
 import ScrollProgress from '@components/ScrollProgress';
-import { getDictionary } from '@root/lib/i18n';
+import { getDictionary, getLang } from '@root/lib/i18n';
 
 export default async function Home() {
-  const { nav, common } = await getDictionary();
+  const lang = await getLang();
+  const { nav, common, faq } = await getDictionary();
   const faqJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: "Quelle est l'expérience actuelle de Gauthier Painteaux ?",
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Gauthier Painteaux est actuellement Lead Développeur chez Koul depuis juin 2023. Il a évolué du poste de Développeur Web Fullstack (juin 2023 - mai 2025) à Lead Développeur (depuis juin 2025). Il travaille principalement avec Next.JS, Symfony, TypeScript et Docker.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Quelles technologies maîtrise Gauthier Painteaux ?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Gauthier Painteaux maîtrise un large éventail de technologies fullstack : côté frontend avec React, Next.JS, TypeScript ; côté backend avec Symfony, Slim et WordPress ; ainsi que des outils DevOps comme Docker.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Dans quelles entreprises Gauthier Painteaux a-t-il travaillé ?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Gauthier Painteaux a travaillé chez Koul (2023-présent) en tant que Lead Développeur, Globalis media system (2018-2023) comme Développeur Fullstack, Appartoo (2018) en stage, et DTI Soft (2016) en stage de développement avec Talend.',
-        },
-      },
-    ],
+    inLanguage: lang,
+    mainEntity: faq.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
   };
 
   const profilePageJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
+    inLanguage: lang,
     mainEntity: {
       '@type': 'Person',
       '@id': 'https://gauthierpainteaux.fr/#person',
