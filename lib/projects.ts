@@ -30,13 +30,20 @@ export interface Install {
 export interface Project {
   slug: string;
   name: string;
+  /** Meta description et texte de la carte d'accueil : 140 à 155 caractères. */
   description: string;
+  /** `<title>` complet, avec le terme recherché, 60 caractères max. */
+  seoTitle: string;
+  /** Langage principal du code (JSON-LD `programmingLanguage`). */
+  programmingLanguage: string;
   pitch: string;
   tags: string[];
   repoUrl: string;
   stats: Stat[];
   /** Fonctionnement, dans l'ordre d'exécution. */
   steps: Feature[];
+  /** Titre de la frise quand elle ne décrit pas le fonctionnement (défaut : « Comment fonctionne <nom> »). */
+  stepsHeading?: string;
   features: Feature[];
   /** Choix techniques : `title` = techno, `description` = raison du choix. */
   stack: Feature[];
@@ -49,10 +56,12 @@ export const projects: Project[] = [
   {
     slug: 'speedtest-monitor',
     name: 'Speedtest Monitor',
+    seoTitle: 'Speedtest Monitor : monitoring de connexion self-hosted',
+    programmingLanguage: 'TypeScript',
     description:
-      'Outil self-hosted de monitoring de connexion internet basé sur Cloudflare Speedtest : dashboard temps réel, alertes et authentification OIDC.',
+      'Monitoring self-hosted de connexion internet avec Cloudflare Speed Test : dashboard temps réel, historique, alertes multicanales et SSO OIDC.',
     pitch:
-      'Votre FAI promet un débit, Speedtest Monitor vérifie qu’il le tient. Il mesure la connexion à intervalle régulier avec le moteur de Cloudflare, conserve tout l’historique et prévient dès que le débit ou la latence se dégradent.',
+      'Un FAI promet un débit ; Speedtest Monitor vérifie qu’il est tenu. Il mesure la connexion à intervalle régulier avec le moteur de Cloudflare, conserve tout l’historique et prévient dès que le débit ou la latence se dégradent.',
     tags: ['Next.js', 'Bun', 'TypeScript', 'SQLite'],
     repoUrl: 'https://github.com/Greite/speedtest-monitor',
     stats: [
@@ -74,7 +83,7 @@ export const projects: Project[] = [
           'Chaque mesure arrive en direct par WebSocket : download, upload, latence, jitter et bufferbloat, sur 6 heures comme sur 30 jours.',
       },
       {
-        title: 'Mesures fiables',
+        title: 'Calibré pour le multi-gigabit',
         description:
           'Download, upload, latence, jitter et bufferbloat mesurés avec Cloudflare Speed Test, et réglables pour saturer les liens multi-gigabit.',
       },
@@ -86,14 +95,14 @@ export const projects: Project[] = [
       {
         title: 'Comptes et SSO',
         description:
-          'Rôles administrateur et lecteur, connexion par mot de passe ou OIDC (Authelia, Authentik, Keycloak).',
+          'Rôles administrateur et lecteur, connexion par mot de passe ou OIDC, testé avec Authelia, Authentik et Keycloak.',
       },
     ],
     stack: [
       {
         title: 'Next.js + serveur Bun',
         description:
-          'Un seul serveur sert l’application et le WebSocket sur le même port : un seul container, un seul port à exposer.',
+          'Le même serveur sert l’application et le WebSocket, donc un seul container et un seul port à exposer.',
       },
       {
         title: 'SQLite + Drizzle',
@@ -106,8 +115,7 @@ export const projects: Project[] = [
       },
       {
         title: 'Better Auth',
-        description:
-          'Rôles administrateur et lecteur, sessions en base et SSO OIDC sans réimplémenter l’authentification.',
+        description: 'Sessions stockées en base et provider OIDC générique, sans réimplémenter l’authentification.',
       },
     ],
     install: {
@@ -159,8 +167,10 @@ docker compose up -d`,
   {
     slug: 'ha-ravelli-smart-wifi',
     name: 'Ravelli Smart Wi-Fi',
+    seoTitle: 'Ravelli Smart Wi-Fi : intégration Home Assistant locale',
+    programmingLanguage: 'Python',
     description:
-      'Intégration Home Assistant pour les poêles à granulés Ravelli équipés du module Smart Wi-Fi : thermostat, niveau de puissance, état de combustion et alarmes, en local sans compte cloud. Distribuée via HACS.',
+      'Intégration Home Assistant locale pour les poêles Ravelli Smart Wi-Fi : thermostat, puissance, combustion, alarmes et programmes, sans cloud.',
     pitch:
       'Piloter son poêle à granulés depuis Home Assistant, sans cloud ni boîtier supplémentaire. L’intégration dialogue directement avec le module Wi-Fi du poêle sur le réseau local et expose tout ce qu’il sait faire sous forme d’entités.',
     tags: ['Python', 'Home Assistant', 'HACS', 'Domotique'],
@@ -182,7 +192,7 @@ docker compose up -d`,
       {
         title: 'Thermostat complet',
         description:
-          'Marche/arrêt, température de consigne, niveau de puissance de 1 à 5 et mode manuel, depuis la carte thermostat habituelle.',
+          'Marche/arrêt, consigne, puissance de 1 à 5 et mode manuel depuis la carte thermostat. Vérifié sur un vrai poêle à carte AIR-RDS.',
       },
       {
         title: 'État de combustion et alarmes',
@@ -195,7 +205,7 @@ docker compose up -d`,
           'Les six programmes du poêle s’affichent dans un calendrier et se modifient par des actions Home Assistant.',
       },
       {
-        title: 'Sécurité avant tout',
+        title: 'Pas d’allumage en alarme',
         description:
           'Une commande n’est jamais renvoyée en double, et l’allumage est refusé tant qu’une alarme est active.',
       },
@@ -247,10 +257,12 @@ docker compose up -d`,
   {
     slug: 'database-backup',
     name: 'Database Backup',
+    seoTitle: 'Database Backup : backups Docker PostgreSQL, MySQL, MongoDB',
+    programmingLanguage: 'Go',
     description:
-      'Container Docker léger pour automatiser les backups PostgreSQL, MariaDB/MySQL, MongoDB et SQLite : scheduler Go intégré, rotation, chiffrement GPG/age et healthcheck natif.',
+      'Container Docker qui backupe PostgreSQL, MariaDB/MySQL, MongoDB et SQLite : scheduler Go intégré, rotation, chiffrement GPG/age et healthcheck.',
     pitch:
-      'Un seul container pour backuper toutes vos bases de données. Un fichier YAML décrit les jobs, le scheduler Go intégré s’occupe du reste : dumps compressés, rotation, chiffrement et healthcheck.',
+      'Un seul container pour backuper toutes les bases d’un serveur. Un fichier YAML décrit les jobs, et le scheduler Go intégré produit des dumps compressés, chiffrés et purgés selon la rétention.',
     tags: ['Go', 'Docker', 'PostgreSQL', 'MongoDB'],
     repoUrl: 'https://github.com/Greite/database-backup',
     stats: [
@@ -283,7 +295,7 @@ docker compose up -d`,
           'GPG symétrique ou age, par passphrase ou par public key : le container n’a jamais besoin de la private key.',
       },
       {
-        title: 'Sûr par défaut',
+        title: 'Non root, credentials masqués',
         description:
           'Exécution non root, credentials jamais visibles dans la ligne de commande, healthcheck par drivers natifs.',
       },
@@ -292,7 +304,7 @@ docker compose up -d`,
       {
         title: 'Go',
         description:
-          'Un binaire unique qui embarque le scheduler et les drivers natifs du healthcheck, sans cron externe.',
+          'Un binaire unique, compilé statiquement, qui embarque le scheduler et les drivers natifs du healthcheck.',
       },
       {
         title: 'Debian slim',
@@ -376,10 +388,13 @@ jobs:
   {
     slug: 'unraid-btop',
     name: 'Unraid btop',
+    stepsHeading: 'Comment le plugin se met à jour',
+    seoTitle: 'Unraid btop : plugin btop et tuile de dashboard Unraid',
+    programmingLanguage: 'PHP',
     description:
-      'Plugin Unraid qui embarque btop dans le terminal et ajoute une tuile au dashboard natif (load, températures, I/O disque et réseau, processus). Releases automatisées par CI à chaque version de btop.',
+      'Plugin Unraid qui installe btop et ajoute au dashboard une tuile load, I/O disque et réseau et processus. Mis à jour par CI à chaque release de btop.',
     pitch:
-      'btop dans le terminal d’Unraid, et l’essentiel de ce qu’il montre directement sur le dashboard. Le plugin package le binaire officiel de btop et ajoute une tuile native avec ce que le dashboard d’origine n’affiche pas.',
+      'Le dashboard d’Unraid montre l’état des disques et des containers, mais pas le load average, les débits ou les processus les plus gourmands. Ce plugin installe btop dans le terminal et ajoute ces informations dans une tuile native.',
     tags: ['PHP', 'Unraid', 'CI/CD', 'Monitoring'],
     repoUrl: 'https://github.com/Greite/unraid-btop',
     stats: [
@@ -405,9 +420,8 @@ jobs:
           'Load average, température CPU, uptime, nombre de processus, I/O disque et réseau agrégés, et les processus les plus gourmands.',
       },
       {
-        title: 'Entièrement réglable',
-        description:
-          'Chaque section de la tuile s’active, se trie et se rafraîchit selon vos préférences depuis les réglages du plugin.',
+        title: 'Tuile configurable',
+        description: 'Chaque section de la tuile s’active, se trie et se rafraîchit depuis les réglages du plugin.',
       },
       {
         title: 'Updates automatiques',
@@ -463,8 +477,10 @@ jobs:
   {
     slug: 'unraid-traefik-rolling-update',
     name: 'Unraid Traefik Rolling Update',
+    seoTitle: 'Unraid Traefik Rolling Update : updates zero-downtime',
+    programmingLanguage: 'PHP',
     description:
-      "Plugin Unraid pour des updates zero-downtime des containers derrière Traefik : la nouvelle version démarre à côté de l'ancienne, Traefik switche dès qu'elle est healthy, rollback automatique sinon.",
+      'Plugin Unraid pour updater les containers derrière Traefik sans downtime : la nouvelle version démarre à côté, switch une fois healthy, sinon rollback.',
     pitch:
       'Sur Unraid, updater un container signifie l’arrêter, le supprimer puis le recréer : le site est down pendant toute l’opération. Derrière Traefik, ce n’est pas nécessaire. Ce plugin démarre la nouvelle version à côté de l’ancienne et ne switche qu’une fois qu’elle est prête.',
     tags: ['PHP', 'Unraid', 'Traefik', 'Docker'],

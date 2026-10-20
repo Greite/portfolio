@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps<'/projets/[slug]'>)
     return {};
   }
 
-  const title = `${project.name} · Gauthier Painteaux`;
+  const title = project.seoTitle;
   const url = `/projets/${project.slug}`;
   const cover = project.screenshots?.[0];
 
@@ -116,6 +116,8 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
   const { previous, next } = getAdjacentProjects(project.slug);
   const [cover, ...gallery] = project.screenshots ?? [];
   const repoName = project.repoUrl.split('/').pop();
+  // Élision : « d’Unraid btop », « de Speedtest Monitor ».
+  const ofName = /^[aeiouyh]/i.test(project.name) ? `d’${project.name}` : `de ${project.name}`;
 
   const softwareJsonLd = {
     '@context': 'https://schema.org',
@@ -125,6 +127,8 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
     url: `${siteUrl}/projets/${project.slug}`,
     codeRepository: project.repoUrl,
     keywords: project.tags.join(', '),
+    programmingLanguage: project.programmingLanguage,
+    ...(stats?.license && { license: `https://spdx.org/licenses/${stats.license}.html` }),
     author: { '@id': `${siteUrl}/#person` },
   };
 
@@ -271,7 +275,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
         <div className="bg-surface-raised">
           <div className={`${wrap} flex flex-col gap-24 pt-12 pb-20 lg:pt-10 lg:pb-24`}>
             <div className="flex flex-col gap-10">
-              <SectionHeading>Comment ça marche</SectionHeading>
+              <SectionHeading>{project.stepsHeading ?? `Comment fonctionne ${project.name}`}</SectionHeading>
               <ol className="grid gap-8 lg:grid-cols-5 lg:gap-6">
                 {project.steps.map((step, index) => (
                   <li key={step.title} className="relative flex gap-5 lg:flex-col lg:gap-4">
@@ -294,7 +298,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
             </div>
 
             <div className="flex flex-col gap-10">
-              <SectionHeading>Points forts</SectionHeading>
+              <SectionHeading>Points forts {ofName}</SectionHeading>
               <ul className="grid gap-x-16 gap-y-8 sm:grid-cols-2">
                 {project.features.map((feature) => (
                   <li key={feature.title} className="flex gap-4">
@@ -327,7 +331,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
             )}
 
             <div className="flex flex-col gap-10">
-              <SectionHeading>Choix techniques</SectionHeading>
+              <SectionHeading>Choix techniques {ofName}</SectionHeading>
               <dl className="divide-y divide-border">
                 {project.stack.map((choice) => (
                   <div
@@ -348,7 +352,7 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
         <section aria-labelledby="install-heading" className="bg-surface-raised">
           <div className={`${wrap} grid gap-12 pb-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:pb-24`}>
             <div className="flex flex-col gap-8">
-              <SectionHeading id="install-heading">Installation rapide</SectionHeading>
+              <SectionHeading id="install-heading">Installer {project.name}</SectionHeading>
               <ol className="flex flex-col gap-5">
                 {project.install.steps.map((step, index) => (
                   <li key={step} className="flex gap-4">

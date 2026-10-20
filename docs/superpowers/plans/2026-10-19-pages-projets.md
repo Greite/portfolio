@@ -18,7 +18,7 @@
 - `cacheComponents` reste désactivé ; cache GitHub via `fetch(url, { next: { revalidate: 86400 } })`.
 - Dépôt public : aucun nom de machine, IP privée, domaine interne, nom de conteneur tiers ni prénom, ni dans le code, ni dans les images, ni dans les commits.
 - Texte en français, dates `Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' })`.
-- Titre de page : `<nom> · Gauthier Painteaux`. Person JSON-LD : `{ '@id': 'https://gauthierpainteaux.fr/#person' }`.
+- Titre de page : `seoTitle` du projet (≤ 60 caractères ; à l'origine `<nom> · Gauthier Painteaux`, révisé après audit SEO). Person JSON-LD : `{ '@id': 'https://gauthierpainteaux.fr/#person' }`.
 - `bun run lint` est le seul contrôle de types (le build ignore les erreurs TS) : le lancer à chaque tâche.
 - Commits : `Improve - #PRT-NoId - <description>`, sans `-c user.*`, pas de push.
 - Pas de suite de tests dans le dépôt, pas de test permanent ajouté : vérification par lint, build, `curl` et navigateur.

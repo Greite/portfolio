@@ -81,10 +81,10 @@ Direction « Vitrine » (révision du 19 oct. 2026, la première version jugée 
    - à gauche : fil d'Ariane visible `<nav aria-label="Fil d'Ariane">` « Accueil › <nom> » (identique au JSON-LD), `h1`, pitch, tags, CTA « Voir sur GitHub », bloc GitHub (release, étoiles, licence, date de mise à jour) masqué si `null` ;
    - à droite, légèrement inclinée sur grand écran : première capture 16:10 via `next/image`, clair/sombre basculés en CSS (`dark:hidden` / `hidden dark:block`). Deux variantes : pas de `preload` (les deux seraient téléchargées), lazy-loading + `fetchPriority="high"` (doc Next `image.md`, « Theme detection ») ; image unique (`light === dark`) : `preload`. Sans capture : `codeSample` dans un `<pre>`.
 3. Bandeau pleine largeur des chiffres clés (`stats`, 3 ou 4 valeurs réelles tirées des dépôts).
-4. « Comment ça marche » : frise d'étapes numérotées (`steps`, une vraie séquence), horizontale en `lg`, verticale en mobile.
-5. « Points forts » (`features`) : liste en 2 colonnes, sans cartes.
+4. « Comment fonctionne <nom> » : frise d'étapes numérotées (`steps`, une vraie séquence), horizontale en `lg`, verticale en mobile. Titre remplaçable par `stepsHeading` quand la séquence ne décrit pas le fonctionnement (btop : « Comment le plugin se met à jour »).
+5. « Points forts de <nom> » (`features`) : liste en 2 colonnes, sans cartes.
 6. Galerie : captures suivantes, si plus d'une.
-7. « Choix techniques » (`stack`) : techno et raison du choix.
+7. « Choix techniques de <nom> » (`stack`) : techno et raison du choix. Élision « d'<nom> » devant voyelle.
 8. « Installation rapide » (`install`), bandeau pleine largeur, adaptée au projet : étapes numérotées, CTA éventuel (HACS), snippets réellement utilisables avec bouton copier (`components/CopyButton.tsx`), lien vers le README.
 9. Navigation précédent/suivant : deux cartes compactes, ordre du tableau, circulaire.
 10. `Footer` partagé.
@@ -94,13 +94,13 @@ Réutilise `Navigation`, `Footer`, `ScrollProgress` et les jetons de `globals.cs
 ## SEO
 
 - `generateMetadata` :
-  - `title` : `<nom> · Gauthier Painteaux` ;
-  - `description` : `description` du projet ;
+  - `title` : `seoTitle` du projet (≤ 60 caractères, contient le terme recherché, ex. « Ravelli Smart Wi-Fi : intégration Home Assistant locale ») ; le nom de l'auteur reste dans `og:site_name` et le JSON-LD ;
+  - `description` : `description` du projet, 140 à 155 caractères (aussi texte de la carte d'accueil) ;
   - `alternates.canonical` : `/projets/<slug>` (obligatoire : le layout déclare `canonical: '/'` pour tout le site) ;
   - `openGraph` complet (`type: 'website'`, `siteName`, `locale`, `url`, `title`, `description`, `images`) car Next remplace l'objet du layout au lieu de le fusionner (le layout déclare `type: 'profile'`) ; image = première capture claire, sinon `/photo.webp` du layout ;
   - `twitter` complet (`card`, `title`, `description`, `images`) pour la même raison : le layout fixe titre, description et photo de l'accueil. `card: 'summary_large_image'` avec la première capture claire, sinon `card: 'summary'` avec `/photo.webp`.
 - JSON-LD par page :
-  - `SoftwareSourceCode` : `name`, `description`, `codeRepository`, `keywords` (tags), `author: { '@id': 'https://gauthierpainteaux.fr/#person' }` ;
+  - `SoftwareSourceCode` : `name`, `description`, `codeRepository`, `keywords` (tags), `programmingLanguage`, `license` (URL SPDX depuis GitHub, omise si indisponible), `author: { '@id': 'https://gauthierpainteaux.fr/#person' }`. Pas de `dateModified` : `pushed_at` du dépôt n'est pas une date éditoriale de la page ;
   - `BreadcrumbList` à deux niveaux : Accueil (`https://gauthierpainteaux.fr`) › projet (dernier élément sans `item`). Pas de niveau « Projets » : il n'existe pas de page `/projets`, et `/#projets` se confond avec l'accueil pour Google.
 - `app/sitemap.ts` : ajoute une entrée par projet depuis `lib/projects.ts`.
 
