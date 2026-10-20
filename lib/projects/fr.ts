@@ -7,6 +7,7 @@ export const fr: Record<Slug, ProjectText> = {
       'Monitoring self-hosted de connexion internet avec Cloudflare Speed Test : dashboard temps réel, historique, alertes multicanales et SSO OIDC.',
     pitch:
       'Un FAI promet un débit ; Speedtest Monitor vérifie qu’il est tenu. Il mesure la connexion à intervalle régulier avec le moteur de Cloudflare, conserve tout l’historique et prévient dès que le débit ou la latence se dégradent.',
+    tags: ['Next.js', 'Bun', 'TypeScript', 'SQLite'],
     stats: [
       { value: '6 h à 30 j', label: 'd’historique affiché, en 5 périodes au choix' },
       { value: '5', label: 'canaux d’alerte : webhook, ntfy, Discord, Slack, e-mail' },
@@ -78,6 +79,7 @@ export const fr: Record<Slug, ProjectText> = {
       'Intégration Home Assistant locale pour les poêles Ravelli Smart Wi-Fi : thermostat, puissance, combustion, alarmes et programmes, sans cloud.',
     pitch:
       'Piloter son poêle à granulés depuis Home Assistant, sans cloud ni boîtier supplémentaire. L’intégration dialogue directement avec le module Wi-Fi du poêle sur le réseau local et expose tout ce qu’il sait faire sous forme d’entités.',
+    tags: ['Python', 'Home Assistant', 'HACS', 'Domotique'],
     stats: [
       { value: '0', label: 'compte cloud : tout passe par le réseau local' },
       { value: '6', label: 'programmes horaires pilotables depuis Home Assistant' },
@@ -150,6 +152,7 @@ export const fr: Record<Slug, ProjectText> = {
       'Container Docker qui backupe PostgreSQL, MariaDB/MySQL, MongoDB et SQLite : scheduler Go intégré, rotation, chiffrement GPG/age et healthcheck.',
     pitch:
       'Un seul container pour backuper toutes les bases d’un serveur. Un fichier YAML décrit les jobs, et le scheduler Go intégré produit des dumps compressés, chiffrés et purgés selon la rétention.',
+    tags: ['Go', 'Docker', 'PostgreSQL', 'MongoDB'],
     stats: [
       { value: '4', label: 'moteurs : PostgreSQL, MariaDB/MySQL, MongoDB, SQLite' },
       { value: '~126 Mo', label: 'd’image, sans client préinstallé' },
@@ -218,6 +221,7 @@ export const fr: Record<Slug, ProjectText> = {
       'Plugin Unraid qui installe btop et ajoute au dashboard une tuile load, I/O disque et réseau et processus. Mis à jour par CI à chaque release de btop.',
     pitch:
       'Le dashboard d’Unraid montre l’état des disques et des containers, mais pas le load average, les débits ou les processus les plus gourmands. Ce plugin installe btop dans le terminal et ajoute ces informations dans une tuile native.',
+    tags: ['PHP', 'Unraid', 'CI/CD', 'Monitoring'],
     stats: [
       { value: '24 h', label: 'entre deux vérifications des releases de btop' },
       { value: '6.12+', label: 'versions d’Unraid supportées, en x86_64' },
@@ -283,6 +287,7 @@ export const fr: Record<Slug, ProjectText> = {
       'Plugin Unraid pour updater les containers derrière Traefik sans downtime : la nouvelle version démarre à côté, switch une fois healthy, sinon rollback.',
     pitch:
       'Sur Unraid, updater un container signifie l’arrêter, le supprimer puis le recréer : le site est down pendant toute l’opération. Derrière Traefik, ce n’est pas nécessaire. Ce plugin démarre la nouvelle version à côté de l’ancienne et ne switche qu’une fois qu’elle est prête.',
+    tags: ['PHP', 'Unraid', 'Traefik', 'Docker'],
     stats: [
       { value: '1–2 vs ~50', label: 'requêtes perdues sur ~500 pendant le switch, contre l’update natif d’Unraid' },
       { value: '0', label: 'label ou healthcheck à écrire' },

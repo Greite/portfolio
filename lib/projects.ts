@@ -35,7 +35,6 @@ export interface Install {
 interface ProjectBase {
   name: string;
   repoUrl: string;
-  tags: string[];
   /** Langage principal du code (JSON-LD `programmingLanguage`). */
   programmingLanguage: string;
   screenshots?: Omit<Screenshot, 'alt'>[];
@@ -51,6 +50,8 @@ export interface ProjectText {
   /** Meta description et texte de la carte d'accueil : 140 à 155 caractères. */
   description: string;
   pitch: string;
+  /** Technos et domaines affichés en badges (et `keywords` du JSON-LD). */
+  tags: string[];
   stats: Stat[];
   /** Titre de la frise quand elle ne décrit pas le fonctionnement (défaut : `projectPage.howItWorks`). */
   stepsHeading?: string;
@@ -87,7 +88,6 @@ const base: Record<Slug, ProjectBase> = {
   'speedtest-monitor': {
     name: 'Speedtest Monitor',
     repoUrl: 'https://github.com/Greite/speedtest-monitor',
-    tags: ['Next.js', 'Bun', 'TypeScript', 'SQLite'],
     programmingLanguage: 'TypeScript',
     screenshots: [
       { light: '/projets/speedtest-monitor/focus-light.webp', dark: '/projets/speedtest-monitor/focus-dark.webp' },
@@ -124,7 +124,6 @@ docker compose up -d`,
   'ha-ravelli-smart-wifi': {
     name: 'Ravelli Smart Wi-Fi',
     repoUrl: 'https://github.com/Greite/ha-ravelli-smart-wifi',
-    tags: ['Python', 'Home Assistant', 'HACS', 'Domotique'],
     programmingLanguage: 'Python',
     screenshots: [
       { light: '/projets/ha-ravelli-smart-wifi/focus.webp', dark: '/projets/ha-ravelli-smart-wifi/focus.webp' },
@@ -136,7 +135,6 @@ docker compose up -d`,
   'database-backup': {
     name: 'Database Backup',
     repoUrl: 'https://github.com/Greite/database-backup',
-    tags: ['Go', 'Docker', 'PostgreSQL', 'MongoDB'],
     programmingLanguage: 'Go',
     codeSample: {
       language: 'yaml',
@@ -197,7 +195,6 @@ jobs:
   'unraid-btop': {
     name: 'Unraid btop',
     repoUrl: 'https://github.com/Greite/unraid-btop',
-    tags: ['PHP', 'Unraid', 'CI/CD', 'Monitoring'],
     programmingLanguage: 'PHP',
     screenshots: [
       { light: '/projets/unraid-btop/dashboard-tile.webp', dark: '/projets/unraid-btop/dashboard-tile.webp' },
@@ -208,7 +205,6 @@ jobs:
   'unraid-traefik-rolling-update': {
     name: 'Unraid Traefik Rolling Update',
     repoUrl: 'https://github.com/Greite/unraid-traefik-rolling-update',
-    tags: ['PHP', 'Unraid', 'Traefik', 'Docker'],
     programmingLanguage: 'PHP',
     screenshots: [
       {

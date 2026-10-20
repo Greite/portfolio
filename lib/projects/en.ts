@@ -7,6 +7,7 @@ export const en: Record<Slug, ProjectText> = {
       'Self-hosted internet connection monitoring built on Cloudflare Speed Test: a real-time dashboard, history, multi-channel alerts and OIDC SSO.',
     pitch:
       'Your ISP promises a speed; Speedtest Monitor checks that it delivers. It measures your connection at regular intervals with Cloudflare’s engine, keeps the full history and alerts you as soon as throughput or latency degrades.',
+    tags: ['Next.js', 'Bun', 'TypeScript', 'SQLite'],
     stats: [
       { value: '6 h to 30 d', label: 'of history on screen, across 5 selectable ranges' },
       { value: '5', label: 'alert channels: webhook, ntfy, Discord, Slack, email' },
@@ -76,6 +77,7 @@ export const en: Record<Slug, ProjectText> = {
       'Local Home Assistant integration for Ravelli Smart Wi-Fi stoves: thermostat, power level, combustion, alarms and schedules, with no cloud at all.',
     pitch:
       'Control your pellet stove from Home Assistant, with no cloud and no extra hardware. The integration talks directly to the stove’s Wi-Fi module on your local network and exposes everything it can do as entities.',
+    tags: ['Python', 'Home Assistant', 'HACS', 'Smart home'],
     stats: [
       { value: '0', label: 'cloud accounts: everything stays on the local network' },
       { value: '6', label: 'time schedules you can manage from Home Assistant' },
@@ -144,6 +146,7 @@ export const en: Record<Slug, ProjectText> = {
       'Docker container that backs up PostgreSQL, MariaDB/MySQL, MongoDB and SQLite: built-in Go scheduler, rotation, GPG/age encryption and healthcheck.',
     pitch:
       'One container to back up every database on a server. A YAML file describes the jobs, and the built-in Go scheduler produces compressed, encrypted dumps, pruned according to your retention.',
+    tags: ['Go', 'Docker', 'PostgreSQL', 'MongoDB'],
     stats: [
       { value: '4', label: 'engines: PostgreSQL, MariaDB/MySQL, MongoDB, SQLite' },
       { value: '~126 MB', label: 'image size, with no client preinstalled' },
@@ -210,6 +213,7 @@ export const en: Record<Slug, ProjectText> = {
       'Unraid plugin that installs btop and adds a dashboard tile with load, disk and network I/O, and processes. Updated by CI on every btop release.',
     pitch:
       'The Unraid dashboard shows disk and container status, but not load average, throughput or the most resource-hungry processes. This plugin installs btop in the terminal and adds that information to a native tile.',
+    tags: ['PHP', 'Unraid', 'CI/CD', 'Monitoring'],
     stats: [
       { value: '24 h', label: 'between two checks for new btop releases' },
       { value: '6.12+', label: 'supported Unraid versions, on x86_64' },
@@ -277,6 +281,7 @@ export const en: Record<Slug, ProjectText> = {
       'Unraid plugin to update containers behind Traefik with zero downtime: the new version starts alongside, switches once healthy, or rolls back.',
     pitch:
       'On Unraid, updating a container means stopping it, removing it and recreating it: the site is down for the whole operation. Behind Traefik, that isn’t necessary. This plugin starts the new version next to the old one and only switches once it’s ready.',
+    tags: ['PHP', 'Unraid', 'Traefik', 'Docker'],
     stats: [
       { value: '1–2 vs ~50', label: 'requests lost out of ~500 during the switch, versus Unraid’s native update' },
       { value: '0', label: 'labels or healthchecks to write' },
@@ -330,7 +335,7 @@ export const en: Record<Slug, ProjectText> = {
     ],
     installSteps: [
       'In Unraid, open Plugins › Install Plugin and paste the plugin URL.',
-      'In Settings › Utilities › Traefik Rolling Update, switch the containers you want to zero-downtime.',
+      'In Settings › Utilities › Traefik Rolling Update, enable zero-downtime updates for the containers you want.',
       'Reload the Docker page: Update and Update All now go through the rolling update.',
     ],
     snippetLabels: ['Plugin URL'],

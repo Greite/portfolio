@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: PageProps<'/[lang]/projects/[
       type: 'website',
       siteName: 'Gauthier Painteaux',
       locale: ogLocale[lang],
+      alternateLocale: ogLocale[lang === 'fr' ? 'en' : 'fr'],
       url: `/${lang}${path}`,
       title,
       description: project.description,

@@ -15,6 +15,7 @@ export const en: Dictionary = {
       'React',
       'TypeScript',
       'Symfony',
+      'Reims',
     ],
     photoAlt: 'Profile photo of Gauthier Painteaux',
   },
