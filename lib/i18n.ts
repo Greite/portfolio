@@ -23,10 +23,13 @@ export async function getDictionary(): Promise<Dictionary> {
   return dictionaries[await getLang()];
 }
 
-/** `path` sans préfixe de langue : `''` pour l'accueil, `/projects/<slug>`. */
+/**
+ * `path` sans préfixe de langue : `''` pour l'accueil, `/projects/<slug>`.
+ * `x-default` de l'accueil = `/`, qui redirige selon la langue du navigateur (schéma documenté par Google).
+ */
 export function alternates(lang: Locale, path: string): Metadata['alternates'] {
   return {
     canonical: `/${lang}${path}`,
-    languages: { fr: `/fr${path}`, en: `/en${path}`, 'x-default': `/en${path}` },
+    languages: { fr: `/fr${path}`, en: `/en${path}`, 'x-default': path ? `/en${path}` : '/' },
   };
 }

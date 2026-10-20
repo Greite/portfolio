@@ -20,7 +20,7 @@ export const fr = {
     photoAlt: 'Photo de profil de Gauthier Painteaux',
   },
   person: {
-    jobTitle: 'Lead Développeur',
+    jobTitle: 'Lead Développeur Web Fullstack',
     description: 'Développeur Web Fullstack basé à Reims, France',
   },
   notFound: {
@@ -36,13 +36,8 @@ export const fr = {
     closeMenu: 'Fermer le menu',
     menu: 'Menu de navigation',
     contact: 'Me contacter',
-    /** Sections de l'accueil : `id` = ancre dans l'URL (`/fr#projets`), traduite comme le libellé. */
-    sections: {
-      about: { id: 'a-propos', label: 'À propos' },
-      experience: { id: 'experience', label: 'Expérience' },
-      projects: { id: 'projets', label: 'Projets' },
-      education: { id: 'formations', label: 'Formations' },
-    },
+    /** Libellés des sections de l'accueil ; leurs ancres traduites sont dans `sectionIds` (lib/locales.ts). */
+    sections: { about: 'À propos', experience: 'Expérience', projects: 'Projets', education: 'Formations' },
     /** Lien vers l'autre langue : code affiché, et nom complet écrit dans cette langue. */
     otherLang: { code: 'EN', name: 'English' },
   },
@@ -63,7 +58,7 @@ export const fr = {
     rights: 'Tous droits réservés.',
   },
   hero: {
-    role: 'Développeur Web Fullstack',
+    role: 'Lead Développeur Web Fullstack',
     intro: 'Je conçois et développe des applications web modernes et performantes.',
     seeProjects: 'Voir mes projets',
     photoAlt: 'Photo de profil de Gauthier Painteaux, développeur fullstack',
@@ -76,7 +71,7 @@ export const fr = {
       'Lead Developer chez Koul',
       ', et ',
       'développeur fullstack passionné',
-      " avec plus de 7 ans d'expérience, je me spécialise dans la création d'applications web modernes avec React, Next.js et TypeScript.",
+      " avec plus de 7 ans d'expérience, basé à Reims, je me spécialise dans la création d'applications web modernes avec React, Next.js et TypeScript.",
     ],
     skills: 'COMPÉTENCES',
     groups: { frontend: 'Frontend', backend: 'Backend', tools: 'Outils' },
@@ -111,24 +106,8 @@ export const fr = {
       'IUT Metz': 'DUT Informatique',
     },
   },
-  faq: [
-    {
-      question: "Quelle est l'expérience actuelle de Gauthier Painteaux ?",
-      answer:
-        'Gauthier Painteaux est actuellement Lead Développeur chez Koul depuis juin 2023. Il a évolué du poste de Développeur Web Fullstack (juin 2023 - mai 2025) à Lead Développeur (depuis juin 2025). Il travaille principalement avec Next.JS, Symfony, TypeScript et Docker.',
-    },
-    {
-      question: 'Quelles technologies maîtrise Gauthier Painteaux ?',
-      answer:
-        'Gauthier Painteaux maîtrise un large éventail de technologies fullstack : côté frontend avec React, Next.JS, TypeScript ; côté backend avec Symfony, Slim et WordPress ; ainsi que des outils DevOps comme Docker.',
-    },
-    {
-      question: 'Dans quelles entreprises Gauthier Painteaux a-t-il travaillé ?',
-      answer:
-        'Gauthier Painteaux a travaillé chez Koul (2023-présent) en tant que Lead Développeur, Globalis media system (2018-2023) comme Développeur Fullstack, Appartoo (2018) en stage, et DTI Soft (2016) en stage de développement avec Talend.',
-    },
-  ],
   projectPage: {
+    byline: 'Projet open source de Gauthier Painteaux',
     dateLocale: 'fr-FR',
     breadcrumb: "Fil d'Ariane",
     home: 'Accueil',

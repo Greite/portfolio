@@ -1,5 +1,6 @@
 import type { Dictionary } from '@root/dictionaries/fr';
-import { getDictionary } from '@root/lib/i18n';
+import { getDictionary, getLang } from '@root/lib/i18n';
+import { sectionIds } from '@root/lib/locales';
 import Link from 'next/link';
 
 import Reveal from './Reveal';
@@ -16,7 +17,7 @@ const entries: ExperienceEntry[] = [
     company: 'Koul',
     link: 'https://koul.io/',
     startDate: '2023-06',
-    tags: ['Next.JS', 'Symfony', 'TypeScript', 'Docker'],
+    tags: ['Next.js', 'Symfony', 'TypeScript', 'Docker'],
   },
   {
     company: 'Globalis media system',
@@ -46,13 +47,13 @@ function diffYearsMonths(startISO: string): { years: number; months: number } {
 }
 
 export default async function Experience() {
-  const { experience, common, nav } = await getDictionary();
+  const { experience, common } = await getDictionary();
   const { years: currentJobYear, months: currentJobMonth } = diffYearsMonths('2023-06-01');
   const currentJobDuration = experience.duration(currentJobYear, currentJobMonth);
 
   return (
     <section
-      id={nav.sections.experience.id}
+      id={sectionIds[await getLang()].experience}
       aria-labelledby="experience-heading"
       className="w-full scroll-mt-20 bg-surface"
     >

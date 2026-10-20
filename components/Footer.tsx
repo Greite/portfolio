@@ -1,4 +1,5 @@
 import { getDictionary, getLang } from '@root/lib/i18n';
+import { sectionIds, sectionKeys } from '@root/lib/locales';
 import Link from 'next/link';
 import { LuGithub, LuLinkedin } from 'react-icons/lu';
 
@@ -29,13 +30,13 @@ export default async function Footer() {
           {/* Center - Navigation */}
           <nav aria-label={footer.nav} className="flex flex-col gap-3">
             <h3 className="text-xs font-semibold tracking-[var(--tracking-brand-wide)] text-accent">NAVIGATION</h3>
-            {Object.values(nav.sections).map(({ id, label }) => (
+            {sectionKeys.map((key) => (
               <a
-                key={id}
-                href={`/${lang}#${id}`}
+                key={key}
+                href={`/${lang}#${sectionIds[lang][key]}`}
                 className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
               >
-                {label}
+                {nav.sections[key]}
               </a>
             ))}
           </nav>

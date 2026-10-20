@@ -80,7 +80,7 @@ app/
 │   └── not-found.tsx     # Page 404
 ├── globals.css           # Styles globaux + tokens Tailwind
 └── sitemap.ts            # Sitemap bilingue
-proxy.ts                  # Redirige (307) les URL sans langue selon Accept-Language
+proxy.ts                  # `/` → /fr ou /en selon le navigateur (307) ; anciennes URL → /fr (308)
 dictionaries/
 ├── fr.ts                 # Textes FR de l'interface et de l'accueil (référence du type)
 ├── en.ts                 # Textes EN, typés par fr.ts

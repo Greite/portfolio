@@ -1,4 +1,5 @@
-import { getDictionary } from '@root/lib/i18n';
+import { getDictionary, getLang } from '@root/lib/i18n';
+import { sectionIds } from '@root/lib/locales';
 
 import Reveal from './Reveal';
 
@@ -9,11 +10,11 @@ const formations = [
 ] as const;
 
 export default async function Formations() {
-  const { formations: labels, nav } = await getDictionary();
+  const { formations: labels } = await getDictionary();
 
   return (
     <section
-      id={nav.sections.education.id}
+      id={sectionIds[await getLang()].education}
       aria-labelledby="formations-heading"
       className="w-full scroll-mt-20 bg-surface"
     >

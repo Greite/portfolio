@@ -1,4 +1,5 @@
-import { getDictionary } from '@root/lib/i18n';
+import { getDictionary, getLang } from '@root/lib/i18n';
+import { sectionIds } from '@root/lib/locales';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LuArrowDown, LuGithub, LuLinkedin, LuMail } from 'react-icons/lu';
@@ -49,7 +50,7 @@ export default async function Hero() {
           </p>
 
           {/* Intro text */}
-          <p className="reveal reveal-delay-2 text-fg-secondary text-base font-normal leading-relaxed max-w-[30rem] text-center lg:text-left">
+          <p className="reveal reveal-delay-2 text-fg-secondary text-base font-normal leading-relaxed max-w-[30rem] text-center text-pretty lg:text-left">
             {hero.intro}
           </p>
 
@@ -63,7 +64,7 @@ export default async function Hero() {
               {nav.contact}
             </Link>
             <Link
-              href={`#${nav.sections.projects.id}`}
+              href={`#${sectionIds[await getLang()].projects}`}
               className="inline-flex min-h-11 items-center justify-center gap-2.5 rounded-full border border-border-accent px-7 py-3.5 text-sm font-semibold text-accent transition-[background-color,color,scale] duration-150 ease-out-strong hover:bg-accent hover:text-accent-fg active:scale-[0.97]"
             >
               {hero.seeProjects}

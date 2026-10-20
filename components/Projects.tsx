@@ -1,4 +1,5 @@
 import { getDictionary, getLang } from '@root/lib/i18n';
+import { sectionIds } from '@root/lib/locales';
 import { getProjects } from '@root/lib/projects';
 import Link from 'next/link';
 import { LuArrowRight, LuGithub } from 'react-icons/lu';
@@ -7,12 +8,12 @@ import Reveal from './Reveal';
 
 export default async function Projects() {
   const lang = await getLang();
-  const { projects: labels, nav } = await getDictionary();
+  const { projects: labels } = await getDictionary();
   const projects = getProjects(lang);
 
   return (
     <section
-      id={nav.sections.projects.id}
+      id={sectionIds[lang].projects}
       aria-labelledby="projects-heading"
       className="w-full scroll-mt-20 border-y border-border bg-surface-raised"
     >

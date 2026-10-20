@@ -1,7 +1,7 @@
 'use client';
 
 import type { Dictionary } from '@root/dictionaries/fr';
-import { type Locale, switchLocalePath } from '@root/lib/locales';
+import { type Locale, sectionIds, sectionKeys, switchLocalePath } from '@root/lib/locales';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -17,25 +17,28 @@ interface NavigationProps {
 
 export default function Navigation({ nav, theme }: NavigationProps) {
   const { lang } = useParams<{ lang: Locale }>();
-  const links = Object.values(nav.sections);
+  const pathname = usePathname();
+  const links = sectionKeys.map((key) => ({ key, id: sectionIds[lang][key], label: nav.sections[key] }));
   const otherLang: Locale = lang === 'fr' ? 'en' : 'fr';
-  // <a> et non <Link> : le root layout change de langue, un chargement complet met à jour <html lang>.
-  const langSwitch = (
-    <a
-      href={switchLocalePath(usePathname(), otherLang)}
-      hrefLang={otherLang}
-      lang={otherLang}
-      aria-label={nav.otherLang.name}
-      className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-border px-3 text-sm font-semibold text-fg transition-[color,border-color,scale] duration-150 ease-out-strong hover:border-border-accent hover:text-accent active:scale-[0.97]"
-    >
-      {nav.otherLang.code}
-    </a>
-  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
+  // Sur l'accueil, on garde la section en cours, sous son ancre traduite (`/en#projects` → `/fr#projets`).
+  const activeKey = links.find((link) => link.id === activeId)?.key;
+  // <a> et non <Link> : le root layout change de langue, un chargement complet met à jour <html lang>.
+  const langSwitch = (
+    <a
+      href={`${switchLocalePath(pathname, otherLang)}${activeKey ? `#${sectionIds[otherLang][activeKey]}` : ''}`}
+      hrefLang={otherLang}
+      lang={otherLang}
+      aria-label={`${nav.otherLang.code} – ${nav.otherLang.name}`}
+      className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-transparent px-3 text-sm font-semibold text-fg-secondary transition-[color,border-color,scale] duration-150 ease-out-strong hover:border-border-accent hover:text-accent active:scale-[0.97]"
+    >
+      {nav.otherLang.code}
+    </a>
+  );
 
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
@@ -94,8 +97,8 @@ export default function Navigation({ nav, theme }: NavigationProps) {
   }, [isMenuOpen, closeMenu]);
 
   useEffect(() => {
-    const sections = Object.values(nav.sections)
-      .map(({ id }) => document.getElementById(id))
+    const sections = sectionKeys
+      .map((key) => document.getElementById(sectionIds[lang][key]))
       .filter((el): el is HTMLElement => el !== null);
 
     if (sections.length === 0) {
@@ -122,13 +125,13 @@ export default function Navigation({ nav, theme }: NavigationProps) {
     }
 
     return () => observer.disconnect();
-  }, [nav.sections]);
+  }, [lang]);
 
   return (
     <>
       <nav aria-label={nav.main} className="sticky top-0 z-40 w-full [container-type:scroll-state]">
         <div className="nav-edge material bg-surface/[0.93] backdrop-blur-md">
-          <div className="mx-auto flex max-w-[90rem] items-center justify-between px-5 py-4 lg:px-[7.5rem]">
+          <div className="mx-auto flex max-w-[90rem] items-center justify-between px-5 py-4 lg:px-10 xl:px-[7.5rem]">
             <Link
               href={`/${lang}`}
               aria-label={nav.home}
@@ -170,18 +173,21 @@ export default function Navigation({ nav, theme }: NavigationProps) {
               </a>
             </div>
 
-            {/* Mobile hamburger button */}
-            <button
-              ref={hamburgerRef}
-              type="button"
-              className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97] lg:hidden"
-              onClick={() => setIsMenuOpen(true)}
-              aria-label={nav.openMenu}
-              aria-expanded={isMenuOpen}
-              aria-controls="mobile-menu"
-            >
-              <LuMenu size={24} aria-hidden="true" />
-            </button>
+            {/* Mobile: language switch stays visible next to the hamburger */}
+            <div className="flex items-center gap-1 lg:hidden">
+              {langSwitch}
+              <button
+                ref={hamburgerRef}
+                type="button"
+                className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
+                onClick={() => setIsMenuOpen(true)}
+                aria-label={nav.openMenu}
+                aria-expanded={isMenuOpen}
+                aria-controls="mobile-menu"
+              >
+                <LuMenu size={24} aria-hidden="true" />
+              </button>
+            </div>
           </div>
         </div>
       </nav>

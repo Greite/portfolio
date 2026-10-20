@@ -126,10 +126,11 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
   const softwareJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareSourceCode',
+    // Même logiciel dans les deux langues : même @id. Pas d'`inLanguage`, qui se lirait comme la langue du code.
+    '@id': `${project.repoUrl}#code`,
     name: project.name,
     description: project.description,
     url: `${siteUrl}/${lang}/projects/${project.slug}`,
-    inLanguage: lang,
     codeRepository: project.repoUrl,
     keywords: project.tags.join(', '),
     programmingLanguage: project.programmingLanguage,
@@ -192,6 +193,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
               <h1 id="project-name" className="text-4xl leading-[1.05] font-bold text-fg sm:text-5xl lg:text-6xl">
                 {project.name}
               </h1>
+              <p className="-mt-3 text-sm font-medium text-accent">{t.byline}</p>
               <p className="max-w-[38rem] text-lg leading-relaxed text-fg-secondary">{project.pitch}</p>
               <ul className="flex flex-wrap gap-2" aria-label={projectLabels.techOf(project.name)}>
                 {project.tags.map((tag) => (

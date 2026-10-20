@@ -1,18 +1,26 @@
-import { preferredLocale, redirectPath } from '@root/lib/locales';
+import { redirectFor } from '@root/lib/locales';
 import { type NextRequest, NextResponse } from 'next/server';
 
-/** 307 et non 308 : la cible dépend du navigateur du visiteur, une redirection permanente mise en cache figerait sa langue. */
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
-  const target = redirectPath(pathname, preferredLocale(request.headers.get('accept-language')));
+  const redirect = redirectFor(pathname, request.headers.get('accept-language'));
 
-  if (target === null) {
+  if (redirect === null) {
     return NextResponse.next();
   }
 
-  const response = NextResponse.redirect(new URL(`${target}${search}`, request.url), 307);
-  response.headers.set('Vary', 'Accept-Language');
-  response.headers.set('Cache-Control', 'private, no-store');
+  // La query string se place avant l'ancre éventuelle (`/fr?utm=x#projets`).
+  const [path, hash = ''] = redirect.location.split('#');
+  const response = NextResponse.redirect(
+    new URL(`${path}${search}${hash && `#${hash}`}`, request.url),
+    redirect.status,
+  );
+
+  // 307 sur `/` : la cible dépend du navigateur, elle ne doit pas être mise en cache.
+  if (redirect.status === 307) {
+    response.headers.set('Vary', 'Accept-Language');
+    response.headers.set('Cache-Control', 'private, no-store');
+  }
 
   return response;
 }

@@ -6,12 +6,12 @@ export const en: Record<Slug, ProjectText> = {
     description:
       'Self-hosted internet connection monitoring built on Cloudflare Speed Test: a real-time dashboard, history, multi-channel alerts and OIDC SSO.',
     pitch:
-      'Your ISP promises a speed; Speedtest Monitor checks that it delivers. It measures your connection at regular intervals with Cloudflare’s engine, keeps the full history and alerts you as soon as throughput or latency degrades.',
+      'Your ISP promises a speed; Speedtest Monitor checks whether it delivers. It measures your connection at regular intervals with Cloudflare’s engine, keeps the full history and alerts you as soon as throughput or latency degrades.',
     tags: ['Next.js', 'Bun', 'TypeScript', 'SQLite'],
     stats: [
-      { value: '6 h to 30 d', label: 'of history on screen, across 5 selectable ranges' },
+      { value: '6 hours to 30 days', label: 'of history on screen, across 5 selectable ranges' },
       { value: '5', label: 'alert channels: webhook, ntfy, Discord, Slack, email' },
-      { value: '1 to 1440 min', label: 'between tests, adjustable on the fly' },
+      { value: '1 to 1,440 min', label: 'between tests, adjustable on the fly' },
     ],
     steps: [
       { title: 'Scheduling', description: 'A test starts at the chosen interval.' },
@@ -24,7 +24,7 @@ export const en: Record<Slug, ProjectText> = {
       {
         title: 'Real-time dashboard',
         description:
-          'Each test streams in live over WebSocket: download, upload, latency, jitter and bufferbloat, over 6 hours or 30 days.',
+          'Each result streams in live over WebSocket: download, upload, latency, jitter and bufferbloat, charted from the last 6 hours up to 30 days.',
       },
       {
         title: 'Built for multi-gigabit',
@@ -34,7 +34,7 @@ export const en: Record<Slug, ProjectText> = {
       {
         title: 'Degradation alerts',
         description:
-          'Thresholds on throughput, latency, bufferbloat or consecutive failures, sent via webhook, ntfy, Discord, Slack or email, once per incident.',
+          'Set thresholds on throughput, latency, bufferbloat or consecutive failures. Alerts go out via webhook, ntfy, Discord, Slack or email, once per incident.',
       },
       {
         title: 'Accounts and SSO',
@@ -145,13 +145,13 @@ export const en: Record<Slug, ProjectText> = {
     description:
       'Docker container that backs up PostgreSQL, MariaDB/MySQL, MongoDB and SQLite: built-in Go scheduler, rotation, GPG/age encryption and healthcheck.',
     pitch:
-      'One container to back up every database on a server. A YAML file describes the jobs, and the built-in Go scheduler produces compressed, encrypted dumps, pruned according to your retention.',
+      'One container to back up every database on a server. A YAML file describes the jobs, and the built-in Go scheduler produces compressed, encrypted dumps and prunes old ones according to your retention policy.',
     tags: ['Go', 'Docker', 'PostgreSQL', 'MongoDB'],
     stats: [
       { value: '4', label: 'engines: PostgreSQL, MariaDB/MySQL, MongoDB, SQLite' },
       { value: '~126 MB', label: 'image size, with no client preinstalled' },
       { value: '2', label: 'published architectures: amd64 and arm64' },
-      { value: '4 × / day', label: 'Debian base image check' },
+      { value: '4×/day', label: 'checks for a new Debian base image' },
     ],
     steps: [
       { title: 'Validation', description: 'backups.yml is validated at startup.' },
@@ -178,7 +178,7 @@ export const en: Record<Slug, ProjectText> = {
       {
         title: 'Non-root, hidden credentials',
         description:
-          'Runs as non-root, credentials never visible on the command line, healthcheck through native drivers.',
+          'Runs as non-root and never exposes credentials on the command line. The healthcheck uses native drivers.',
       },
     ],
     stack: [
@@ -201,8 +201,8 @@ export const en: Record<Slug, ProjectText> = {
       },
     ],
     installSteps: [
-      'Describe the jobs in backups.yml (here, an SQLite database backed up every night), with chmod 600.',
-      'Mount that file, the backup folder and the data to back up into the container.',
+      'Describe the jobs in backups.yml (here, a SQLite database backed up nightly) and chmod it to 600.',
+      'Mount backups.yml, the backup folder and the source data into the container.',
       'Run docker compose up -d: compressed dumps land in ./backups.',
     ],
     snippetLabels: ['backups.yml', 'compose.yml'],
@@ -215,8 +215,8 @@ export const en: Record<Slug, ProjectText> = {
       'The Unraid dashboard shows disk and container status, but not load average, throughput or the most resource-hungry processes. This plugin installs btop in the terminal and adds that information to a native tile.',
     tags: ['PHP', 'Unraid', 'CI/CD', 'Monitoring'],
     stats: [
-      { value: '24 h', label: 'between two checks for new btop releases' },
-      { value: '6.12+', label: 'supported Unraid versions, on x86_64' },
+      { value: '24 h', label: 'between checks for new btop releases' },
+      { value: '6.12+', label: 'Unraid version required (x86_64)' },
     ],
     stepsHeading: 'How the plugin stays up to date',
     steps: [
@@ -254,7 +254,7 @@ export const en: Record<Slug, ProjectText> = {
       },
       {
         title: 'Static btop binary',
-        description: 'The official binary runs on Unraid with no library to install.',
+        description: 'The official binary runs on Unraid with no libraries to install.',
       },
       {
         title: 'Shell',
@@ -262,7 +262,7 @@ export const en: Record<Slug, ProjectText> = {
       },
       {
         title: 'GitHub Actions',
-        description: 'Daily tracking of btop releases, build, tests and publishing, with no manual step.',
+        description: 'Daily tracking of btop releases, build, tests and publishing, with no manual steps.',
       },
     ],
     installSteps: [
@@ -278,12 +278,15 @@ export const en: Record<Slug, ProjectText> = {
   'unraid-traefik-rolling-update': {
     seoTitle: 'Unraid Traefik Rolling Update: zero-downtime updates',
     description:
-      'Unraid plugin to update containers behind Traefik with zero downtime: the new version starts alongside, switches once healthy, or rolls back.',
+      'Unraid plugin for zero-downtime container updates behind Traefik: the new version starts alongside the old one, takes over once healthy, or is rolled back.',
     pitch:
-      'On Unraid, updating a container means stopping it, removing it and recreating it: the site is down for the whole operation. Behind Traefik, that isn’t necessary. This plugin starts the new version next to the old one and only switches once it’s ready.',
+      'On Unraid, updating a container means stopping it, removing it and recreating it: the site is down for the whole operation. Behind Traefik, that isn’t necessary. This plugin starts the new version next to the old one and only switches traffic over once it’s ready.',
     tags: ['PHP', 'Unraid', 'Traefik', 'Docker'],
     stats: [
-      { value: '1–2 vs ~50', label: 'requests lost out of ~500 during the switch, versus Unraid’s native update' },
+      {
+        value: '1–2 vs ~50',
+        label: 'requests dropped out of ~500 during the switch: this plugin vs Unraid’s native update',
+      },
       { value: '0', label: 'labels or healthchecks to write' },
     ],
     steps: [
@@ -306,12 +309,13 @@ export const en: Record<Slug, ProjectText> = {
       },
       {
         title: 'Custom healthchecks',
-        description: 'Per container: expected path, port, HTTP code and text, interval and timeouts, Coolify-style.',
+        description:
+          'Per container: path, port, expected status code and response text, interval and timeouts, Coolify-style.',
       },
       {
         title: 'Native everywhere else',
         description:
-          'Containers you don’t opt in keep Unraid’s native update, and uninstalling the plugin restores the original behavior.',
+          'Containers you haven’t opted in keep Unraid’s native update, and uninstalling the plugin restores the original behavior.',
       },
     ],
     stack: [

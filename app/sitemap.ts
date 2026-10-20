@@ -14,7 +14,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority,
       alternates: {
-        languages: { fr: `${siteUrl}/fr${path}`, en: `${siteUrl}/en${path}`, 'x-default': `${siteUrl}/en${path}` },
+        languages: {
+          fr: `${siteUrl}/fr${path}`,
+          en: `${siteUrl}/en${path}`,
+          // Accueil : `/`, qui redirige selon la langue du navigateur (comme `alternates()` de lib/i18n.ts).
+          'x-default': path ? `${siteUrl}/en${path}` : `${siteUrl}/`,
+        },
       },
     })),
   );

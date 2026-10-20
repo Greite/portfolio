@@ -4,7 +4,8 @@ import { LuArrowLeft } from 'react-icons/lu';
 
 export default async function NotFoundPage() {
   const lang = await getLang();
-  const { notFound } = await getDictionary();
+  const other = lang === 'fr' ? 'en' : 'fr';
+  const { notFound, nav } = await getDictionary();
 
   return (
     <main className="flex min-h-dvh w-full items-center justify-center bg-surface px-8">
@@ -28,6 +29,14 @@ export default async function NotFoundPage() {
           <LuArrowLeft size={16} aria-hidden="true" />
           {notFound.back}
         </Link>
+        <a
+          href={`/${other}`}
+          hrefLang={other}
+          lang={other}
+          className="inline-flex min-h-11 items-center text-sm text-fg-secondary underline underline-offset-4 transition-colors hover:text-accent"
+        >
+          {nav.otherLang.name}
+        </a>
       </div>
     </main>
   );

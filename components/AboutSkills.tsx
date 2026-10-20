@@ -1,20 +1,21 @@
-import { getDictionary } from '@root/lib/i18n';
+import { getDictionary, getLang } from '@root/lib/i18n';
+import { sectionIds } from '@root/lib/locales';
 
 import Reveal from './Reveal';
 
 const skillGroups = [
-  { id: 'frontend', skills: ['Next.JS', 'React', 'TypeScript'] },
+  { id: 'frontend', skills: ['Next.js', 'React', 'TypeScript'] },
   { id: 'backend', skills: ['Symfony', 'Laravel', 'Slim', 'WordPress'] },
   { id: 'tools', skills: ['Docker'] },
 ] as const;
 
 export default async function AboutSkills() {
-  const { about, nav } = await getDictionary();
+  const { about } = await getDictionary();
   const [before, role, middle, passion, after] = about.intro;
 
   return (
     <section
-      id={nav.sections.about.id}
+      id={sectionIds[await getLang()].about}
       aria-labelledby="about-heading"
       className="w-full scroll-mt-20 border-y border-border bg-surface-raised"
     >

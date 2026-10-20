@@ -1,5 +1,5 @@
 import ThemeProvider from '@components/ThemeProvider';
-import { alternates, getDictionary, getLang, ogLocale } from '@root/lib/i18n';
+import { getDictionary, getLang, ogLocale } from '@root/lib/i18n';
 import { locales } from '@root/lib/locales';
 import type { Metadata, Viewport } from 'next';
 import { Raleway } from 'next/font/google';
@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: { name: 'Gauthier Painteaux', url: siteUrl },
     creator: 'Gauthier Painteaux',
     publisher: 'Gauthier Painteaux',
-    alternates: alternates(lang, ''),
+    // Pas d'`alternates` ni de `robots` ici : la 404 hérite du layout (canonical et hreflang dans chaque page).
     openGraph: {
       type: 'profile',
       siteName: 'Gauthier Painteaux',
@@ -51,7 +51,6 @@ export async function generateMetadata(): Promise<Metadata> {
       description: meta.description,
       images: ['/photo.webp'],
     },
-    robots: { index: true, follow: true },
   };
 }
 
@@ -73,19 +72,20 @@ export default async function RootLayout({ children }: LayoutProps<'/[lang]'>) {
     '@graph': [
       {
         '@type': 'WebSite',
-        '@id': 'https://gauthierpainteaux.fr/#website',
+        '@id': `${siteUrl}/#website`,
         name: 'Gauthier Painteaux',
         alternateName: 'GP',
-        url: `${siteUrl}/${lang}`,
-        inLanguage: lang,
+        // Le site porte les deux langues : URL racine et langues fixes, quelle que soit la page.
+        url: `${siteUrl}/`,
+        inLanguage: ['fr', 'en'],
       },
       {
         '@type': 'Person',
-        '@id': 'https://gauthierpainteaux.fr/#person',
+        '@id': `${siteUrl}/#person`,
         name: 'Gauthier Painteaux',
         jobTitle: person.jobTitle,
         description: person.description,
-        url: `${siteUrl}/${lang}`,
+        url: `${siteUrl}/`,
         email: 'contact@gauthierpainteaux.fr',
         worksFor: {
           '@type': 'Organization',
@@ -97,7 +97,7 @@ export default async function RootLayout({ children }: LayoutProps<'/[lang]'>) {
           { '@type': 'EducationalOrganization', name: 'Lycée Raymond Poincaré' },
           { '@type': 'EducationalOrganization', name: 'IUT Metz' },
         ],
-        knowsAbout: ['Next.JS', 'React', 'TypeScript', 'Symfony', 'Docker', 'WordPress', 'Slim'],
+        knowsAbout: ['Next.js', 'React', 'TypeScript', 'Symfony', 'Laravel', 'Docker', 'WordPress', 'Slim'],
         sameAs: ['https://www.linkedin.com/in/gauthier-painteaux-1018a2167/', 'https://github.com/Greite'],
       },
     ],

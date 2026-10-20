@@ -7,36 +7,31 @@ import Hero from '@components/Hero';
 import Navigation from '@components/Navigation';
 import Projects from '@components/Projects';
 import ScrollProgress from '@components/ScrollProgress';
-import { getDictionary, getLang } from '@root/lib/i18n';
+import { alternates, getDictionary, getLang } from '@root/lib/i18n';
+import type { Metadata } from 'next';
+
+const siteUrl = 'https://gauthierpainteaux.fr';
+
+/** Ici et non dans le layout : la 404 hérite du layout et ne doit pas reprendre le canonical de l'accueil. */
+export async function generateMetadata(): Promise<Metadata> {
+  return { alternates: alternates(await getLang(), '') };
+}
 
 export default async function Home() {
   const lang = await getLang();
-  const { nav, common, faq } = await getDictionary();
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    inLanguage: lang,
-    mainEntity: faq.map(({ question, answer }) => ({
-      '@type': 'Question',
-      name: question,
-      acceptedAnswer: { '@type': 'Answer', text: answer },
-    })),
-  };
-
+  const { nav, common } = await getDictionary();
   const profilePageJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
+    '@id': `${siteUrl}/${lang}#profilepage`,
+    url: `${siteUrl}/${lang}`,
     inLanguage: lang,
-    mainEntity: {
-      '@type': 'Person',
-      '@id': 'https://gauthierpainteaux.fr/#person',
-    },
+    isPartOf: { '@id': `${siteUrl}/#website` },
+    mainEntity: { '@id': `${siteUrl}/#person`, name: 'Gauthier Painteaux' },
   };
 
   return (
     <>
-      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data for SEO, content is JSON-stringified and safe */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       {/* biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data for SEO, content is JSON-stringified and safe */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }} />
 
