@@ -1,3 +1,4 @@
+import { getDictionary } from '@root/lib/i18n';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LuArrowDown, LuGithub, LuLinkedin, LuMail } from 'react-icons/lu';
@@ -19,7 +20,9 @@ const socials = [
   },
 ];
 
-export default function Hero() {
+export default async function Hero() {
+  const { common } = await getDictionary();
+
   return (
     <section aria-labelledby="hero-name" className="relative isolate w-full overflow-hidden bg-surface">
       {/* Warm honey halo */}
@@ -84,6 +87,7 @@ export default function Hero() {
             ))}
             <li>
               <CopyEmail
+                labels={common}
                 label="Email"
                 iconSize={18}
                 className="inline-flex min-h-11 items-center gap-2 rounded-md px-2 py-2 text-[0.8125rem] font-medium text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"

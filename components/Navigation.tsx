@@ -1,8 +1,9 @@
 'use client';
 
-import type { Locale } from '@root/lib/locales';
+import type { Dictionary } from '@root/dictionaries/fr';
+import { type Locale, switchLocalePath } from '@root/lib/locales';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { LuGithub, LuLinkedin, LuMail, LuMenu, LuX } from 'react-icons/lu';
 
@@ -10,14 +11,32 @@ import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 
 const links = [
-  { label: 'À propos', id: 'a-propos', num: '01' },
-  { label: 'Expérience', id: 'experience', num: '02' },
-  { label: 'Projets', id: 'projets', num: '03' },
-  { label: 'Formations', id: 'formations', num: '04' },
-];
+  { id: 'a-propos', num: '01' },
+  { id: 'experience', num: '02' },
+  { id: 'projets', num: '03' },
+  { id: 'formations', num: '04' },
+] as const;
 
-export default function Navigation() {
+interface NavigationProps {
+  nav: Dictionary['nav'];
+  theme: Dictionary['common']['theme'];
+}
+
+export default function Navigation({ nav, theme }: NavigationProps) {
   const { lang } = useParams<{ lang: Locale }>();
+  const otherLang: Locale = lang === 'fr' ? 'en' : 'fr';
+  // <a> et non <Link> : le root layout change de langue, un chargement complet met à jour <html lang>.
+  const langSwitch = (
+    <a
+      href={switchLocalePath(usePathname(), otherLang)}
+      hrefLang={otherLang}
+      lang={otherLang}
+      aria-label={nav.otherLang.name}
+      className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-border px-3 text-sm font-semibold text-fg transition-[color,border-color,scale] duration-150 ease-out-strong hover:border-border-accent hover:text-accent active:scale-[0.97]"
+    >
+      {nav.otherLang.code}
+    </a>
+  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
@@ -113,12 +132,12 @@ export default function Navigation() {
 
   return (
     <>
-      <nav aria-label="Navigation principale" className="sticky top-0 z-40 w-full [container-type:scroll-state]">
+      <nav aria-label={nav.main} className="sticky top-0 z-40 w-full [container-type:scroll-state]">
         <div className="nav-edge material bg-surface/[0.93] backdrop-blur-md">
           <div className="mx-auto flex max-w-[90rem] items-center justify-between px-5 py-4 lg:px-[7.5rem]">
             <Link
               href={`/${lang}`}
-              aria-label="Accueil — Gauthier Painteaux"
+              aria-label={nav.home}
               className="inline-flex items-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             >
               <Logo size={36} />
@@ -139,20 +158,21 @@ export default function Navigation() {
                         : 'text-fg hover:text-accent after:scale-x-0 hover:after:scale-x-100'
                     }`}
                   >
-                    {link.label}
+                    {nav.links[link.id]}
                   </a>
                 );
               })}
 
-              <div className="ml-3">
-                <ThemeToggle />
+              <div className="ml-3 flex items-center gap-2">
+                <ThemeToggle labels={theme} />
+                {langSwitch}
               </div>
 
               <a
                 href="mailto:contact@gauthierpainteaux.fr"
                 className="ml-3 inline-flex min-h-9 items-center rounded-full border border-border-accent px-5 py-2 text-sm font-semibold text-accent transition-[background-color,color,scale] duration-150 ease-out-strong hover:bg-accent hover:text-accent-fg active:scale-[0.97]"
               >
-                Me contacter
+                {nav.contact}
               </a>
             </div>
 
@@ -162,7 +182,7 @@ export default function Navigation() {
               type="button"
               className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97] lg:hidden"
               onClick={() => setIsMenuOpen(true)}
-              aria-label="Ouvrir le menu"
+              aria-label={nav.openMenu}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
             >
@@ -178,7 +198,7 @@ export default function Navigation() {
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Menu de navigation"
+        aria-label={nav.menu}
         data-state={isMenuOpen ? 'open' : 'closed'}
         inert={!isMenuOpen}
         className="material fixed inset-0 z-50 flex origin-top-right flex-col bg-surface/90 backdrop-blur-xl transition-[opacity,scale] ease-out-strong data-[state=closed]:pointer-events-none data-[state=closed]:scale-[0.98] data-[state=closed]:opacity-0 data-[state=closed]:duration-150 data-[state=open]:duration-[180ms] data-[state=open]:will-change-[opacity,scale] lg:hidden"
@@ -187,7 +207,7 @@ export default function Navigation() {
         <div className="flex items-center justify-between px-5 py-4">
           <Link
             href={`/${lang}`}
-            aria-label="Accueil — Gauthier Painteaux"
+            aria-label={nav.home}
             className="inline-flex items-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             onClick={closeMenu}
           >
@@ -198,7 +218,7 @@ export default function Navigation() {
             type="button"
             className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-md text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             onClick={closeMenu}
-            aria-label="Fermer le menu"
+            aria-label={nav.closeMenu}
           >
             <LuX size={24} aria-hidden="true" />
           </button>
@@ -220,7 +240,9 @@ export default function Navigation() {
                     onClick={closeMenu}
                   >
                     <span className="text-[0.8125rem] font-semibold text-accent">{link.num}</span>
-                    <span className="text-3xl font-bold tracking-[var(--tracking-brand-tight)]">{link.label}</span>
+                    <span className="text-3xl font-bold tracking-[var(--tracking-brand-tight)]">
+                      {nav.links[link.id]}
+                    </span>
                   </a>
                 </li>
               );
@@ -229,7 +251,10 @@ export default function Navigation() {
 
           {/* Bottom section */}
           <div className="flex flex-col items-center gap-7">
-            <ThemeToggle />
+            <div className="flex items-center gap-3">
+              <ThemeToggle labels={theme} />
+              {langSwitch}
+            </div>
 
             <Link
               href="mailto:contact@gauthierpainteaux.fr"
@@ -237,7 +262,7 @@ export default function Navigation() {
               onClick={closeMenu}
             >
               <LuMail size={18} aria-hidden="true" />
-              Me contacter
+              {nav.contact}
             </Link>
 
             <div className="flex items-center gap-6">

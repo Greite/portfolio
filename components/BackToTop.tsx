@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { LuArrowUp } from 'react-icons/lu';
 
-export default function BackToTop() {
+export default function BackToTop({ label }: { label: string }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function BackToTop() {
     <button
       type="button"
       onClick={scrollToTop}
-      aria-label="Retour en haut de la page"
+      aria-label={label}
       tabIndex={visible ? 0 : -1}
       className={`material fixed bottom-6 right-6 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full border border-border-accent bg-surface-raised/90 text-accent shadow-[var(--shadow-photo)] backdrop-blur-md transition-[opacity,translate,scale,background-color,color] ease-out-strong hover:bg-accent hover:text-accent-fg active:scale-[0.97] ${
         visible

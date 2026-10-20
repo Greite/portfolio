@@ -111,6 +111,7 @@ function SectionHeading({ id, children }: { id?: string; children: ReactNode }) 
 export default async function ProjectPage({ params }: PageProps<'/[lang]/projects/[slug]'>) {
   const project = getProject((await params).slug);
   const lang = await getLang();
+  const { nav, common } = await getDictionary();
 
   if (!project) {
     notFound();
@@ -157,12 +158,12 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
         href="#main"
         className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[100] focus-visible:rounded-full focus-visible:bg-cta focus-visible:px-5 focus-visible:py-3 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-cta-fg"
       >
-        Aller au contenu principal
+        {common.skip}
       </a>
 
       <ScrollProgress />
 
-      <Navigation />
+      <Navigation nav={nav} theme={common.theme} />
 
       <main id="main">
         {/* En-tête : texte à gauche, visuel posé dans le halo à droite */}
@@ -403,7 +404,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
                   >
                     <figcaption className="flex items-center justify-between gap-4 border-b border-border pr-1 pl-5 text-xs font-medium text-fg-secondary">
                       {snippet.label}
-                      <CopyButton text={snippet.code} subject={snippet.label} />
+                      <CopyButton text={snippet.code} subject={snippet.label} labels={common} />
                     </figcaption>
                     <pre
                       className={`overflow-x-auto p-5 font-mono text-sm leading-relaxed text-fg ${snippet.language === 'text' ? 'break-all whitespace-pre-wrap' : ''}`}

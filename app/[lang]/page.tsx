@@ -7,8 +7,10 @@ import Hero from '@components/Hero';
 import Navigation from '@components/Navigation';
 import Projects from '@components/Projects';
 import ScrollProgress from '@components/ScrollProgress';
+import { getDictionary } from '@root/lib/i18n';
 
-export default function Home() {
+export default async function Home() {
+  const { nav, common } = await getDictionary();
   const faqJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -60,12 +62,12 @@ export default function Home() {
         href="#main"
         className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[100] focus-visible:rounded-full focus-visible:bg-cta focus-visible:px-5 focus-visible:py-3 focus-visible:text-sm focus-visible:font-semibold focus-visible:text-cta-fg"
       >
-        Aller au contenu principal
+        {common.skip}
       </a>
 
       <ScrollProgress />
 
-      <Navigation />
+      <Navigation nav={nav} theme={common.theme} />
 
       <main id="main">
         <Hero />
@@ -81,7 +83,7 @@ export default function Home() {
 
       <Footer />
 
-      <BackToTop />
+      <BackToTop label={common.backToTop} />
     </>
   );
 }

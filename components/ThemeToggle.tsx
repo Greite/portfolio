@@ -1,22 +1,18 @@
 'use client';
 
+import type { Dictionary } from '@root/dictionaries/fr';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { LuMonitor, LuMoon, LuSun } from 'react-icons/lu';
 
-type ThemeOption = {
-  value: 'light' | 'dark' | 'system';
-  label: string;
-  Icon: typeof LuSun;
-};
-
-const options: ThemeOption[] = [
-  { value: 'light', label: 'Thème clair', Icon: LuSun },
-  { value: 'system', label: 'Thème système', Icon: LuMonitor },
-  { value: 'dark', label: 'Thème sombre', Icon: LuMoon },
-];
+const options = [
+  { value: 'light', Icon: LuSun },
+  { value: 'system', Icon: LuMonitor },
+  { value: 'dark', Icon: LuMoon },
+] as const;
 
 interface ThemeToggleProps {
+  labels: Dictionary['common']['theme'];
   variant?: 'compact' | 'full';
 }
 
@@ -28,7 +24,7 @@ function switchTheme(setTheme: (theme: string) => void, value: string) {
   window.setTimeout(() => root.classList.remove('theme-transition'), 350);
 }
 
-export default function ThemeToggle({ variant = 'compact' }: ThemeToggleProps) {
+export default function ThemeToggle({ labels, variant = 'compact' }: ThemeToggleProps) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -58,7 +54,7 @@ export default function ThemeToggle({ variant = 'compact' }: ThemeToggleProps) {
   return (
     <div
       role="radiogroup"
-      aria-label="Choix du thème"
+      aria-label={labels.group}
       className={`relative inline-flex items-center rounded-full border border-border p-1 ${
         variant === 'full' ? 'w-full' : ''
       }`}
@@ -72,7 +68,8 @@ export default function ThemeToggle({ variant = 'compact' }: ThemeToggleProps) {
         style={{ transform: `translateX(${activeIndex * 100}%)` }}
       />
 
-      {options.map(({ value, label, Icon }) => {
+      {options.map(({ value, Icon }) => {
+        const label = labels[value];
         const isActive = current === value;
 
         return (
@@ -88,7 +85,7 @@ export default function ThemeToggle({ variant = 'compact' }: ThemeToggleProps) {
             } ${isActive ? 'text-accent-fg' : 'text-fg-secondary hover:text-fg'}`}
           >
             <Icon size={16} aria-hidden="true" />
-            {variant === 'full' && <span className="ml-2">{label.replace('Thème ', '')}</span>}
+            {variant === 'full' && <span className="ml-2">{label}</span>}
           </button>
         );
       })}

@@ -1,4 +1,4 @@
-import { getLang } from '@root/lib/i18n';
+import { getDictionary, getLang } from '@root/lib/i18n';
 import Link from 'next/link';
 import { LuGithub, LuLinkedin } from 'react-icons/lu';
 
@@ -6,6 +6,7 @@ import CopyEmail from './CopyEmail';
 
 export default async function Footer() {
   const lang = await getLang();
+  const { nav, common, footer } = await getDictionary();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -22,42 +23,28 @@ export default async function Footer() {
               <span className="text-fg">Gauthier </span>
               <span className="text-accent">Painteaux</span>
             </span>
-            <span className="text-sm font-normal text-fg-secondary">Lead Développeur chez Koul</span>
+            <span className="text-sm font-normal text-fg-secondary">{footer.role}</span>
           </div>
 
           {/* Center - Navigation */}
-          <nav aria-label="Navigation pied de page" className="flex flex-col gap-3">
+          <nav aria-label={footer.nav} className="flex flex-col gap-3">
             <h3 className="text-xs font-semibold tracking-[var(--tracking-brand-wide)] text-accent">NAVIGATION</h3>
-            <a
-              href={`/${lang}#a-propos`}
-              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
-            >
-              À propos
-            </a>
-            <a
-              href={`/${lang}#experience`}
-              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
-            >
-              Expérience
-            </a>
-            <a
-              href={`/${lang}#projets`}
-              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
-            >
-              Projets
-            </a>
-            <a
-              href={`/${lang}#formations`}
-              className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
-            >
-              Formations
-            </a>
+            {Object.entries(nav.links).map(([id, label]) => (
+              <a
+                key={id}
+                href={`/${lang}#${id}`}
+                className="inline-flex min-h-11 items-center rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
+              >
+                {label}
+              </a>
+            ))}
           </nav>
 
           {/* Right - Contact */}
           <div className="flex flex-col gap-3">
             <h3 className="text-xs font-semibold tracking-[var(--tracking-brand-wide)] text-accent">CONTACT</h3>
             <CopyEmail
+              labels={common}
               label="Email"
               className="inline-flex min-h-11 items-center gap-2.5 rounded-md text-sm font-normal text-fg transition-[color,scale] duration-150 ease-out-strong hover:text-accent active:scale-[0.97]"
             />
@@ -88,7 +75,7 @@ export default async function Footer() {
         {/* Copyright Bar */}
         <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
           <span className="text-xs font-normal text-fg-secondary">
-            © {currentYear} Gauthier Painteaux. Tous droits réservés.
+            © {currentYear} Gauthier Painteaux. {footer.rights}
           </span>
         </div>
       </div>
