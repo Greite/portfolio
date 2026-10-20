@@ -14,8 +14,15 @@ import { LuArrowLeft, LuArrowRight, LuArrowUpRight, LuBookOpen, LuCheck, LuGithu
 
 const siteUrl = 'https://gauthierpainteaux.fr';
 const wrap = 'mx-auto w-full max-w-[90rem] px-6 md:px-[7.5rem]';
-/** Classes complètes pour que Tailwind les génère. */
-const statColumns: Record<number, string> = { 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4' };
+/**
+ * Classes complètes pour que Tailwind les génère. Les valeurs sont en `text-5xl` sans retour à la ligne : 3 ou 4
+ * colonnes seulement quand elles laissent la place à « 1 à 1440 min » ou « 10 to 300 s » (sinon 2 colonnes).
+ */
+const statColumns: Record<number, string> = {
+  2: 'lg:grid-cols-2',
+  3: 'xl:grid-cols-3',
+  4: 'min-[90rem]:grid-cols-4',
+};
 
 export const dynamicParams = false;
 
@@ -268,7 +275,7 @@ export default async function ProjectPage({ params }: PageProps<'/[lang]/project
 
         <section aria-label={t.keyFigures} className="bg-surface-raised">
           <dl
-            className={`${wrap} grid gap-10 py-12 sm:grid-cols-2 lg:py-14 ${statColumns[project.stats.length] ?? 'lg:grid-cols-3'}`}
+            className={`${wrap} grid gap-10 py-12 sm:grid-cols-2 lg:py-14 ${statColumns[project.stats.length] ?? 'xl:grid-cols-3'}`}
           >
             {project.stats.map((stat) => (
               <div key={stat.label} className="flex flex-col gap-2">

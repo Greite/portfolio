@@ -9,9 +9,9 @@ export const en: Record<Slug, ProjectText> = {
       'Your ISP promises a speed; Speedtest Monitor checks whether it delivers. It measures your connection at regular intervals with Cloudflare’s engine, keeps the full history and alerts you as soon as throughput or latency degrades.',
     tags: ['Next.js', 'Bun', 'TypeScript', 'SQLite'],
     stats: [
-      { value: '6 hours to 30 days', label: 'of history on screen, across 5 selectable ranges' },
+      { value: '6 h–30 days', label: 'of history on screen, across 5 selectable ranges' },
       { value: '5', label: 'alert channels: webhook, ntfy, Discord, Slack, email' },
-      { value: '1 to 1,440 min', label: 'between tests, adjustable on the fly' },
+      { value: '1–1,440 min', label: 'between tests, adjustable on the fly' },
     ],
     steps: [
       { title: 'Scheduling', description: 'A test starts at the chosen interval.' },
