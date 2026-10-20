@@ -261,71 +261,73 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
           </dl>
         </section>
 
-        <div className={`${wrap} flex flex-col gap-24 py-20 lg:py-24`}>
-          <Reveal className="flex flex-col gap-10">
-            <SectionHeading>Comment ça marche</SectionHeading>
-            <ol className="grid gap-8 lg:grid-cols-5 lg:gap-6">
-              {project.steps.map((step, index) => (
-                <li key={step.title} className="relative flex gap-5 lg:flex-col lg:gap-4">
-                  {index < project.steps.length - 1 && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute top-12 bottom-[-1.5rem] left-5 w-px bg-border-accent lg:top-5 lg:right-[-1.5rem] lg:bottom-auto lg:left-12 lg:h-px lg:w-auto"
-                    />
-                  )}
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-accent bg-surface text-sm font-bold text-accent">
-                    {index + 1}
-                  </span>
-                  <div className="flex flex-col gap-1.5 pt-1.5 lg:pt-0">
-                    <h3 className="text-base font-semibold text-fg">{step.title}</h3>
-                    <p className="text-sm leading-relaxed text-fg-secondary">{step.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
-
-          <Reveal className="flex flex-col gap-10">
-            <SectionHeading>Points forts</SectionHeading>
-            <ul className="grid gap-x-16 gap-y-8 sm:grid-cols-2">
-              {project.features.map((feature) => (
-                <li key={feature.title} className="flex gap-4">
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent-soft-fg">
-                    <LuCheck size={16} aria-hidden="true" />
-                  </span>
-                  <div className="flex flex-col gap-1">
-                    <h3 className="text-base font-semibold text-fg">{feature.title}</h3>
-                    <p className="text-sm leading-relaxed text-fg-secondary">{feature.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-
-          {gallery.length > 0 && (
+        <div className="bg-surface-raised">
+          <div className={`${wrap} flex flex-col gap-24 py-20 lg:py-24`}>
             <Reveal className="flex flex-col gap-10">
-              <SectionHeading>En images</SectionHeading>
-              <ul className="grid gap-6 lg:grid-cols-2">
-                {gallery.map((screenshot) => (
-                  <li key={screenshot.light}>
-                    <ThemedScreenshot screenshot={screenshot} />
+              <SectionHeading>Comment ça marche</SectionHeading>
+              <ol className="grid gap-8 lg:grid-cols-5 lg:gap-6">
+                {project.steps.map((step, index) => (
+                  <li key={step.title} className="relative flex gap-5 lg:flex-col lg:gap-4">
+                    {index < project.steps.length - 1 && (
+                      <span
+                        aria-hidden="true"
+                        className="absolute top-12 bottom-[-1.5rem] left-5 w-px bg-border-accent lg:top-5 lg:right-[-1.5rem] lg:bottom-auto lg:left-12 lg:h-px lg:w-auto"
+                      />
+                    )}
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-accent bg-surface-raised text-sm font-bold text-accent">
+                      {index + 1}
+                    </span>
+                    <div className="flex flex-col gap-1.5 pt-1.5 lg:pt-0">
+                      <h3 className="text-base font-semibold text-fg">{step.title}</h3>
+                      <p className="text-sm leading-relaxed text-fg-secondary">{step.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </Reveal>
+
+            <Reveal className="flex flex-col gap-10">
+              <SectionHeading>Points forts</SectionHeading>
+              <ul className="grid gap-x-16 gap-y-8 sm:grid-cols-2">
+                {project.features.map((feature) => (
+                  <li key={feature.title} className="flex gap-4">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent-soft-fg">
+                      <LuCheck size={16} aria-hidden="true" />
+                    </span>
+                    <div className="flex flex-col gap-1">
+                      <h3 className="text-base font-semibold text-fg">{feature.title}</h3>
+                      <p className="text-sm leading-relaxed text-fg-secondary">{feature.description}</p>
+                    </div>
                   </li>
                 ))}
               </ul>
             </Reveal>
-          )}
 
-          <Reveal className="flex flex-col gap-10">
-            <SectionHeading>Choix techniques</SectionHeading>
-            <dl className="grid gap-x-16 gap-y-8 lg:grid-cols-2">
-              {project.stack.map((choice) => (
-                <div key={choice.title} className="flex flex-col gap-1.5 border-l-2 border-accent pl-5">
-                  <dt className="text-base font-semibold text-fg">{choice.title}</dt>
-                  <dd className="text-sm leading-relaxed text-fg-secondary">{choice.description}</dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
+            {gallery.length > 0 && (
+              <Reveal className="flex flex-col gap-10">
+                <SectionHeading>En images</SectionHeading>
+                <ul className="grid gap-6 lg:grid-cols-2">
+                  {gallery.map((screenshot) => (
+                    <li key={screenshot.light}>
+                      <ThemedScreenshot screenshot={screenshot} />
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            )}
+
+            <Reveal className="flex flex-col gap-10">
+              <SectionHeading>Choix techniques</SectionHeading>
+              <dl className="grid gap-x-16 gap-y-8 lg:grid-cols-2">
+                {project.stack.map((choice) => (
+                  <div key={choice.title} className="flex flex-col gap-1.5 border-l-2 border-accent pl-5">
+                    <dt className="text-base font-semibold text-fg">{choice.title}</dt>
+                    <dd className="text-sm leading-relaxed text-fg-secondary">{choice.description}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+          </div>
         </div>
 
         <section aria-labelledby="install-heading" className="border-y border-border bg-surface-raised">
@@ -371,7 +373,10 @@ export default async function ProjectPage({ params }: PageProps<'/projets/[slug]
             {project.install.snippets && (
               <div className="flex min-w-0 flex-col gap-4 self-center">
                 {project.install.snippets.map((snippet) => (
-                  <figure key={snippet.label} className="overflow-hidden rounded-2xl border border-border bg-surface">
+                  <figure
+                    key={snippet.label}
+                    className="overflow-hidden rounded-2xl border border-border bg-surface-raised"
+                  >
                     <figcaption className="flex items-center justify-between gap-4 border-b border-border py-1.5 pr-2 pl-5 text-xs font-medium text-fg-secondary">
                       {snippet.label}
                       <CopyButton text={snippet.code} subject={snippet.label} />
