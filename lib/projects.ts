@@ -50,7 +50,7 @@ export const projects: Project[] = [
     slug: 'speedtest-monitor',
     name: 'Speedtest Monitor',
     description:
-      'Outil self-hosted de supervision de connexion internet basé sur Cloudflare Speedtest : dashboard temps réel, alertes et authentification OIDC.',
+      'Outil self-hosted de monitoring de connexion internet basé sur Cloudflare Speedtest : dashboard temps réel, alertes et authentification OIDC.',
     pitch:
       'Votre FAI promet un débit, Speedtest Monitor vérifie qu’il le tient. Il mesure la connexion à intervalle régulier avec le moteur de Cloudflare, conserve tout l’historique et prévient dès que le débit ou la latence se dégradent.',
     tags: ['Next.js', 'Bun', 'TypeScript', 'SQLite'],
@@ -62,19 +62,20 @@ export const projects: Project[] = [
     ],
     steps: [
       {
-        title: 'Planification',
+        title: 'Scheduling',
         description: 'Un scheduler intégré déclenche une mesure à l’intervalle choisi dans l’interface.',
       },
       {
         title: 'Mesure',
-        description: 'Le moteur Cloudflare Speed Test mesure débit, latence, gigue et bufferbloat, en HTTP pur.',
+        description:
+          'Le moteur Cloudflare Speed Test mesure le débit, la latence, le jitter et le bufferbloat, en HTTP pur.',
       },
       {
         title: 'Stockage',
         description: 'Chaque résultat est enregistré dans une base SQLite persistée sur un volume.',
       },
       {
-        title: 'Diffusion',
+        title: 'Push',
         description: 'Le serveur pousse la nouvelle mesure au dashboard ouvert, par WebSocket.',
       },
       {
@@ -87,12 +88,12 @@ export const projects: Project[] = [
       {
         title: 'Dashboard en temps réel',
         description:
-          'Chaque mesure arrive en direct par WebSocket : débit descendant et montant, latence, gigue et bufferbloat, sur 6 heures comme sur 30 jours.',
+          'Chaque mesure arrive en direct par WebSocket : download, upload, latence, jitter et bufferbloat, sur 6 heures comme sur 30 jours.',
       },
       {
         title: 'Mesures fiables',
         description:
-          'Débit, latence, gigue et bufferbloat mesurés avec Cloudflare Speed Test, et réglables pour saturer les liens multi-gigabit.',
+          'Download, upload, latence, jitter et bufferbloat mesurés avec Cloudflare Speed Test, et réglables pour saturer les liens multi-gigabit.',
       },
       {
         title: 'Alertes à la dégradation',
@@ -100,7 +101,7 @@ export const projects: Project[] = [
           'Seuils sur le débit, la latence, le bufferbloat ou les échecs consécutifs, envoyés par webhook, ntfy, Discord, Slack ou e-mail, une seule fois par incident.',
       },
       {
-        title: 'Planification modifiable à chaud',
+        title: 'Scheduler modifiable à chaud',
         description:
           'L’intervalle entre deux mesures se règle depuis l’interface et s’applique immédiatement, sans redémarrage.',
       },
@@ -168,7 +169,7 @@ docker compose up -d`,
       {
         light: '/projets/speedtest-monitor/dashboard-light.webp',
         dark: '/projets/speedtest-monitor/dashboard-dark.webp',
-        alt: 'Dashboard de Speedtest Monitor : débit descendant, montant et latence, historique sur 24 heures et dernières mesures',
+        alt: 'Dashboard de Speedtest Monitor : download, upload et latence, historique sur 24 heures et dernières mesures',
       },
     ],
   },
@@ -185,7 +186,7 @@ docker compose up -d`,
       { value: '0', label: 'compte cloud : tout passe par le réseau local' },
       { value: '6', label: 'programmes horaires pilotables depuis Home Assistant' },
       { value: '1 à 5', label: 'niveaux de puissance, comme sur le poêle' },
-      { value: '10 à 300 s', label: 'entre deux lectures du module' },
+      { value: '10 à 300 s', label: 'd’intervalle de polling du module' },
     ],
     steps: [
       {
@@ -199,8 +200,8 @@ docker compose up -d`,
           'L’intégration lit la carte électronique du poêle et refuse les modèles qu’elle ne sait pas piloter.',
       },
       {
-        title: 'Lecture',
-        description: 'Le module est interrogé à intervalle régulier : état, températures, alarmes, programmes.',
+        title: 'Polling',
+        description: 'Le module est pollé à intervalle régulier : état, températures, alarmes, programmes.',
       },
       {
         title: 'Entités',
@@ -254,13 +255,14 @@ docker compose up -d`,
         description: 'Home Assistant propose l’intégration dès que le module apparaît sur le réseau.',
       },
       {
-        title: 'Simulateur du module',
-        description: 'Les tests tournent contre un faux module : pas besoin d’un poêle pour valider une modification.',
+        title: 'Mock du module',
+        description:
+          'Les tests tournent contre un mock du module : pas besoin d’un poêle pour valider une modification.',
       },
     ],
     install: {
       steps: [
-        'Ouvrir le dépôt dans HACS, télécharger Ravelli Smart Wi-Fi et redémarrer Home Assistant.',
+        'Ouvrir le repo dans HACS, télécharger Ravelli Smart Wi-Fi et redémarrer Home Assistant.',
         'Dans Paramètres › Appareils et services, ajouter l’intégration Ravelli Smart Wi-Fi.',
         'Choisir la recherche sur le réseau local, ou saisir l’adresse du module.',
       ],
@@ -281,9 +283,9 @@ docker compose up -d`,
     slug: 'database-backup',
     name: 'Database Backup',
     description:
-      'Container Docker léger pour automatiser les sauvegardes PostgreSQL, MariaDB/MySQL, MongoDB et SQLite : scheduler Go intégré, rotation, chiffrement GPG/age et healthcheck natif.',
+      'Container Docker léger pour automatiser les backups PostgreSQL, MariaDB/MySQL, MongoDB et SQLite : scheduler Go intégré, rotation, chiffrement GPG/age et healthcheck natif.',
     pitch:
-      'Un seul container pour sauvegarder toutes vos bases de données. Un fichier YAML décrit les jobs, le scheduler Go intégré s’occupe du reste : dumps compressés, rotation, chiffrement et healthcheck.',
+      'Un seul container pour backuper toutes vos bases de données. Un fichier YAML décrit les jobs, le scheduler Go intégré s’occupe du reste : dumps compressés, rotation, chiffrement et healthcheck.',
     tags: ['Go', 'Docker', 'PostgreSQL', 'MongoDB'],
     repoUrl: 'https://github.com/Greite/database-backup',
     stats: [
@@ -302,7 +304,7 @@ docker compose up -d`,
         description: 'Seuls les clients de base de données utilisés par la configuration sont installés.',
       },
       {
-        title: 'Planification',
+        title: 'Scheduling',
         description: 'Le scheduler Go déclenche chaque job selon son expression cron.',
       },
       {
@@ -311,14 +313,14 @@ docker compose up -d`,
       },
       {
         title: 'Rotation',
-        description: 'Les sauvegardes plus anciennes que la rétention du job sont supprimées.',
+        description: 'Les backups plus anciens que la rétention du job sont supprimés.',
       },
     ],
     features: [
       {
         title: 'Quatre moteurs',
         description:
-          'PostgreSQL (toute version cliente du dépôt PGDG), MariaDB/MySQL, MongoDB et SQLite, avec un snapshot cohérent même en cours d’écriture.',
+          'PostgreSQL (toute version cliente du repo PGDG), MariaDB/MySQL, MongoDB et SQLite, avec un snapshot cohérent même en cours d’écriture.',
       },
       {
         title: 'Image légère',
@@ -326,23 +328,23 @@ docker compose up -d`,
           'Environ 126 Mo : aucun client préinstallé, seuls ceux dont la configuration a besoin sont installés au démarrage.',
       },
       {
-        title: 'Planification intégrée',
+        title: 'Scheduler intégré',
         description:
-          'Expressions cron ou raccourcis comme @daily, sans démon cron externe, avec une rétention par job.',
+          'Expressions cron ou raccourcis comme @daily, sans daemon cron externe, avec une rétention par job.',
       },
       {
         title: 'Chiffrement au repos',
         description:
-          'GPG symétrique ou age, par phrase de passe ou par clé publique : le container n’a jamais besoin de la clé privée.',
+          'GPG symétrique ou age, par passphrase ou par public key : le container n’a jamais besoin de la private key.',
       },
       {
         title: 'Sûr par défaut',
         description:
-          'Exécution non root, identifiants jamais visibles dans la ligne de commande, healthcheck par drivers natifs.',
+          'Exécution non root, credentials jamais visibles dans la ligne de commande, healthcheck par drivers natifs.',
       },
       {
         title: 'Toujours à jour',
-        description: 'Images amd64 et arm64 reconstruites automatiquement dès que l’image de base Debian évolue.',
+        description: 'Images amd64 et arm64 rebuildées automatiquement dès que l’image de base Debian évolue.',
       },
     ],
     stack: [
@@ -358,17 +360,17 @@ docker compose up -d`,
       },
       {
         title: 'GPG et age',
-        description: 'Deux formats de chiffrement standards, déchiffrables sans l’outil, dont un par clé publique.',
+        description: 'Deux formats de chiffrement standards, déchiffrables sans l’outil, dont un par public key.',
       },
       {
         title: 'GitHub Actions',
-        description: 'Tests, images multi-architecture et reconstruction automatique quand l’image Debian change.',
+        description: 'Tests, images multi-architecture et rebuild automatique quand l’image Debian change.',
       },
     ],
     install: {
       steps: [
-        'Décrire les jobs dans backups.yml (ici une base SQLite sauvegardée chaque nuit), en chmod 600.',
-        'Monter dans le container ce fichier, le dossier des sauvegardes et les données à sauvegarder.',
+        'Décrire les jobs dans backups.yml (ici une base SQLite backupée chaque nuit), en chmod 600.',
+        'Monter dans le container ce fichier, le dossier des backups et les données à backuper.',
         'Lancer docker compose up -d : les dumps compressés arrivent dans ./backups.',
       ],
       snippets: [
@@ -434,7 +436,7 @@ jobs:
     slug: 'unraid-btop',
     name: 'Unraid btop',
     description:
-      'Plugin Unraid qui embarque btop dans le terminal et ajoute une tuile au dashboard natif (charge, températures, I/O disque et réseau, processus). Releases automatisées par CI à chaque version de btop.',
+      'Plugin Unraid qui embarque btop dans le terminal et ajoute une tuile au dashboard natif (load, températures, I/O disque et réseau, processus). Releases automatisées par CI à chaque version de btop.',
     pitch:
       'btop dans le terminal d’Unraid, et l’essentiel de ce qu’il montre directement sur le dashboard. Le plugin package le binaire officiel de btop et ajoute une tuile native avec ce que le dashboard d’origine n’affiche pas.',
     tags: ['PHP', 'Unraid', 'CI/CD', 'Monitoring'],
@@ -451,18 +453,18 @@ jobs:
       },
       {
         title: 'Build',
-        description: 'Le paquet Unraid est reconstruit autour du binaire officiel de cette version.',
+        description: 'Le package Unraid est rebuildé autour du binaire officiel de cette version.',
       },
       {
         title: 'Tests',
-        description: 'Le contenu du paquet et la syntaxe PHP sont vérifiés, puis le binaire est lancé en smoke test.',
+        description: 'Le contenu du package et la syntaxe PHP sont vérifiés, puis le binaire est lancé en smoke test.',
       },
       {
         title: 'Publication',
-        description: 'La release GitHub est publiée et le manifeste du plugin est mis à jour sur main.',
+        description: 'La release GitHub est publiée et le manifest du plugin est mis à jour sur main.',
       },
       {
-        title: 'Mise à jour',
+        title: 'Update',
         description: 'Unraid propose la nouvelle version du plugin, comme pour n’importe quel plugin.',
       },
     ],
@@ -470,12 +472,12 @@ jobs:
       {
         title: 'btop prêt à l’emploi',
         description:
-          'Disponible en SSH et dans le terminal web d’Unraid, avec des réglages conservés sur la clé de démarrage entre deux redémarrages.',
+          'Disponible en SSH et dans le terminal web d’Unraid, avec des réglages conservés sur la clé USB de boot entre deux redémarrages.',
       },
       {
         title: 'Tuile de dashboard',
         description:
-          'Charge, température CPU, uptime, nombre de processus, débits disque et réseau agrégés, et les processus les plus gourmands.',
+          'Load average, température CPU, uptime, nombre de processus, I/O disque et réseau agrégés, et les processus les plus gourmands.',
       },
       {
         title: 'Entièrement réglable',
@@ -483,9 +485,9 @@ jobs:
           'Chaque section de la tuile s’active, se trie et se rafraîchit selon vos préférences depuis les réglages du plugin.',
       },
       {
-        title: 'Mises à jour automatiques',
+        title: 'Updates automatiques',
         description:
-          'La CI surveille chaque jour les releases de btop, reconstruit le paquet, le teste et publie la mise à jour du plugin.',
+          'La CI surveille chaque jour les releases de btop, rebuild le package, le teste et publie l’update du plugin.',
       },
     ],
     stack: [
@@ -496,11 +498,11 @@ jobs:
       },
       {
         title: 'Binaire statique de btop',
-        description: 'Le binaire officiel fonctionne sur Unraid sans bibliothèque à installer.',
+        description: 'Le binaire officiel fonctionne sur Unraid sans lib à installer.',
       },
       {
         title: 'Shell',
-        description: 'Le build assemble le paquet Unraid et vérifie son contenu avant publication.',
+        description: 'Le build assemble le package Unraid et vérifie son contenu avant publication.',
       },
       {
         title: 'GitHub Actions',
@@ -524,7 +526,7 @@ jobs:
       {
         light: '/projets/unraid-btop/dashboard-tile.webp',
         dark: '/projets/unraid-btop/dashboard-tile.webp',
-        alt: 'Tuile btop du dashboard Unraid : charge, débits disque et réseau, processus les plus gourmands',
+        alt: 'Tuile btop du dashboard Unraid : load, I/O disque et réseau, processus les plus gourmands',
       },
       {
         light: '/projets/unraid-btop/settings.webp',
@@ -537,14 +539,14 @@ jobs:
     slug: 'unraid-traefik-rolling-update',
     name: 'Unraid Traefik Rolling Update',
     description:
-      "Plugin Unraid pour mettre à jour sans interruption les containers derrière Traefik : la nouvelle version démarre à côté de l'ancienne, Traefik bascule dès qu'elle est healthy, rollback automatique sinon.",
+      "Plugin Unraid pour des updates zero-downtime des containers derrière Traefik : la nouvelle version démarre à côté de l'ancienne, Traefik switche dès qu'elle est healthy, rollback automatique sinon.",
     pitch:
-      'Sur Unraid, mettre à jour un container signifie l’arrêter, le supprimer puis le recréer : le site est coupé pendant toute l’opération. Derrière Traefik, ce n’est pas nécessaire. Ce plugin démarre la nouvelle version à côté de l’ancienne et ne bascule qu’une fois qu’elle est prête.',
+      'Sur Unraid, updater un container signifie l’arrêter, le supprimer puis le recréer : le site est down pendant toute l’opération. Derrière Traefik, ce n’est pas nécessaire. Ce plugin démarre la nouvelle version à côté de l’ancienne et ne switche qu’une fois qu’elle est prête.',
     tags: ['PHP', 'Unraid', 'Traefik', 'Docker'],
     repoUrl: 'https://github.com/Greite/unraid-traefik-rolling-update',
     stats: [
-      { value: '1 à 2', label: 'requêtes en échec sur ~500 pendant la bascule' },
-      { value: '~50', label: 'avec la mise à jour native d’Unraid' },
+      { value: '1 à 2', label: 'requêtes en échec sur ~500 pendant le switch' },
+      { value: '~50', label: 'avec l’update natif d’Unraid' },
       { value: '0', label: 'label ou healthcheck à écrire' },
     ],
     steps: [
@@ -563,19 +565,19 @@ jobs:
           'Traefik ne lui envoie du trafic qu’une fois healthy ; sinon elle est supprimée et l’image restaurée.',
       },
       {
-        title: 'Bascule',
+        title: 'Switch',
         description: 'L’ancienne instance est arrêtée, Traefik la retire, la nouvelle reprend son nom.',
       },
       {
-        title: 'Nettoyage',
+        title: 'Cleanup',
         description: 'L’ancien container et son image sont supprimés, puis une notification est envoyée.',
       },
     ],
     features: [
       {
-        title: 'Zéro interruption',
+        title: 'Zero downtime',
         description:
-          'Mesuré sur un vrai serveur : 1 ou 2 requêtes en échec sur environ 500 pendant la bascule, contre une cinquantaine avec la mise à jour native.',
+          'Mesuré sur un vrai serveur : 1 ou 2 requêtes en échec sur environ 500 pendant le switch, contre une cinquantaine avec l’update natif.',
       },
       {
         title: 'Rollback automatique',
@@ -595,7 +597,7 @@ jobs:
       {
         title: 'Natif partout ailleurs',
         description:
-          'Les containers non cochés gardent la mise à jour d’Unraid, et désinstaller le plugin rétablit le comportement d’origine.',
+          'Les containers non cochés gardent l’update natif d’Unraid, et désinstaller le plugin rétablit le comportement d’origine.',
       },
     ],
     stack: [
@@ -607,7 +609,7 @@ jobs:
       {
         title: 'Healthchecks Docker',
         description:
-          'Traefik ignore les containers qui ne sont pas healthy : c’est ce qui sert de porte avant la bascule.',
+          'Traefik ignore les containers qui ne sont pas healthy : c’est ce qui sert de health gate avant le switch.',
       },
       {
         title: 'Labels Traefik',
@@ -623,7 +625,7 @@ jobs:
       steps: [
         'Dans Unraid, ouvrir Plugins › Install Plugin et coller l’adresse du plugin.',
         'Dans Settings › Utilities › Traefik Rolling Update, passer les containers voulus en zero-downtime.',
-        'Recharger la page Docker : Update et Update All utilisent désormais la bascule.',
+        'Recharger la page Docker : Update et Update All passent désormais par le rolling update.',
       ],
       snippets: [
         {
@@ -637,7 +639,7 @@ jobs:
       {
         light: '/projets/unraid-traefik-rolling-update/settings.webp',
         dark: '/projets/unraid-traefik-rolling-update/settings.webp',
-        alt: 'Réglages de Traefik Rolling Update dans Unraid : délai du health gate, notifications et healthcheck d’un container en mise à jour sans interruption',
+        alt: 'Réglages de Traefik Rolling Update dans Unraid : délai du health gate, notifications et healthcheck d’un container en update zero-downtime',
       },
     ],
   },
