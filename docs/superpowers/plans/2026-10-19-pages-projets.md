@@ -142,7 +142,7 @@ git commit -m "Improve - #PRT-NoId - Add GitHub repo stats fetcher"
 
 - [ ] **Step 3: Étendre `app/sitemap.ts`**
 
-Ajouter `...projects.map(({ slug }) => ({ url: \`https://gauthierpainteaux.fr/projets/${slug}\`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 }))`.
+Ajouter ``...projects.map(({ slug }) => ({ url: `https://gauthierpainteaux.fr/projets/${slug}`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 }))``.
 - [ ] **Step 4: Vérifier**
 
 Run: `bun run lint` → aucune erreur.
