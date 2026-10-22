@@ -11,14 +11,14 @@ Actions exécuté chaque jour.
 
 ## Décisions
 
-| Sujet | Décision |
-|---|---|
-| Outil | Workflow GitHub Actions custom (Renovate et Dependabot écartés : pas de hook post-update pour `biome migrate`, pas de commit direct sur `main`) |
-| Résultat si vert | Commit direct sur `main`, puis release complète : bump de version (patch), tag `vX.Y.Z`, release GitHub, build Docker |
+| Sujet                         | Décision                                                                                                                                                                       |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Outil                         | Workflow GitHub Actions custom (Renovate et Dependabot écartés : pas de hook post-update pour `biome migrate`, pas de commit direct sur `main`)                                |
+| Résultat si vert              | Commit direct sur `main`, puis release complète : bump de version (patch), tag `vX.Y.Z`, release GitHub, build Docker                                                          |
 | Déclenchement du build Docker | `workflow_dispatch` explicite sur `build.yml` (les tags poussés avec `GITHUB_TOKEN` ne déclenchent pas les workflows ; un PAT a été écarté pour éviter la gestion d'un secret) |
-| Résultat si rouge | PR avec la branche de mise à jour |
-| Périmètre | Minor + patch dans les plages semver du `package.json` ; majeures signalées par issue, jamais appliquées |
-| Schéma Biome | `bunx biome migrate --write` exécuté à chaque run (no-op si déjà aligné) |
+| Résultat si rouge             | PR avec la branche de mise à jour                                                                                                                                              |
+| Périmètre                     | Minor + patch dans les plages semver du `package.json` ; majeures signalées par issue, jamais appliquées                                                                       |
+| Schéma Biome                  | `bunx biome migrate --write` exécuté à chaque run (no-op si déjà aligné)                                                                                                       |
 
 ## Fichiers touchés
 
@@ -46,7 +46,6 @@ mises à jour tant que l'échec n'est pas résolu.
 
 Setup identique à `build.yml` : checkout, Node via `.nvmrc`, Bun, cache Bun,
 `bun install --frozen-lockfile`.
-
 1. `bun update` — met à jour minor/patch dans les plages caret
 2. `bun install` — resynchronise les plages embarquées dans `bun.lock`
    (quirk de bun 1.3.14 : `bun update` ne les réécrit pas ; sans ce resync,
@@ -81,7 +80,6 @@ Setup identique à `build.yml` : checkout, Node via `.nvmrc`, Bun, cache Bun,
 ### Détection des majeures
 
 Après le flux principal (que le run soit vert ou sans changement) :
-
 - Parser la sortie de `bun outdated` ; pour chaque paquet dont le major de
   « Latest » dépasse celui de « Current », ouvrir une issue
   `Major update available: <pkg> <current> → <latest>` avec label

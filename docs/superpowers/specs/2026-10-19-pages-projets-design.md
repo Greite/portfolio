@@ -7,7 +7,6 @@ Date : 2026-10-19
 Donner à chaque projet de la section « Projets » une page de présentation propre, à mi-chemin entre vitrine produit et page indexable (SEO). Bénéfice secondaire : support de recrutement.
 
 Critères de réussite :
-
 - une URL indexable par projet, avec métadonnées, canonical et JSON-LD propres ;
 - un contenu rédigé pour le portfolio (pas une copie du README) ;
 - des données GitHub à jour sans maintenance manuelle ;
@@ -15,14 +14,14 @@ Critères de réussite :
 
 ## Décisions
 
-| Sujet | Décision |
-|---|---|
-| Source du contenu | Hybride : contenu vitrine rédigé dans le dépôt + données GitHub dynamiques ; installation détaillée renvoyée au README |
-| Format du contenu | Données TypeScript structurées, aucune nouvelle dépendance (pas de MDX) |
-| Visuels | Captures quand le projet a une interface, sinon un bloc de configuration/console (`codeSample`) |
-| Accueil | La carte mène à la page interne ; GitHub devient un lien secondaire |
-| Page index `/projets` | Non (doublon de la section d'accueil avec 5 projets) |
-| URL | `/projets/<slug>`, slug = nom du dépôt GitHub |
+| Sujet                 | Décision                                                                                                               |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Source du contenu     | Hybride : contenu vitrine rédigé dans le dépôt + données GitHub dynamiques ; installation détaillée renvoyée au README |
+| Format du contenu     | Données TypeScript structurées, aucune nouvelle dépendance (pas de MDX)                                                |
+| Visuels               | Captures quand le projet a une interface, sinon un bloc de configuration/console (`codeSample`)                        |
+| Accueil               | La carte mène à la page interne ; GitHub devient un lien secondaire                                                    |
+| Page index `/projets` | Non (doublon de la section d'accueil avec 5 projets)                                                                   |
+| URL                   | `/projets/<slug>`, slug = nom du dépôt GitHub                                                                          |
 
 ## Architecture
 
@@ -58,7 +57,6 @@ Chaque projet a soit `screenshots`, soit `codeSample` (au moins l'un des deux). 
 ### `lib/github.ts` (nouveau)
 
 `getRepoStats(repoUrl): Promise<RepoStats | null>`
-
 - appelle l'API REST publique `GET /repos/{owner}/{repo}` et `GET /repos/{owner}/{repo}/releases/latest` ;
 - `fetch(..., { next: { revalidate: 86400 } })` (modèle de cache actuel, `cacheComponents` non activé) ;
 - retourne `{ stars, license, pushedAt, latestRelease? }` ; `latestRelease` absent si le dépôt n'a pas de release (404) ;
@@ -75,7 +73,6 @@ Volume : 2 appels par projet et par jour, très en dessous de la limite non auth
 ## Page projet
 
 Direction « Vitrine » (révision du 19 oct. 2026, la première version jugée trop fade). Ordre des blocs :
-
 1. `Navigation` partagée, `ScrollProgress`.
 2. En-tête en deux colonnes, dans le halo miel du Hero de l'accueil :
    - à gauche : fil d'Ariane visible `<nav aria-label="Fil d'Ariane">` « Accueil › <nom> » (identique au JSON-LD), `h1`, pitch, tags, CTA « Voir sur GitHub », bloc GitHub (release, étoiles, licence, date de mise à jour) masqué si `null` ;
@@ -127,7 +124,6 @@ Réutilise `Navigation`, `Footer`, `ScrollProgress` et les jetons de `globals.cs
 ## Vérification
 
 Le dépôt n'a pas de suite de tests ; pas de test permanent ajouté pour du rendu statique.
-
 - `bun run lint` (seul contrôle de types, le build ignore les erreurs TS).
 - `bun run build` : les 5 pages projet sont prérendues (SSG).
 - Navigateur sur le serveur de dev :

@@ -29,19 +29,19 @@ bun start
 
 ## Scripts disponibles
 
-| Commande                  | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `bun dev`                 | Serveur de dev avec Turbopack                          |
-| `bun run build`           | Build de production (`run` requis, `bun build` reserve) |
-| `bun start`               | Serveur de production (standalone)                     |
-| `bun prod`                | Build + start                                          |
-| `bun lint`                | `next typegen` + `tsc` + Biome check + Biome format    |
-| `bun tsc`                 | Type-check TypeScript (`tsc --noEmit`)                 |
-| `bun biome:check`         | Lint Biome (lecture seule)                             |
-| `bun biome:check:write`   | Lint Biome + autofix                                   |
-| `bun biome:format`        | Format Biome (lecture seule)                           |
-| `bun biome:format:write`  | Format Biome + autofix                                 |
-| `bun biome:write`         | Lint + format Biome avec autofix                       |
+| Commande                 | Description                                             |
+| ------------------------ | ------------------------------------------------------- |
+| `bun dev`                | Serveur de dev avec Turbopack                           |
+| `bun run build`          | Build de production (`run` requis, `bun build` reserve) |
+| `bun start`              | Serveur de production (standalone)                      |
+| `bun prod`               | Build + start                                           |
+| `bun lint`               | `next typegen` + `tsc` + Biome check + Biome format     |
+| `bun tsc`                | Type-check TypeScript (`tsc --noEmit`)                  |
+| `bun biome:check`        | Lint Biome (lecture seule)                              |
+| `bun biome:check:write`  | Lint Biome + autofix                                    |
+| `bun biome:format`       | Format Biome (lecture seule)                            |
+| `bun biome:format:write` | Format Biome + autofix                                  |
+| `bun biome:write`        | Lint + format Biome avec autofix                        |
 
 ## Docker
 
@@ -54,15 +54,14 @@ docker run -p 3000:3000 -e PUID=99 -e PGID=100 portfolio
 
 L'image utilise un build multi-stage avec `node:krypton-alpine` et tourne avec un utilisateur non-root.
 
-| Variable | Défaut | Description |
-| -------- | ------ | ----------- |
+| Variable | Défaut | Description                                                                                        |
+| -------- | ------ | -------------------------------------------------------------------------------------------------- |
 | `PUID`   | `1001` | UID du serveur ; `/app/.next` est chowné dessus au démarrage (style linuxserver.io). Unraid : `99` |
-| `PGID`   | `1001` | GID du serveur. Unraid : `100` |
+| `PGID`   | `1001` | GID du serveur. Unraid : `100`                                                                     |
 
 ## CI/CD
 
 Le workflow GitHub Actions (`.github/workflows/build.yml`) se declenche sur les tags `v*.*.*` et :
-
 1. Build le projet
 2. Upload les artefacts
 3. Build et push l'image Docker sur `ghcr.io`

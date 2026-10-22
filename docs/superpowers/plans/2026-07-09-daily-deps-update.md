@@ -40,7 +40,6 @@ gh label list --search dependencies
 ```
 
 Expected: une ligne `dependencies`.
-
 - [ ] **Step 2: Ajouter `workflow_dispatch` à `build.yml`**
 
 Dans `.github/workflows/build.yml`, remplacer :
@@ -49,7 +48,7 @@ Dans `.github/workflows/build.yml`, remplacer :
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 ```
 
 par :
@@ -58,7 +57,7 @@ par :
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
   workflow_dispatch:
 ```
 
@@ -70,7 +69,6 @@ actionlint .github/workflows/build.yml
 ```
 
 Expected: aucune sortie (exit 0).
-
 - [ ] **Step 4: Commit**
 
 ```bash
@@ -133,7 +131,6 @@ echo "4.8.1" | awk -F. '{printf "%d.%d.%d", $1, $2, $3 + 1}'
 ```
 
 Expected: `4.8.2`.
-
 - [ ] **Step 3: Écrire `.github/workflows/update-deps.yml`**
 
 Contenu complet :
@@ -143,7 +140,7 @@ name: Update Dependencies
 
 on:
   schedule:
-    - cron: '0 5 * * *'
+    - cron: "0 5 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -190,7 +187,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -331,7 +328,6 @@ actionlint .github/workflows/update-deps.yml
 ```
 
 Expected: aucune sortie (exit 0). Corriger toute erreur signalée avant de continuer.
-
 - [ ] **Step 5: Commit et push (avec la Task 1)**
 
 ```bash
@@ -369,7 +365,6 @@ git status --short
 ```
 
 Expected: working tree propre (hors fichiers non suivis éventuels).
-
 - [ ] **Step 2: Déclencher le workflow et suivre le run**
 
 ```bash
@@ -380,7 +375,6 @@ gh run watch $(gh run list --workflow=update-deps.yml --limit 1 --json databaseI
 ```
 
 Expected: run vert. Le job `guard` passe (pas de PR ouverte), le job `update` détecte des changements, lint + build verts, étape release exécutée.
-
 - [ ] **Step 3: Vérifier les commits, le tag et la release**
 
 ```bash
@@ -390,7 +384,6 @@ gh release view v4.8.2
 ```
 
 Expected: deux commits de `github-actions[bot]` — `Config - #PRT-NoId - Bump dependencies (...)` puis `Config - #PRT-NoId - Bump version to 4.8.2` — le tag `v4.8.2`, et une release dont les notes contiennent uniquement `**Full Changelog**: https://github.com/Greite/portfolio/compare/v4.8.1...v4.8.2`. (Si d'autres versions sont sorties entre-temps, la liste des paquets peut différer de next/biome/@types/node — c'est normal.)
-
 - [ ] **Step 4: Vérifier que le build Docker a été déclenché sur le tag**
 
 ```bash
@@ -398,7 +391,6 @@ gh run list --workflow=build.yml --limit 1 --json displayTitle,headBranch,status
 ```
 
 Expected: un run avec `headBranch: v4.8.2`, `event: workflow_dispatch`, qui se termine en `success` (suivre avec `gh run watch` si besoin). L'image `ghcr.io/greite/portfolio` reçoit les tags `4.8.2`, `4.8`, `4` et `sha-*`.
-
 - [ ] **Step 5: Vérifier l'absence d'issues parasites**
 
 ```bash
@@ -426,7 +418,6 @@ gh run watch $(gh run list --workflow=update-deps.yml --limit 1 --json databaseI
 ```
 
 Expected: run vert et rapide. Annotation `Aucune mise à jour disponible.` sur l'étape `Detect changes` ; étapes lint/build/release/PR toutes skippées ; étape majeures exécutée.
-
 - [ ] **Step 2: Vérifier qu'aucun doublon n'a été créé**
 
 ```bash
