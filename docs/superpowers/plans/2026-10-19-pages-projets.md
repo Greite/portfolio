@@ -41,6 +41,7 @@
 
 **Interfaces:**
 - Produces:
+
   ```ts
   export interface Feature { title: string; description: string }
   export interface Screenshot { light: string; dark: string; alt: string } // chemins publics `/projets/<slug>/<fichier>.webp`, `light === dark` permis si l'outil n'a qu'un thème
@@ -58,22 +59,18 @@
 - [ ] **Step 1: Récupérer la matière de chaque README**
 
 Run: `gh api repos/Greite/<repo>/readme -H 'Accept: application/vnd.github.raw'` pour `speedtest-monitor`, `ha-ravelli-smart-wifi`, `database-backup`, `unraid-btop`, `unraid-traefik-rolling-update`.
-
 - [ ] **Step 2: Créer `lib/projects.ts`**
 
 Reprendre à l'identique `name`, `description`, `tags`, `repoUrl` et l'ordre actuels de `components/Projects.tsx`. `slug` = dernier segment de `repoUrl`. Pour chaque projet, rédiger à partir du README (ton vitrine, pas copie) : `pitch` (2-3 phrases), `features` (4 à 6 entrées). `codeSample` pour **Database Backup** (extrait `docker-compose` ou sortie de log du README, noms remplacés par des valeurs neutres type `app-db`) ; aucun `screenshots` à ce stade (ajoutés en Task 5). Les autres projets n'ont temporairement ni capture ni `codeSample` : la page de la Task 3 doit le tolérer jusqu'à la Task 5.
 
 `getAdjacentProjects` : index `i` du slug, `previous = projects[(i - 1 + n) % n]`, `next = projects[(i + 1) % n]`.
-
 - [ ] **Step 3: Brancher `components/Projects.tsx`**
 
 `import { projects } from '@root/lib/projects';`, supprimer l'interface et le tableau locaux. Rendu inchangé dans cette tâche.
-
 - [ ] **Step 4: Vérifier**
 
 Run: `bun run lint` → aucune erreur.
 Run: `bun run dev` puis navigateur sur `/#projets` → grille identique à avant (5 cartes + « Tous mes projets »).
-
 - [ ] **Step 5: Commit**
 
 ```bash
@@ -88,6 +85,7 @@ git commit -m "Improve - #PRT-NoId - Move projects data to lib and add showcase 
 
 **Interfaces:**
 - Produces:
+
   ```ts
   export interface RepoStats { stars: number; license?: string; pushedAt: string; latestRelease?: string }
   export async function getRepoStats(repoUrl: string): Promise<RepoStats | null>; // ne lève jamais
@@ -104,7 +102,6 @@ Extraire `owner/repo` de `repoUrl`. Deux `fetch` en parallèle vers `https://api
 Script jetable (`bun -e`, non commité) appelant `getRepoStats` sur les 5 `repoUrl` : chacun renvoie `stars` numérique, `license` (`MIT`, ou `GPL-2.0` pour traefik-rolling-update), `latestRelease` défini.
 
 Note : hors runtime Next, l'option `next` est ignorée par `fetch`, sans effet sur ce contrôle.
-
 - [ ] **Step 3: Vérifier les cas d'échec (Review Focus 1, 2)**
 
 Même script jetable, `getRepoStats` appelé avec `https://github.com/Greite/speedtest-monitor` sauf mention :
@@ -115,7 +112,6 @@ Même script jetable, `getRepoStats` appelé avec `https://github.com/Greite/spe
 - `fetch` réel, `https://github.com/octocat/Hello-World` (sans release) → objet sans `latestRelease`.
 
 Les `fetch` levés ou en 403 empêchent le rendu ou le build seulement si `getRepoStats` lève ; ces cas prouvent qu'elle ne lève pas. Le rendu avec `null` est contrôlé en Task 3, Step 4.
-
 - [ ] **Step 4: Commit**
 
 ```bash
@@ -135,7 +131,6 @@ git commit -m "Improve - #PRT-NoId - Add GitHub repo stats fetcher"
 - [ ] **Step 1: Lire la doc Next**
 
 `node_modules/next/dist/docs/01-app/03-api-reference/04-functions/generate-static-params.md`, `generate-metadata.md`, `03-file-conventions/dynamic-routes.md`.
-
 - [ ] **Step 2: Implémenter la page**
 
 - `export const dynamicParams = false;` `generateStaticParams` → `projects.map(({ slug }) => ({ slug }))`.
@@ -148,7 +143,6 @@ git commit -m "Improve - #PRT-NoId - Add GitHub repo stats fetcher"
 - [ ] **Step 3: Étendre `app/sitemap.ts`**
 
 Ajouter `...projects.map(({ slug }) => ({ url: \`https://gauthierpainteaux.fr/projets/${slug}\`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 }))`.
-
 - [ ] **Step 4: Vérifier**
 
 Run: `bun run lint` → aucune erreur.
@@ -177,12 +171,10 @@ git commit -m "Improve - #PRT-NoId - Add project pages with metadata and JSON-LD
 
 - [ ] **Step 1: Carte d'accueil**
 
-`<li>` → conteneur `relative` portant les classes de survol actuelles (`group`, translate, bordure, halo) sans être un lien. Titre `h3` contient `<Link href={\`/projets/${slug}\`}>` avec `after:absolute after:inset-0 after:rounded-2xl` et focus visible sur la carte. `LuArrowUpRight` → `LuArrowRight`. Le libellé `Greite/<repo>` devient un `<Link>` externe (`target="_blank"`, `rel="noopener noreferrer"`, `relative z-10`, `aria-label` « <nom> — code sur GitHub (ouvre dans un nouvel onglet) »). Carte « Tous mes projets » inchangée.
-
+`<li>` → conteneur `relative` portant les classes de survol actuelles (`group`, translate, bordure, halo) sans être un lien. Titre `h3` contient ``<Link href={`/projets/${slug}`}>`` avec `after:absolute after:inset-0 after:rounded-2xl` et focus visible sur la carte. `LuArrowUpRight` → `LuArrowRight`. Le libellé `Greite/<repo>` devient un `<Link>` externe (`target="_blank"`, `rel="noopener noreferrer"`, `relative z-10`, `aria-label` « <nom> — code sur GitHub (ouvre dans un nouvel onglet) »). Carte « Tous mes projets » inchangée.
 - [ ] **Step 2: Ancres**
 
 `Navigation.tsx` : `href: '/#a-propos'` etc. (garder `id` sans `#`). `Footer.tsx` : mêmes `/#…`. La logique « section active » ne trouve aucune section hors accueil et laisse `activeId` à `null` : aucun changement requis, à confirmer au Step 3.
-
 - [ ] **Step 3: Vérifier (Review Focus 4)**
 
 Run: `bun run lint` → aucune erreur.
@@ -193,7 +185,6 @@ Navigateur, `bun run dev` :
 - [ ] **Step 4: README**
 
 Ajouter à l'arborescence `app/projets/[slug]/page.tsx  # Pages projet`, `lib/projects.ts  # Données et contenu des projets`, `lib/github.ts  # Stats GitHub (revalidées chaque jour)`, `public/projets/  # Captures des projets`.
-
 - [ ] **Step 5: Commit**
 
 ```bash
@@ -208,28 +199,22 @@ git commit -m "Improve - #PRT-NoId - Link project cards to project pages"
 - Modify: `lib/projects.ts` (champs `screenshots`, éventuel `codeSample` de repli)
 
 L'utilisateur fournit les URL en conversation (jamais écrites dans le dépôt ni dans ce plan) et se connecte lui-même dans l'onglet. Cibles : Speedtest Monitor (dashboard), Ravelli Smart Wi-Fi (carte/entités Home Assistant), Unraid btop (tuile dashboard + btop dans le terminal), Unraid Traefik Rolling Update (page du plugin ; si elle n'est pas parlante, `codeSample` de repli validé avec l'utilisateur).
-
 - [ ] **Step 1: Capturer**
 
 Onglet `browser` en viewport 1600×1000, thème clair puis sombre de l'outil quand il en a un (sinon une seule image, `light === dark`). Avant chaque capture, remplacer via `tab.run` dans le DOM toute donnée d'exploitation visible (nom de serveur, IP, domaine, noms de conteneurs/pièces/entités tiers, FAI) par des valeurs neutres.
-
 - [ ] **Step 2: Convertir**
 
 Script jetable (non commité) avec `sharp` : PNG → WebP qualité 80, 1600×1000, vers `public/projets/<slug>/<vue>-light.webp` / `-dark.webp`.
-
 - [ ] **Step 3: Contrôler**
 
 Ouvrir chaque WebP et le relire entièrement : aucune donnée listée dans Global Constraints. Toute image douteuse est montrée à l'utilisateur avant commit.
-
 - [ ] **Step 4: Renseigner `screenshots`**
 
 Ajouter les entrées dans `lib/projects.ts` (`alt` descriptif en français, la vue principale en premier).
-
 - [ ] **Step 5: Vérifier (Review Focus 5)**
 
 Run: `bun run lint` puis `bun run build` → aucune erreur.
 Navigateur : chaque page en clair, sombre et mobile (390 px) ; bascule du thème sur une page projet → une seule version visible, sans rechargement ; galerie présente seulement au-delà d'une capture ; `curl` d'une page avec capture → `twitter:card" content="summary_large_image"` et `og:image` en URL absolue.
-
 - [ ] **Step 6: Commit**
 
 ```bash
